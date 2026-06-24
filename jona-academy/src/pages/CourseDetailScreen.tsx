@@ -7,6 +7,7 @@ export default function CourseDetailScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
   const [expandedModule, setExpandedModule] = useState<number | null>(0)
+  const [showFullDesc, setShowFullDesc] = useState(false)
   const course = courses.find(c => c.id === Number(id)) || courses[0]
   const hasAccess = course.isFree
 
@@ -87,9 +88,27 @@ export default function CourseDetailScreen() {
 
         {/* Description */}
         <h3 style={{ fontSize: 16, marginBottom: 10 }}>Rreth këtij kursi</h3>
-        {course.description.split('\n\n').map((para, i) => (
-          <p key={i} style={{ color: 'var(--text-secondary)', fontSize: 14, marginBottom: 12, lineHeight: 1.75 }}>{para}</p>
-        ))}
+        <div style={{ position: 'relative' }}>
+          <div style={{ overflow: 'hidden', maxHeight: showFullDesc ? 'none' : 120, transition: 'max-height 0.4s ease' }}>
+            {course.description.split('\n').map((line, i) => {
+              if (line.trim() === '') return <div key={i} style={{ height: 10 }} />
+              const isBullet = line.startsWith('■') || line.startsWith('●')
+              return (
+                <p key={i} style={{ color: isBullet ? 'var(--text-primary)' : 'var(--text-secondary)', fontSize: 14, marginBottom: isBullet ? 4 : 0, lineHeight: 1.75, fontWeight: isBullet ? 500 : 400 }}>{line}</p>
+              )
+            })}
+          </div>
+          {!showFullDesc && (
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, background: 'linear-gradient(to bottom, transparent, var(--bg-primary))' }} />
+          )}
+        </div>
+        <button
+          onClick={() => setShowFullDesc(v => !v)}
+          style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: 14, fontWeight: 700, cursor: 'pointer', padding: '8px 0 16px', display: 'flex', alignItems: 'center', gap: 5 }}
+        >
+          {showFullDesc ? 'Lexo më pak' : 'Lexo më shumë'}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showFullDesc ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
 
         {/* Website link */}
         {(course as any).website && (

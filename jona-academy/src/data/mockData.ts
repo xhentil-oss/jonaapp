@@ -1,9 +1,13 @@
 export const categories = [
   { id: 1, name: 'Motivim', count: 4, emoji: '🔥', color: '#7A4F2D' },
-  { id: 2, name: 'Shëndet', count: 3, emoji: '💪', color: '#4A9B6F' },
+  { id: 2, name: 'Shëndet', count: 5, emoji: '💪', color: '#4A9B6F' },
   { id: 3, name: 'Mirëqenie', count: 3, emoji: '🧘', color: '#0EA5E9' },
   { id: 4, name: 'Jetesë', count: 2, emoji: '✨', color: '#D4904A' },
   { id: 5, name: 'Zhvillim Personal', count: 5, emoji: '🎯', color: '#6366F1' },
+  { id: 6, name: 'Biznes', count: 1, emoji: '💼', color: '#C0392B' },
+  { id: 7, name: 'Familje', count: 1, emoji: '👨‍👩‍👧', color: '#E67E22' },
+  { id: 8, name: 'Krijimtari', count: 1, emoji: '📖', color: '#8E44AD' },
+  { id: 9, name: 'Psikologji', count: 1, emoji: '🧠', color: '#2980B9' },
 ]
 
 export const courses = [
@@ -80,7 +84,7 @@ Ky trajnim është i përshtatshëm:
 Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrugën e shpirtit drejt bollëkut, suksesit dhe lumturisë në trajnimin transformues "PËRTEJ LIMITEVE NJERËZOR".`,
     modules: [
       { id: 1, title: 'Seanca 1 — Fillimi i Rrugëtimit', lessons: [
-        { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: true },
+        { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: false },
         { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: false },
         { id: 3,  title: 'Përtej Limiteve — Detyra 1', duration: '10:00', isFree: false },
         { id: 4,  title: 'Përtej Limiteve — Detyra 2', duration: '10:00', isFree: false },
@@ -226,9 +230,71 @@ Ky trajnim është i përshtatshëm:
 
 Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrugën e shpirtit drejt bollëkut, suksesit dhe lumturisë në trajnimin transformues "PËRTEJ LIMITEVE NJERËZOR".`,
     modules: [
-      { id: 1, title: 'Mentaliteti Fitues', lessons: [
-        { id: 1, title: 'Çfarë janë limitet njerëzore?', duration: '12:00', isFree: true },
-        { id: 2, title: 'Si funksionon truri ynë', duration: '15:30', isFree: false },
+      { id: 2, title: 'Seanca 1 — Fillimi i Rrugëtimit', lessons: [
+        { id: 502, title: 'Përtej Limiteve — Seanca 1 ( VIP )', duration: '45:00', isFree: false },
+        { id: 503, title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'. ( VIP )", duration: '22:00', isFree: false },
+        { id: 504, title: 'Përtej Limiteve — Detyra 1 ( VIP )', duration: '10:00', isFree: false },
+        { id: 505, title: 'Përtej Limiteve — Detyra 2 ( VIP )', duration: '10:00', isFree: false },
+        { id: 506, title: 'Përtej Limiteve — Detyra 3 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 3, title: 'Seanca 2 — Fëmija i Brendshëm', lessons: [
+        { id: 507, title: 'Përtej Limiteve — Seanca 2 ( VIP )', duration: '50:00', isFree: false },
+        { id: 508, title: 'Hipnoza carousel,fëmija i brëndshëm ( VIP )', duration: '25:00', isFree: false },
+        { id: 509, title: 'Përtej Limiteve — Detyra 4 ( VIP )', duration: '10:00', isFree: false },
+        { id: 510, title: 'Përtej Limiteve — Detyra 5 ( VIP )', duration: '10:00', isFree: false },
+        { id: 511, title: 'Përtej Limiteve — Detyra 6 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 4, title: 'Seanca 3 — Vizionimi i së Ardhmes', lessons: [
+        { id: 512, title: 'Përtej Limiteve — Seanca 3 ( VIP )', duration: '48:00', isFree: false },
+        { id: 513, title: "Vizualizim'Treni i se ardhmes' ( VIP )", duration: '20:00', isFree: false },
+        { id: 514, title: 'Përtej Limiteve — Detyra 7 ( VIP )', duration: '10:00', isFree: false },
+        { id: 515, title: 'Përtej Limiteve — Detyra 8 ( VIP )', duration: '10:00', isFree: false },
+        { id: 516, title: 'Përtej Limiteve — Detyra 9 ( VIP )', duration: '10:00', isFree: false },
+        { id: 517, title: 'Përtej Limiteve — Detyra 10 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 5, title: "Seanca 4 — Libraria e Vetëbesimit", lessons: [
+        { id: 518, title: 'Përtej Limiteve — Seanca 4 ( VIP )', duration: '52:00', isFree: false },
+        { id: 519, title: "Hipnoze'Libraria e Vetebesimit' ( VIP )", duration: '24:00', isFree: false },
+        { id: 520, title: 'Përtej Limiteve — Detyra 11 ( VIP )', duration: '10:00', isFree: false },
+        { id: 521, title: 'Përtej Limiteve — Detyra 12 ( VIP )', duration: '10:00', isFree: false },
+        { id: 522, title: 'Përtej Limiteve — Detyra 13 ( VIP )', duration: '10:00', isFree: false },
+        { id: 523, title: 'Përtej Limiteve — Detyra 14 ( VIP )', duration: '10:00', isFree: false },
+        { id: 524, title: 'Përtej Limiteve — Detyra 15 ( VIP )', duration: '10:00', isFree: false },
+        { id: 525, title: 'Përtej Limiteve — Detyra 16 ( VIP )', duration: '10:00', isFree: false },
+        { id: 526, title: 'Përtej Limiteve — Detyra 17 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 6, title: "Seanca 5 — Udhëtimi Drejt Shpirtit", lessons: [
+        { id: 527, title: 'Përtej Limiteve — Seanca 5 ( VIP )', duration: '55:00', isFree: false },
+        { id: 528, title: "Meditim 'Udhëtimi drejt shpirtit' ( VIP )", duration: '22:00', isFree: false },
+        { id: 529, title: 'Përtej Limiteve — Detyra 18 ( VIP )', duration: '10:00', isFree: false },
+        { id: 530, title: 'Përtej Limiteve — Detyra 19 ( VIP )', duration: '10:00', isFree: false },
+        { id: 531, title: 'Përtej Limiteve — Detyra 20 ( VIP )', duration: '10:00', isFree: false },
+        { id: 532, title: 'Përtej Limiteve — Detyra 21 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 7, title: "Seanca 6 — Kanalizimi i Energjisë", lessons: [
+        { id: 533, title: 'Përtej Limiteve — Seanca 6 ( VIP )', duration: '50:00', isFree: false },
+        { id: 534, title: "Vizualizim \"Kanalizim energjie\" ( VIP )", duration: '20:00', isFree: false },
+        { id: 535, title: 'Përtej Limiteve — Detyra 22 ( VIP )', duration: '10:00', isFree: false },
+        { id: 536, title: 'Përtej Limiteve — Detyra 23 ( VIP )', duration: '10:00', isFree: false },
+        { id: 537, title: 'Përtej Limiteve — Detyra 24 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 8, title: 'Seanca 7 — Liria Emocionale', lessons: [
+        { id: 538, title: 'Përtej Limiteve — Seanca 7 ( VIP )', duration: '48:00', isFree: false },
+        { id: 539, title: "Vizualizim për 'Liri emocionale ' ( VIP )", duration: '20:00', isFree: false },
+        { id: 540, title: 'Përtej Limiteve — Detyra 25 ( VIP )', duration: '10:00', isFree: false },
+        { id: 541, title: 'Përtej Limiteve — Detyra 26 ( VIP )', duration: '10:00', isFree: false },
+        { id: 542, title: 'Përtej Limiteve — Detyra 27 ( VIP )', duration: '10:00', isFree: false },
+      ]},
+      { id: 9, title: 'Seanca 8 — Transformimi Final', lessons: [
+        { id: 543, title: 'Përtej Limiteve — Seanca 8 ( VIP )', duration: '60:00', isFree: false },
+        { id: 544, title: 'Përtej Limiteve — Detyra 28 ( VIP )', duration: '10:00', isFree: false },
+        { id: 545, title: "Vizualizimi 'Lidhja me engjëjt' ( VIP )", duration: '25:00', isFree: false },
+      ]},
+      { id: 10, title: 'Seminar Bonus', lessons: [
+        { id: 546, title: 'Përtej Limiteve Njerëzor — Bonus 1', duration: '30:00', isFree: false },
+        { id: 547, title: 'Përtej Limiteve Njerëzor — Bonus 2', duration: '30:00', isFree: false },
+        { id: 548, title: 'Përtej Limiteve Njerëzor — Bonus 3', duration: '30:00', isFree: false },
+        { id: 549, title: 'Përtej Limiteve Njerëzor — Bonus 4', duration: '30:00', isFree: false },
       ]},
     ],
   },
@@ -238,11 +304,11 @@ Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrug�
     instructor: 'Fatjona Cici',
     category: 'Mirëqenie',
     duration: '5h 34m',
-    lessons: 41,
+    lessons: 40,
     level: 'Fillestare',
     price: '€399',
     isFree: false, isPremium: true,
-    emoji: '🧘', color: '#0EA5E9', image: '/jona-3.jpeg',
+    emoji: '🧘', color: '#0EA5E9', image: '/jona-4.webp',
     shortDesc: 'Mëso të menaxhosh ankthin dhe mendimet negative me metoda shkencore.',
     description: `Ky trajnim zgjat 4 javë dhe ofron mjetet praktike për të kuptuar dhe menaxhuar ankthin, frikën dhe mendimet negative. Bazuar në psikologji konjitive, neuro-shkencë dhe eksperiencë vetjake.
 
@@ -286,58 +352,57 @@ Arritjet nga personat që kanë qenë pjesë e trajnimeve:
 ■ Rritje e vetëbesimit dhe zbulim i qëllimeve dhe ëndrrave.
 ■ Qetësi shpirtërore dhe shërim total.`,
     modules: [
-      { id: 1, title: 'Seminari 1 — Kuptimi i Ankthit (1h 13min)', lessons: [
-        { id: 101, title: 'Çfarë është ankthi sipas OBSH?', duration: '10:00', isFree: true },
-        { id: 102, title: 'Si pasqyrohet ankthi në jetën e përditshme?', duration: '9:00', isFree: true },
-        { id: 103, title: 'Si e përjetoja unë ankthin?!', duration: '8:00', isFree: false },
-        { id: 104, title: 'Aspektet e ankthit që konsiderohen të shëndetshme', duration: '9:00', isFree: false },
-        { id: 105, title: 'Çfarë e shkakton ankthin?', duration: '10:00', isFree: false },
-        { id: 106, title: 'Eksperienca ime personale — mendimet negative dhe ankthi', duration: '9:00', isFree: false },
-        { id: 107, title: 'Pse mendojmë negativisht?', duration: '9:00', isFree: false },
-        { id: 108, title: '2 mënyrat si operon truri', duration: '9:00', isFree: false },
+      { id: 1, title: 'Seanca 1 (74 min)', lessons: [
+        { id: 101, title: 'Ankthi — Seanca 1', duration: '74:00', isFree: false },
+        { id: 102, title: 'Ankthi — Detyra 1', duration: '1:00', isFree: false },
+        { id: 103, title: 'Ankthi — Detyra 2', duration: '2:00', isFree: false },
+        { id: 104, title: 'Ankthi — Detyra 3', duration: '1:00', isFree: false },
       ]},
-      { id: 2, title: 'Seminari 2 — Frika dhe Menaxhimi (53min)', lessons: [
-        { id: 109, title: 'Çfarë është frika?', duration: '10:00', isFree: false },
-        { id: 110, title: 'Ushtrim për të tejkaluar frikën tënde më të madhe', duration: '9:00', isFree: false },
-        { id: 111, title: 'Cilat janë llojet e frikës?', duration: '9:00', isFree: false },
-        { id: 112, title: 'Si të menaxhojmë ankthin?', duration: '9:00', isFree: false },
-        { id: 113, title: 'Si nxitet ankthi nga mendimet dhe veprimet e përditshme?', duration: '8:00', isFree: false },
-        { id: 114, title: 'Shkaktari kryesor i ankthit', duration: '8:00', isFree: false },
+      { id: 2, title: 'Seanca 2 (53 min)', lessons: [
+        { id: 105, title: 'Ankthi — Seanca 2', duration: '53:00', isFree: false },
+        { id: 106, title: 'Hipnoza për mendimet negative...', duration: '25:00', isFree: false },
+        { id: 107, title: 'Ankthi — Detyra 4', duration: '3:00', isFree: false },
+        { id: 108, title: 'Ankthi — Detyra 5', duration: '1:00', isFree: false },
+        { id: 109, title: 'Ankthi — Detyra 6', duration: '1:00', isFree: false },
+        { id: 110, title: 'Ankthi — Detyra 7', duration: '1:00', isFree: false },
+        { id: 111, title: 'Ankthi — Detyra 8', duration: '4:00', isFree: false },
+        { id: 112, title: 'Ankthi — Detyra 9', duration: '1:00', isFree: false },
       ]},
-      { id: 3, title: 'Seminari 3 — Rutina dhe Zakone (1h 13min)', lessons: [
-        { id: 115, title: 'Teknikë e fuqishme për të menaxhuar ankthin', duration: '10:00', isFree: false },
-        { id: 116, title: 'Zakonet që duhen ndryshuar për të menaxhuar ankthin', duration: '9:00', isFree: false },
-        { id: 117, title: 'Çfarë është cikli i ankthit?', duration: '9:00', isFree: false },
-        { id: 118, title: 'Ndryshimet në regjimin ushqimor dhe stilin e jetesës', duration: '9:00', isFree: false },
-        { id: 119, title: 'Këshilla që ndihmojnë në lidhje me pagjumësinë', duration: '9:00', isFree: false },
-        { id: 120, title: 'Pse nivelet e ankthit janë të larta në mëngjes?', duration: '9:00', isFree: false },
-        { id: 121, title: 'Rëndësia e rutinës së mëngjesit', duration: '9:00', isFree: false },
-        { id: 122, title: 'Si lidhet rutina e mëngjesit me ankthin?', duration: '9:00', isFree: false },
+      { id: 3, title: 'Seanca 3 (73 min)', lessons: [
+        { id: 113, title: 'Ankthi — Seanca 3', duration: '73:00', isFree: false },
+        { id: 114, title: 'Hipnoza për fëmijën e brendshëm dhe faljen', duration: '25:00', isFree: false },
+        { id: 115, title: 'Ankthi — Detyra 10', duration: '2:00', isFree: false },
+        { id: 116, title: 'Ankthi — Detyra 11', duration: '1:00', isFree: false },
+        { id: 117, title: 'Ankthi — Detyra 12', duration: '1:00', isFree: false },
+        { id: 118, title: 'Ankthi — Detyra 13', duration: '1:00', isFree: false },
+        { id: 119, title: 'Ankthi — Detyra 14', duration: '1:00', isFree: false },
+        { id: 120, title: 'Ankthi — Detyra 15', duration: '2:00', isFree: false },
+        { id: 121, title: 'Ankthi — Detyra 16', duration: '2:00', isFree: false },
+        { id: 122, title: 'Ankthi — Detyra 17', duration: '1:00', isFree: false },
+        { id: 123, title: 'Ankthi — Detyra 18', duration: '1:00', isFree: false },
+        { id: 124, title: 'Ankthi — Detyra 19', duration: '1:00', isFree: false },
+        { id: 125, title: 'Ankthi — Detyra 20', duration: '1:00', isFree: false },
       ]},
-      { id: 4, title: 'Seminari 4 — Fokusi dhe Transformimi (45min)', lessons: [
-        { id: 123, title: 'Ndryshimet konkrete që do të lehtësojnë gjendjen e ankthit', duration: '10:00', isFree: false },
-        { id: 124, title: 'Si të ndërtojmë rutinën e mbrëmjes', duration: '8:00', isFree: false },
-        { id: 125, title: 'Çfarë është zhvendosja e fokusit dhe si na ndihmon?', duration: '9:00', isFree: false },
-        { id: 126, title: 'Praktika e vëzhgimit të vetes', duration: '9:00', isFree: false },
-        { id: 127, title: 'Ndryshimi i vizionit që kemi për veten', duration: '9:00', isFree: false },
+      { id: 4, title: 'Seanca 4 (46 min)', lessons: [
+        { id: 126, title: 'Ankthi — Seanca 4', duration: '46:00', isFree: false },
+        { id: 127, title: 'Hipnoza për rritje të vetëbesimit', duration: '25:00', isFree: false },
+        { id: 128, title: 'Ankthi — Detyra 21', duration: '1:00', isFree: false },
+        { id: 129, title: 'Ankthi — Detyra 22', duration: '2:00', isFree: false },
+        { id: 130, title: 'Ankthi — Detyra 23', duration: '1:00', isFree: false },
+        { id: 131, title: 'Ankthi — Detyra 24', duration: '1:00', isFree: false },
+        { id: 132, title: 'Ankthi — Detyra 25', duration: '1:00', isFree: false },
       ]},
-      { id: 5, title: 'Seminari 5 — Ëndrrat dhe Vetëbesimi (1h)', lessons: [
-        { id: 128, title: 'Si ti zbulojmë ëndrrat dhe dëshirat?', duration: '7:00', isFree: false },
-        { id: 129, title: 'Si të fokusohemi tek aspektet pozitive të jetës?', duration: '7:00', isFree: false },
-        { id: 130, title: 'Plan konkret për të realizuar ëndrrat dhe qëllimet', duration: '8:00', isFree: false },
-        { id: 131, title: 'Këshilla praktike që sigurojnë sukses në menaxhimin e ankthit', duration: '8:00', isFree: false },
-        { id: 132, title: 'Si të veproj kur ndihem sikur jam kthyer mbrapa?', duration: '7:00', isFree: false },
-        { id: 133, title: '5 fazat e ndryshimit të sjelljes', duration: '7:00', isFree: false },
-        { id: 134, title: 'Cilat janë stadet e procesit të ndryshimit?', duration: '7:00', isFree: false },
-        { id: 135, title: 'Këshilla për të rritur vetëbesimin', duration: '7:00', isFree: false },
-        { id: 136, title: 'Çfarë është zhvillimi personal?', duration: '6:00', isFree: false },
-        { id: 137, title: 'Guximi për ta parë veten të aftë në jetë', duration: '6:00', isFree: false },
+      { id: 5, title: 'Seanca 5 (1 orë)', lessons: [
+        { id: 133, title: 'Ankthi — Seanca 5', duration: '60:00', isFree: false },
+        { id: 134, title: 'Vizualizim për liri emocionale!', duration: '20:00', isFree: false },
       ]},
-      { id: 6, title: 'Hipnozë dhe Vizualizim', lessons: [
-        { id: 138, title: 'Hipnoterapi — Menaxhimi i mendimeve negative', duration: '25:00', isFree: false },
-        { id: 139, title: 'Hipnoterapi — Shërimi i fëmijës së brendshëm dhe bllokimet emocionale', duration: '25:00', isFree: false },
-        { id: 140, title: 'Hipnoterapi — Rritja e vetëbesimit', duration: '25:00', isFree: false },
-        { id: 141, title: 'Vizualizim "Liri emocionale"', duration: '20:00', isFree: false },
+      { id: 6, title: 'Seminar Bonus', lessons: [
+        { id: 135, title: 'Menaxho Ankthin — BONUS 1', duration: '20:00', isFree: false },
+        { id: 136, title: 'Menaxho Ankthin — BONUS 2', duration: '20:00', isFree: false },
+        { id: 137, title: 'Menaxho Ankthin — BONUS 3', duration: '20:00', isFree: false },
+        { id: 138, title: 'Menaxho Ankthin — BONUS 4', duration: '20:00', isFree: false },
+        { id: 139, title: 'Menaxho Ankthin — BONUS 5', duration: '20:00', isFree: false },
+        { id: 140, title: 'Menaxho Ankthin — BONUS 6', duration: '20:00', isFree: false },
       ]},
     ],
   },
@@ -347,11 +412,11 @@ Arritjet nga personat që kanë qenë pjesë e trajnimeve:
     instructor: 'Fatjona Cici',
     category: 'Zhvillim Personal',
     duration: '3h 00m',
-    lessons: 6,
+    lessons: 3,
     level: 'Të gjitha nivelet',
     price: '€44',
     isFree: false, isPremium: true,
-    emoji: '🚀', color: '#D4904A', image: '/jona-4.webp',
+    emoji: '🚀', color: '#D4904A', image: '/jona-3.jpeg',
     shortDesc: '"Vit i ri, identitet i ri" — Koha për të rikthyer ëndrrat që lamë përgjysmë!',
     description: `Rifillo vitin nga e para, me qartësi, forcë dhe vizion.
 
@@ -411,13 +476,10 @@ Pavarësisht moshës, profesionit, gjinisë — ky seminar është për këdo. M
 
 Nuk po vjen vetëm një vit i ri. Po vjen një mundësi e re!`,
     modules: [
-      { id: 1, title: 'Seminari Intensiv 3-Orësh', lessons: [
-        { id: 201, title: 'Mbyllja e vitit 2025 — Paqe dhe vetëdije', duration: '30:00', isFree: true },
-        { id: 202, title: 'Riprogramimi i mendjes dhe çlirimi emocional', duration: '30:00', isFree: false },
-        { id: 203, title: 'Vizion i qartë për vitin 2026', duration: '30:00', isFree: false },
-        { id: 204, title: 'Plan praktik për ndryshim — 3 veprimet kryesore', duration: '30:00', isFree: false },
-        { id: 205, title: 'Pastrim energjetik dhe rikthim i fokusit', duration: '30:00', isFree: false },
-        { id: 206, title: 'Rrënjosja e qëllimeve të reja për 2026', duration: '30:00', isFree: false },
+      { id: 2, title: 'Materialet', lessons: [
+        { id: 207, title: 'Pjesa 1', duration: '93:00', isFree: false },
+        { id: 208, title: 'Pjesa 2', duration: '52:00', isFree: false },
+        { id: 209, title: 'Pjesa 3', duration: '73:00', isFree: false },
       ]},
     ],
   },
@@ -427,7 +489,7 @@ Nuk po vjen vetëm një vit i ri. Po vjen një mundësi e re!`,
     instructor: 'Fatjona Cici',
     category: 'Mirëqenie',
     duration: '2h 18m',
-    lessons: 2,
+    lessons: 1,
     level: 'Të gjitha nivelet',
     price: '€55',
     isFree: false, isPremium: true,
@@ -446,9 +508,8 @@ Ky seminar intensiv përmban shpjegime në lidhje me këto tema:
 Gjithashtu përfshin:
 ■ Hipnozë për shërimin e fëmijës së brendshëm dhe faljen.`,
     modules: [
-      { id: 1, title: 'Seminar — Traumat dhe Bllokimet Emocionale', lessons: [
-        { id: 301, title: 'Traumat dhe bllokimet emocionale — Shpjegime', duration: '98:00', isFree: true },
-        { id: 302, title: 'Hipnozë — Shërimi i fëmijës së brendshëm dhe falja', duration: '40:00', isFree: false },
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 301, title: 'Shëro traumat dhe bllokimet emocionale', duration: '138:00', isFree: false },
       ]},
     ],
   },
@@ -474,8 +535,8 @@ Ky seminar intensiv përmban shpjegime në lidhje me:
 ■ Vetëbesimin dhe guximin për të thënë JO.
 ■ Shumë tema, teknika dhe shpjegime që lidhen me vetëbesimin.`,
     modules: [
-      { id: 1, title: 'Seminar — Vetëbesimi i Hekurt', lessons: [
-        { id: 401, title: 'Si të ndërtojmë vetëbesim të hekurt — Shpjegime', duration: '151:00', isFree: true },
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 401, title: 'Si të ndërtojmë vetëbesim të hekurt', duration: '151:00', isFree: false },
       ]},
     ],
   },
@@ -491,12 +552,36 @@ Ky seminar intensiv përmban shpjegime në lidhje me:
     isFree: false, isPremium: true,
     emoji: '🌱', color: '#4A9B6F', image: '/jona-8.webp',
     shortDesc: 'Hapi i parë i udhëtimit tënd të zhvillimit personal.',
-    description: 'Kursi fillestar të pajis me themelet e zhvillimit personal — vetënjohje, menaxhim i emocioneve dhe ndërtim i zakoneve pozitive.',
+    description: `Çfarë është zhvillimi personal?
+Si të organizojmë rrugëtimin e zhvillimit personal?
+Hapi i parë më i rëndësishëm i zhvillimit personal.
+3 metodat se si mund ta vëzhgosh veten.
+5 fazat në të cilat kalon ndryshimi i imazhit që ne kemi për veten.
+Pse mendojmë negativisht?
+Çfarë konsiderohet një rutinë e shëndetshme dhe si ta krijojmë atë?
+Sekreti i një ndryshimi rrënjësor.
+
+Çfarë do arrish ti në fund të trajnimit:
+■ Njohje të vetes.
+■ Njohjen e emocioneve dhe ndjesive që ti përjeton.
+■ Aftësinë për të kontrolluar mendimet negative.
+■ Prezantimin me zakonet e shëndetshme.
+■ Eliminimi i ndjesive të fajit dhe të gjykimit të vetes.
+■ Identifikimi i modeleve të mendimit, bindjeve dhe të zakoneve që të krijojnë pengesa në jetë.
+■ Motivim dhe gatishmëri për të përmbushur detyrimet e ditës.
+■ Dëshirë për ta përmirësuar veten më tej.`,
     modules: [
-      { id: 1, title: 'Themelet', lessons: [
-        { id: 1, title: 'Kush jam unë?', duration: '14:00', isFree: true },
-        { id: 2, title: 'Vetënjohja dhe vlerat', duration: '16:00', isFree: false },
-        { id: 3, title: 'Menaxhimi i emocioneve', duration: '18:00', isFree: false },
+      { id: 1, title: 'Materialet', lessons: [
+        { id: 701, title: 'Zhvillim personal niveli "Fillestar"- Seanca 1', duration: '22:00', isFree: false },
+        { id: 702, title: 'Zhvillim personal niveli "Fillestar"- Detyra 1', duration: '2:00', isFree: false },
+        { id: 703, title: 'Zhvillim personal niveli "Fillestar"- Seanca 2', duration: '27:00', isFree: false },
+        { id: 704, title: 'Zhvillim personal niveli "Fillestar"- Detyra 2', duration: '3:00', isFree: false },
+        { id: 705, title: "Hipnoza për 'Mendimet negative'", duration: '25:00', isFree: false },
+        { id: 706, title: 'Zhvillim personal niveli "Fillestar"- Seanca 3', duration: '12:00', isFree: false },
+        { id: 707, title: 'Zhvillim personal niveli "Fillestar"- Detyra 3', duration: '3:00', isFree: false },
+        { id: 708, title: 'Zhvillim personal niveli "Fillestar"- Seanca 4', duration: '22:00', isFree: false },
+        { id: 709, title: 'Zhvillim personal niveli "Fillestar"- Detyra 4', duration: '2:00', isFree: false },
+        { id: 710, title: 'Përmbledhje', duration: '4:00', isFree: false },
       ]},
     ],
   },
@@ -512,11 +597,40 @@ Ky seminar intensiv përmban shpjegime në lidhje me:
     isFree: false, isPremium: true,
     emoji: '⚡', color: '#6366F1', image: '/jona-9.webp',
     shortDesc: 'Çoje zhvillimin tënd personal në nivel tjetër.',
-    description: 'Niveli mesatar të ndihmon të thellohesh në komunikim, marrëdhënie dhe lidershipin personal.',
+    description: `Ndërtimi i një rutine transformuese.
+Cilat janë 4 rolet që marrim gjatë ditës?
+Çfarë është vetëbesimi?
+Ushtrim për të matur nivelet e vetëbesimit.
+Treguesit e vetëbesimit të ulët.
+Çfarë e shkakton vetëbesimin e ulët?
+Treguesit e vetëbesimit të lartë.
+Si të punosh me veten për të rritur vetëbesimin?
+Ushtrim për rritjen e vetëbesimit.
+Çfarë duhet të kesh parasysh gjatë këtij rrugëtimi për rritjen e vetëbesimit?
+Të mësosh të thuash JO!
+Zgjerim i perceptimit.
+Mendimi spirancë.
+Cikli optimist.
+Menaxhimi i një shpërthimi emocional.
+
+Arritjet në përfundim të trajnimit:
+■ Si të menaxhosh një shpërthim emocional.
+■ Rritje të vetëbesimit mbi nivelin mesatar.
+■ Si të thuash JO.
+■ Të pranosh veten.
+■ Të ndërtosh një rutinë të shëndetshme ditore.
+■ Të hedhësh hapat e parë drejt ndryshimit të zakoneve.`,
     modules: [
-      { id: 1, title: 'Komunikimi & Marrëdhëniet', lessons: [
-        { id: 1, title: 'Komunikimi efektiv', duration: '20:00', isFree: true },
-        { id: 2, title: 'Kufijtë shëndetësorë', duration: '22:00', isFree: false },
+      { id: 1, title: 'Materialet', lessons: [
+        { id: 801, title: 'Zhvillim personal niveli Mesatar — Seanca 1', duration: '17:00', isFree: false },
+        { id: 802, title: 'Zhvillim personal niveli Mesatar — Detyra 1', duration: '1:00', isFree: false },
+        { id: 803, title: 'Zhvillim personal niveli Mesatar — Seanca 2', duration: '29:00', isFree: false },
+        { id: 804, title: 'Zhvillim personal niveli Mesatar — Detyra 2', duration: '7:00', isFree: false },
+        { id: 805, title: 'Zhvillim personal niveli Mesatar — Seanca 3', duration: '13:00', isFree: false },
+        { id: 806, title: 'Zhvillim personal niveli Mesatar — Detyra 3', duration: '3:00', isFree: false },
+        { id: 807, title: 'Zhvillim personal niveli Mesatar — Seanca 4', duration: '7:00', isFree: false },
+        { id: 808, title: 'Zhvillim personal niveli Mesatar — Detyra 4', duration: '2:00', isFree: false },
+        { id: 809, title: "Hipnoza për 'Rritjen e vetëbesimit'", duration: '18:00', isFree: false },
       ]},
     ],
   },
@@ -532,12 +646,330 @@ Ky seminar intensiv përmban shpjegime në lidhje me:
     isFree: false, isPremium: true,
     emoji: '🏆', color: '#7A4F2D', image: '/jona-10.webp',
     shortDesc: 'Masteroni artin e transformimit të plotë personal.',
-    description: 'Niveli i avancuar është për ata që janë gati të bëhen versioni më i mirë i vetes — me qëllim, disiplinë dhe vizion afatgjatë.',
+    description: `Cilat janë aspektet e zhvillimit personal?
+Hapat konkret që sugjerohet të ndjekësh në mënyrë që të realizosh një zhvillim të plotë të vetes.
+Hapat e parë drejt ndryshimit të zakoneve.
+Faktorët që përcaktojnë nëse do e përvetësosh një zakon dhe për sa kohë.
+Çfarë është rezistenca limbike?
+Raporti vetëdije-nënvetëdije.
+Si të riprogramojmë nënvetëdijen?
+Roli që ka përsëritja në riprogramimin e nënvetëdijes.
+Njohja e thellë e vetes.
+Si ta dëgjosh intuitën dhe të lidhesh me veten tënde të lartë.
+Si ta mbrosh energjinë tënde.
+Dhënësit dhe marrësit e energjisë.
+
+Arritjet në përfundim të trajnimit:
+■ Do kuptosh cilat janë aspektet e zhvillimit personal.
+■ Do mësosh cilat janë hapat konkret për një zhvillim të plotë të vetes.
+■ Do kuptosh çfarë janë zakonet.
+■ Do mësosh cilët janë faktorët që ndikojnë në përvetësimin e një zakoni të caktuar.
+■ Do kuptosh si ndikojnë fazat e caktuara të ditës në përvetësimin e zakoneve.
+■ Do kuptosh se çfarë është vizualizimi.
+■ Do kuptosh raportin ndërmjet pjesës së vetëdijshme dhe të pavetëdijshme të mendjes.
+■ Do zbulosh cilat janë mënyrat për të riprogramuar nënvetëdijen.
+■ Do zbulosh rolin që ka përsëritja në riprogramimin e nënvetëdijes.
+■ Do njohësh të gjitha aspektet e qenies njerëzore.
+■ Do mësosh si të dëgjosh intuitën dhe të lidhesh me veten tënde të lartë.
+■ Do mësosh si të mbrosh energjinë tënde.
+■ Do kuptosh në thelb se çfarë është frika.`,
     modules: [
-      { id: 1, title: 'Masteri i Transformimit', lessons: [
-        { id: 1, title: 'Vizion dhe qëllim afatgjatë', duration: '25:00', isFree: true },
-        { id: 2, title: 'Lidershipi personal', duration: '28:00', isFree: false },
-        { id: 3, title: 'Trashëgimia dhe ndikimi', duration: '22:00', isFree: false },
+      { id: 1, title: 'Materialet', lessons: [
+        { id: 901, title: 'Zhvillim personal niveli i "Avancuar"- Seanca 1', duration: '22:00', isFree: false },
+        { id: 902, title: 'Zhvillim personal niveli i "Avancuar"- Detyra 1', duration: '1:00', isFree: false },
+        { id: 903, title: 'Zhvillim personal niveli i "Avancuar"- Seanca 2', duration: '27:00', isFree: false },
+        { id: 904, title: 'Zhvillim personal niveli i "Avancuar"- Detyra 2', duration: '4:00', isFree: false },
+        { id: 905, title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '15:00', isFree: false },
+        { id: 906, title: 'Zhvillim personal niveli i "Avancuar"- Seanca 3', duration: '19:00', isFree: false },
+        { id: 907, title: 'Zhvillim personal niveli i "Avancuar"- Detyra 3', duration: '2:00', isFree: false },
+        { id: 908, title: 'Zhvillim personal niveli i "Avancuar"- Seanca 4', duration: '29:00', isFree: false },
+        { id: 909, title: 'Zhvillim personal niveli i "Avancuar"- Detyra 4', duration: '2:00', isFree: false },
+        { id: 910, title: 'Zhvillim personal niveli i "Avancuar"- Seanca 5', duration: '19:00', isFree: false },
+        { id: 911, title: 'Zhvillim personal niveli i "Avancuar"- Detyra 5', duration: '1:00', isFree: false },
+        { id: 912, title: 'Vizualizim — E ardhmja', duration: '10:00', isFree: false },
+      ]},
+    ],
+  },
+  {
+    id: 10,
+    title: 'TRANSFORMOHU ME JONËN',
+    instructor: 'Fatjona Cici',
+    category: 'Shëndet',
+    duration: '0h 00m',
+    lessons: 0,
+    level: 'Të gjitha nivelet',
+    price: '€75',
+    isFree: false, isPremium: true,
+    emoji: '💪', color: '#4A9B6F', image: '/TRANSFORMOHU-ME-JONEN-500x300.jpeg',
+    shortDesc: 'Programi 4 javor i fitnesit që ndërthuron aktivitetin fizik me zhvillimin personal.',
+    description: `Programi 4 javor i fitnesit përfshin:
+▪︎ Aktivitet fizik live në Zoom 4 herë në javë nga e hëna në të enjte në orën 17:30
+▪︎ Vizualizime dhe hipnoza.
+▪︎ Këshilla specifike individuale rreth regjimit ushqimor.
+▪︎ Zhvillim personal dhe seancë individuale prezantimi.
+▪︎ Humbje ose shtim peshe në varësi të nevojave individuale.
+
+❌ Ky është programi i parë i fitnesit në Shqipëri që përfshin këto elementë: ndërthurje të aktivitetit fizik me bllokimet emocionale, traumat dhe vizualizimin.
+
+❌ Nëse abonohesh për 4 javë programin në vijim e përfiton në vlerën 50€.`,
+    modules: [],
+  },
+  {
+    id: 11,
+    title: 'SEMINAR "BIZNESI, KARRIERA FINANSAT EMIGRIMI, BLLOKIMET FINANCIARE, PAVARËSIA FINANCIARE"',
+    instructor: 'Fatjona Cici',
+    category: 'Biznes',
+    duration: '2h 31m',
+    lessons: 1,
+    level: 'Të gjitha nivelet',
+    price: '€55',
+    isFree: false, isPremium: true,
+    emoji: '💼', color: '#C0392B', image: '/jona-10.webp',
+    shortDesc: 'Seminar intensiv mbi biznesin, karrierën, financat, emigrimin dhe pavarësinë financiare.',
+    description: `• Si të kem më shumë para?
+• Si të heq frikën nga varfëria dhe mungesa e parave?
+• Si të guxoj të hap një biznes?
+• Si të guxoj të ndryshoj vendin e punës?
+• Si të mësoj të menaxhoj të ardhurat që kam?
+• Si të krijoj një strategji financiare?
+• Si të kem sukses në biznes?
+• Si të kem më shumë klientë?
+• Si të zbuloj pasionet e mia dhe atë që dua të bëj vërtetë?
+• Si të krijoj karrierën dhe filloj studimet kur kam humbur motivimin dhe besimin?
+• Cilat janë ëndrrat e mia?
+• Si të bëj biznes në 5D?
+• Si të dal nga 'matrixi financiar'/iluzioni?
+• Dhe shumë shpjegime të tjera`,
+    modules: [
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 1101, title: 'BIZNESI, KARRIERA FINANSAT EMIGRIMI, BLLOKIMET FINANCIARE, PAVARËSIA FINANCIARE', duration: '151:00', isFree: false },
+      ]},
+    ],
+  },
+  {
+    id: 12,
+    title: 'SEMINAR "PRINDËR POZITIV SI TË JEM NJË PRIND I VETËDIJSHËM, ANKTHI TE FËMIJËT, SHPËRTHIMET EMOCIONALE TE ADOLESHENTËT"',
+    instructor: 'Fatjona Cici',
+    category: 'Familje',
+    duration: '1h 48m',
+    lessons: 1,
+    level: 'Të gjitha nivelet',
+    price: '€55',
+    isFree: false, isPremium: true,
+    emoji: '👨‍👩‍👧', color: '#E67E22', image: '/jona-4.webp',
+    shortDesc: 'Seminar për prindër: si të jesh prind i vetëdijshëm dhe të menaxhosh ankthin e fëmijëve.',
+    description: `• Si të jem një prind i vetëdijshëm dhe mos t'i kaloj bllokimet e mia fëmijës tim?
+• Si ti shmang ndjenjat e fajit si prind kur bëj diçka për veten?
+• Si të sillem nëse fëmija im ka ankth?
+• Si të sillem me shpërthimet emocionale të adoleshentëve?
+• Si të flas me qetësi dhe vetëpërmbajtje me fëmijën tim?
+• Si ta përmirësoj marrëdhënien dhe ta fitoj sërisht besimin e fëmijës tim?
+• Si ta lejoj fëmijën tim të jetë fëmijë?
+• Si ti pranoj zgjedhjet e fëmijës tim?
+• Si ta pranoj që fëmija është në spektrum (autizëm) dhe të vazhdoj para me jetën time?
+• Dhe shumë shpjegime në lidhje me regjimin, suplementet dhe rutinën e shëndetshme të fëmijëve`,
+    modules: [
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 1201, title: 'PRINDËR POZITIV SI TË JEM NJË PRIND I VETËDIJSHËM, ANKTHI TE FËMIJËT, SHPËRTHIMET EMOCIONALE TE ADOLESHENTËT', duration: '108:00', isFree: false },
+      ]},
+    ],
+  },
+  {
+    id: 13,
+    title: 'SEMINAR "SI TË SHKRUAJ NJË LIBËR HAP PAS HAPI DERI TE BOTIMI"',
+    instructor: 'Fatjona Cici',
+    category: 'Krijimtari',
+    duration: '2h 01m',
+    lessons: 1,
+    level: 'Të gjitha nivelet',
+    price: '€55',
+    isFree: false, isPremium: true,
+    emoji: '📖', color: '#8E44AD', image: '/jona-10.webp',
+    shortDesc: 'Seminar hap pas hapi për të shkruar dhe botuar librin tënd.',
+    description: `Seminari do të përmbajë shpjegime në lidhje me temat:
+• Si të shkruaj një libër?
+• Si të guxoj dhe të filloj shkrimin e librit tim të parë?
+• Si të bëj një plan pune nga fillimi deri te botimi?
+• Cilat janë cilësitë e një libri bestseller?
+• Cila është metoda më efektive për ta shkruar librin?
+• Si të vendos titullin?
+• Si të përcaktoj çmimin?
+• Si bëhet ndarja e kapitujve?
+• Si të krijoj lidhjet e duhura me: redaktor, shtëpi botuese ose shtypshkronjë?
+• Si ta promovoj librin që botova?
+• Si të lidhem me libraritë?
+• Sa % fitimi mbajnë libraritë?
+• Cilat janë libraritë më korrekte dhe të sigurta për bashkëpunim në Shqipëri, Kosovë, Maqedoni (nga përvoja ime personale)?
+• Si ta ofroj librin në Amazon?`,
+    modules: [
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 1301, title: 'SI TË SHKRUAJ NJË LIBËR HAP PAS HAPI DERI TE BOTIMI', duration: '121:00', isFree: false },
+      ]},
+    ],
+  },
+  {
+    id: 14,
+    title: 'SEMINAR "ANKTHI DHE PROBLEMET E SHËNDETIT MENDOR"',
+    instructor: 'Fatjona Cici',
+    category: 'Shëndet',
+    duration: '2h 33m',
+    lessons: 1,
+    level: 'Të gjitha nivelet',
+    price: '€55',
+    isFree: false, isPremium: true,
+    emoji: '🧠', color: '#2980B9', image: '/jona-8.webp',
+    shortDesc: 'Seminar mbi ankthin dhe problemet e shëndetit mendor.',
+    description: `Trajtohen temat në lidhje me:
+• Ankthin e përditshëm.
+• Çrregullimet e ankthit.
+• Mendimet negative.
+• Frikën (të gjitha llojet e frikës).
+• Si të menaxhoj një atak paniku.
+• Si të shpëtoj nga stresi dhe depresioni.
+• Mendimet obsesive.
+• Si të arrij të ndërpres një mendim negativ.`,
+    modules: [
+      { id: 1, title: 'Seminari', lessons: [
+        { id: 1401, title: 'ANKTHI DHE PROBLEMET E SHËNDETIT MENDOR', duration: '153:00', isFree: false },
+      ]},
+    ],
+  },
+  {
+    id: 15,
+    title: 'Menaxho ankthin, frikën dhe mendimet negative — VIP',
+    instructor: 'Fatjona Cici',
+    category: 'Psikologji',
+    duration: '0h 00m',
+    lessons: 40,
+    level: 'Të gjitha nivelet',
+    price: '€999',
+    isFree: false, isPremium: true,
+    emoji: '⭐', color: '#7A4F2D', image: '/jona-2.webp',
+    shortDesc: 'Programi VIP për menaxhimin e ankthit, frikës dhe mendimeve negative.',
+    description: `Çfarë është ankthi sipas OBSH?
+Si pasqyrohet ankthi në jetën e përditshme?
+Si e përjetoja unë ankthin?!
+Aspektet e ankthit që konsiderohen të shëndetshme
+Çfarë e shkakton ankthin?
+Eksperienca ime personale në lidhje me mendimet negative dhe gjendjen e ankthit
+Pse mendojmë negativisht?
+2 mënyrat si operon truri
+Çfarë është frika?
+Ushtrim për të tejkaluar frikën tënde më të madhe.
+Cilat janë llojet e frikës?
+Si të menaxhojmë ankthin?
+Si nxitet ankthi nga mendimet, veprimet e përditshme?
+Shkaktari kryesor ankthit.
+Teknikë e fuqishme për të menaxhuar ankthin.
+Zakonet që duhen ndryshuar për të menaxhuar ankthin
+Çfarë është cikli i ankthit?
+Ndryshimet në regjimin ushqimor dhe stilin e jetesës.
+Këshilla që ndihmojnë në lidhje me pagjumësinë
+Pse nivelet e ankthit, stresit dhe shqetësimit janë të larta në mëngjes?
+Rëndësia e rutinës së mëngjesit
+Si lidhet rutina e mëngjesit me ankthin?
+Ndryshimet konkrete që do të lehtësojnë gjendjen e ankthit.
+Si të ndërtojmë rutinën e mbrëmjes.
+Çfarë është zhvendosja e fokusit dhe si na ndihmon për të menaxhuar ankthin.
+Praktika e vëzhgimit të vetes
+Ndryshimi i vizionit që kemi për veten
+Si ti zbulojmë ëndrrat dhe dëshirat?
+Si të fokusohemi tek aspektet pozitive të jetës?
+Plan konkret për të realizuar ëndrrat dhe qëllimet.
+Këshilla praktike që sigurojnë sukses në procesin e menaxhimit të ankthit, frikës dhe mendimeve negative.
+Si të veproj kur ndihem sikur jam kthyer mbrapa?
+5 fazat e ndryshimit të sjelljes
+Cilat janë stadet e procesit të ndryshimit?
+Këshilla për të rritur vetëbesimin
+Çfarë është zhvillimi personal?
+Guximi për ta parë veten të aftë në jetë.
+
+Ky trajnim është i përshtatshëm për:
+■ Personat që dëshirojnë të transformojnë jetën e tyre.
+■ Personat që kanë humbur motivimin apo kuptimin e jetës.
+■ Personat që vuajnë nga ankthi dhe duan të jetojnë të pavarur nga medikamentet.
+■ Personat që kanë vështirësi të menaxhojnë stresin e përditshëm dhe shmangin ambjente të caktuara si pasojë e frikës.
+■ Personat që dëshirojnë të menaxhojnë mendimet negative dhe të mendojnë pozitivisht.
+■ Personat që kanë harruar të duan veten.
+■ Personat që dëshirojnë të ndryshojnë imazhin që kanë për veten e tyre dhe të rrisin vetëbesimin.
+■ Personat që dëshirojnë të zbulojnë forcën dhe të besojnë që meritojnë më të mirën.
+■ Personat që dëshirojnë të jetojnë të lumtur dhe të zbulojnë ëndrrat dhe qëllimet që kanë në jetë.
+
+Nevojat paraprake të qindra pjesëmarrësve:
+• Gjendje shumë e rënduar e ankthit dhe mendime nga më të ndryshmet negative.
+• Depresion madhor, atak paniku, frikë nga çdo situatë.
+• Përdorim i medikamenteve për ankthin (anti-depresiv dhe qetësues).
+• Frika për ti dhënë makinës, frika për të qëndruar vetëm, frika nga sëmundjet.
+• Frika nga gjykimet e të tjerëve, nga mendimet e të tjerëve dhe frikë nga e ardhmja.
+• Mungesë kontrolli mbi trupin, dridhje e duarve.
+• Ndjesia sikur prek fundin dhe nuk ke fuqi të vazhdosh jetën.
+• Humbja e aftësive themelore për ti shërbyer vetes dhe për të përmbushur detyrimet e përditshme.
+• Stres të përditshëm.
+• Trauma dhe bllokime të ndryshme emocionale.
+• Mbyllje në vetvete.
+• Pagjumësi.
+• Ankth social.
+• Mungesë vetëbesimi.
+• Gjykim i theksuar i vetes.
+• Ndjenja faji ndaj vepimeve të së shkuarës, ndjenja faji ndaj fëmijëve.
+• Ankth për të shkuar në ambjentet me shumë njerëz dhe në ambjentet e panjohura.
+• Zhgënjim ndaj jetës, mungesë motivimi dhe shprese.
+
+Arritjet nga pjesëmarrësit e trajnimeve të mëparshme:
+■ Tejkalim të frikës, ankthit dhe depresionit.
+■ Menaxhim të një ataku paniku.
+■ Transformim të mendimeve negative në pozitive.
+■ Rikthim i shpresës për jetën.
+■ Ndryshim i rutinës së përditshme.
+■ Përvetësim i zakoneve të shëndetshme.
+■ Lënie e medikamenteve të ankthit.
+■ Frekuentim i ambjenteve me shumë njerëz (qendër tregtare, kinema, parukeri, organizime familjare).
+■ Menaxhim i emocioneve ndaj fëmijëve (inat, shpërthim emocional, dhunë fizike).
+■ Zbulim i versionit të ri të vetes.
+■ Zbulim i forcës së brendshme.
+■ Qetësi shpirtërore.
+■ Shërim total.
+■ Rritje e dashurisë ndaj vetes.
+■ Falja e vetes për gabimet e të shkuarës.
+■ Zbulim i qëllimeve dhe ëndrrave.
+■ Përmirësim i marrëdhënies intime.
+■ Rritje e vetëbesimit.`,
+    modules: [
+      { id: 1, title: 'Materialet', lessons: [
+        { id: 1501, title: 'Ankthi — Seanca 1 ( VIP )', duration: '74:00', isFree: false },
+        { id: 1502, title: 'Ankthi — Detyra 1 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1503, title: 'Ankthi — Detyra 2 ( VIP )', duration: '2:00', isFree: false },
+        { id: 1504, title: 'Ankthi — Detyra 3 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1505, title: 'Ankthi — Seanca 2 ( VIP )', duration: '53:00', isFree: false },
+        { id: 1506, title: 'Hipnoza për mendimet negative... ( VIP )', duration: '0:00', isFree: false },
+        { id: 1507, title: 'Ankthi — Detyra 4 ( VIP )', duration: '3:00', isFree: false },
+        { id: 1508, title: 'Ankthi — Detyra 5 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1509, title: 'Ankthi — Detyra 6 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1510, title: 'Ankthi — Detyra 7 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1511, title: 'Ankthi — Detyra 8 ( VIP )', duration: '4:00', isFree: false },
+        { id: 1512, title: 'Ankthi — Detyra 9 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1513, title: 'Ankthi — Seanca 3 ( VIP )', duration: '73:00', isFree: false },
+        { id: 1514, title: 'Hipnoza për fëmijën e brendshëm dhe faljen ( VIP )', duration: '0:00', isFree: false },
+        { id: 1515, title: 'Ankthi — Detyra 10 ( VIP )', duration: '2:00', isFree: false },
+        { id: 1516, title: 'Ankthi — Detyra 11 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1517, title: 'Ankthi — Detyra 12 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1518, title: 'Ankthi — Detyra 13 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1519, title: 'Ankthi — Detyra 14 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1520, title: 'Ankthi — Detyra 15 ( VIP )', duration: '2:00', isFree: false },
+        { id: 1521, title: 'Ankthi — Detyra 16 ( VIP )', duration: '2:00', isFree: false },
+        { id: 1522, title: 'Ankthi — Detyra 17 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1523, title: 'Ankthi — Detyra 18 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1524, title: 'Ankthi — Detyra 19 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1525, title: 'Ankthi — Detyra 20 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1526, title: 'Ankthi — Seanca 4 ( VIP )', duration: '46:00', isFree: false },
+        { id: 1527, title: 'Hipnoza për rritje të vetëbesimit ( VIP )', duration: '0:00', isFree: false },
+        { id: 1528, title: 'Ankthi — Detyra 21 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1529, title: 'Ankthi — Detyra 22 ( VIP )', duration: '2:00', isFree: false },
+        { id: 1530, title: 'Ankthi — Detyra 23 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1531, title: 'Ankthi — Detyra 24 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1532, title: 'Ankthi — Detyra 25 ( VIP )', duration: '1:00', isFree: false },
+        { id: 1533, title: 'Ankthi — Seanca 5 ( VIP )', duration: '60:00', isFree: false },
+        { id: 1534, title: 'Vizualizim për liri emocionale! ( VIP )', duration: '0:00', isFree: false },
       ]},
     ],
   },

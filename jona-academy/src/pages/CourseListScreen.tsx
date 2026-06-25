@@ -1,11 +1,17 @@
 import { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
 import CourseCard from '../components/CourseCard'
 import { courses, categories } from '../data/mockData'
 
 export default function CourseListScreen() {
-  const [filtriAktiv, setFiltriAktiv] = useState('Të gjitha')
+  const [searchParams] = useSearchParams()
+  const categoryIdParam = searchParams.get('category')
+  const initialCategory = categoryIdParam
+    ? (categories.find(c => c.id === Number(categoryIdParam))?.name ?? 'Të gjitha')
+    : 'Të gjitha'
+  const [filtriAktiv, setFiltriAktiv] = useState(initialCategory)
   const filtrat = ['Të gjitha', ...categories.map(c => c.name)]
   const filtered = filtriAktiv === 'Të gjitha' ? courses : courses.filter(c => c.category === filtriAktiv)
 

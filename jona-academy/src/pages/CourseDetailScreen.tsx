@@ -2,14 +2,17 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { courses } from '../data/mockData'
 import { LockIcon, LayersIcon, ClockIcon, TrendingUpIcon, ChevronLeftIcon } from '../components/Icons'
+import { useAuth } from '../context/AuthContext'
 
 export default function CourseDetailScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { hasCourseAccess, hasLessonAccess, hasSubscription } = useAuth()
   const [expandedModule, setExpandedModule] = useState<number | null>(0)
   const [showFullDesc, setShowFullDesc] = useState(false)
   const course = courses.find(c => c.id === Number(id)) || courses[0]
-  const hasAccess = course.isFree
+  const hasAccess = hasCourseAccess(course.id)
+  const isSubscriber = hasSubscription()
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', paddingBottom: 120 }}>
@@ -55,6 +58,7 @@ export default function CourseDetailScreen() {
           <span className="badge badge-primary">{course.category}</span>
           <span className="badge" style={{ background: 'rgba(255,255,255,0.1)', color: 'var(--text-secondary)' }}>{course.level}</span>
           {course.isFree && <span className="badge badge-free">Falas</span>}
+          {isSubscriber && !course.isFree && <span className="badge" style={{ background: 'rgba(99,102,241,0.12)', color: '#6366F1', border: '1px solid rgba(99,102,241,0.25)' }}>✓ Abonuar</span>}
         </div>
 
         <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 8, lineHeight: 1.3 }}>{course.title}</h1>
@@ -156,7 +160,7 @@ export default function CourseDetailScreen() {
                   {mod.lessons.map((lesson) => (
                     <button
                       key={lesson.id}
-                      onClick={() => hasAccess || lesson.isFree ? navigate(`/lesson/${lesson.id}`) : navigate('/paywall')}
+                      onClick={() => hasLessonAccess(lesson, course.id) ? navigate(`/lesson/${lesson.id}`) : navigate(`/paywall?courseId=${course.id}`)}
                       style={{
                         width: '100%', padding: '12px 16px', background: 'none', border: 'none', cursor: 'pointer',
                         display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid var(--border)',
@@ -164,22 +168,23 @@ export default function CourseDetailScreen() {
                     >
                       <div style={{
                         width: 32, height: 32, borderRadius: '50%', flexShrink: 0,
-                        background: lesson.isFree ? 'rgba(74,155,111,0.12)' : 'var(--bg-secondary)',
+                        background: hasLessonAccess(lesson, course.id) ? 'rgba(74,155,111,0.12)' : 'var(--bg-secondary)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14,
-                        border: `1px solid ${lesson.isFree ? 'var(--secondary)' : 'var(--border)'}`,
+                        border: `1px solid ${hasLessonAccess(lesson, course.id) ? 'var(--secondary)' : 'var(--border)'}`,
                       }}>
-                        {lesson.isFree
+                        {hasLessonAccess(lesson, course.id)
                           ? <svg width="12" height="12" viewBox="0 0 24 24" fill="var(--secondary)" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                           : <LockIcon size={13} color="var(--text-muted)" strokeWidth={1.8} />
                         }
                       </div>
                       <div style={{ flex: 1, textAlign: 'left' }}>
-                        <p style={{ fontSize: 13, fontWeight: 500, color: 'var(--text-primary)', marginBottom: 2 }}>{lesson.title}</p>
-                        <div style={{ display: 'flex', gap: 8 }}>
+                        <p style={{ fontSize: 13, fontWeight: 500, color: hasLessonAccess(lesson, course.id) ? 'var(--text-primary)' : 'var(--text-muted)', marginBottom: 2 }}>{lesson.title}</p>
+                        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                           <span style={{ fontSize: 11, color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                             <ClockIcon size={10} color="var(--text-muted)" strokeWidth={2} /> {lesson.duration}
                           </span>
                           {lesson.isFree && <span className="badge badge-free" style={{ fontSize: 9, padding: '2px 6px' }}>Falas</span>}
+                          {!lesson.isFree && !hasAccess && <span style={{ fontSize: 9, color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: 2 }}><LockIcon size={9} color="var(--text-muted)" strokeWidth={2} /> Premium</span>}
                         </div>
                       </div>
                     </button>
@@ -200,22 +205,36 @@ export default function CourseDetailScreen() {
         borderTop: '1px solid var(--border)',
       }}>
         {hasAccess ? (
-          <button className="btn btn-primary btn-full" onClick={() => navigate(`/lesson/1`)} style={{ padding: '16px' }}>
+          <button className="btn btn-primary btn-full" onClick={() => {
+            const firstLesson = course.modules?.[0]?.lessons?.[0]
+            navigate(`/lesson/${firstLesson?.id ?? 1}`)
+          }} style={{ padding: '16px' }}>
             ▶ Fillo Kursin
           </button>
         ) : (
-          <div style={{ display: 'flex', gap: 10 }}>
-            <button className="btn btn-outline btn-full" onClick={() => navigate('/paywall')}>
-              Abonohu
-            </button>
-            <button
-              className="btn btn-primary btn-full"
-              style={{ padding: '16px' }}
-              onClick={() => navigate(`/checkout/${course.id}`)}
-            >
-              Blej {course.price}
-            </button>
-          </div>
+          <>
+            <div style={{ display: 'flex', gap: 10, marginBottom: 8 }}>
+              <button className="btn btn-outline btn-full" onClick={() => navigate(`/paywall?courseId=${course.id}`)}>
+                Abonohu
+              </button>
+              <button
+                className="btn btn-primary btn-full"
+                style={{ padding: '16px' }}
+                onClick={() => navigate(`/checkout/${course.id}`)}
+              >
+                Blej {course.price}
+              </button>
+            </div>
+            {course.modules?.[0]?.lessons?.[0]?.isFree && (
+              <button
+                className="btn btn-secondary btn-full"
+                style={{ fontSize: 13 }}
+                onClick={() => navigate(`/lesson/${course.modules[0].lessons[0].id}`)}
+              >
+                ▶ Shiko mësimin e parë falas
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>

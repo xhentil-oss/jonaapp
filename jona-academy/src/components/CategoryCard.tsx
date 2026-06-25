@@ -24,7 +24,8 @@ export default function CategoryCard({ id, name, count, color }: CategoryCardPro
         flexDirection: 'column',
         gap: 10,
         transition: 'transform 0.2s, box-shadow 0.2s',
-        minWidth: 100,
+        width: 110,
+        minWidth: 110,
         flexShrink: 0,
       }}
     >

@@ -58,9 +58,12 @@ html, body {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
 
 /* Buttons */
 .btn {

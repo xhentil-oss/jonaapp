@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { StarIcon } from '../components/Icons'
+import { courses } from '../data/mockData'
 
 const planet = [
   {
@@ -24,8 +25,22 @@ const planet = [
 
 export default function PaywallScreen() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const courseId = new URLSearchParams(location.search).get('courseId')
+  const course = courseId ? courses.find(c => c.id === Number(courseId)) : null
   const [zgjedhur, setZgjedhur] = useState<'mujor' | 'vjetor' | 'njëherë'>('vjetor')
-  const [cmimi] = useState('€29')
+
+  const handleCTA = () => {
+    if (zgjedhur === 'njëherë') {
+      if (course) {
+        navigate(`/checkout/${course.id}`)
+      } else {
+        navigate('/courses')
+      }
+    } else {
+      navigate(`/checkout/sub-${zgjedhur}`)
+    }
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-primary)', display: 'flex', flexDirection: 'column' }}>
@@ -59,7 +74,7 @@ export default function PaywallScreen() {
             <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Akses vetëm për këtë kurs, përgjithmonë</p>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <p style={{ fontSize: 18, fontWeight: 800, color: zgjedhur === 'njëherë' ? 'var(--primary)' : 'var(--text-primary)' }}>{cmimi}</p>
+            <p style={{ fontSize: 18, fontWeight: 800, color: zgjedhur === 'njëherë' ? 'var(--primary)' : 'var(--text-primary)' }}>{course?.price ?? '€29'}</p>
             <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>një herë</p>
           </div>
         </button>
@@ -98,8 +113,10 @@ export default function PaywallScreen() {
           </button>
         ))}
 
-        <button className="btn btn-primary btn-full" onClick={() => navigate('/home')} style={{ marginTop: 16, padding: '16px', fontSize: 16 }}>
-          {zgjedhur === 'njëherë' ? `Blej për ${cmimi}` : `Fillo Abonimin ${zgjedhur === 'vjetor' ? 'Vjetor' : 'Mujor'}`}
+        <button className="btn btn-primary btn-full" onClick={handleCTA} style={{ marginTop: 16, padding: '16px', fontSize: 16 }}>
+          {zgjedhur === 'njëherë'
+            ? course ? `Blej për ${course.price}` : 'Zgjidh një kurs'
+            : `Fillo Abonimin ${zgjedhur === 'vjetor' ? 'Vjetor' : 'Mujor'}`}
         </button>
 
         <div style={{ textAlign: 'center', marginTop: 16 }}>

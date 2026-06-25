@@ -4,6 +4,7 @@ import CourseCard from '../components/CourseCard'
 import CategoryCard from '../components/CategoryCard'
 import { SearchIcon, BellIcon, SparkleIcon, SunIcon } from '../components/Icons'
 import { courses, categories, myCourses } from '../data/mockData'
+import { useAuth } from '../context/AuthContext'
 
 const citateMotivuese = [
   { citate: 'Sekreti i fillimit është të fillosh.', autor: 'Mark Twain' },
@@ -13,6 +14,9 @@ const citateMotivuese = [
 
 export default function HomeScreen() {
   const navigate = useNavigate()
+  const { profile, user } = useAuth()
+  const displayName = profile?.emri || user?.displayName || 'Mirë se vini'
+  const avatarLetter = displayName.charAt(0).toUpperCase()
   const citate = citateMotivuese[0]
   const kursetEZgjedhura = courses.slice(0, 4)
   const kursetEReja = courses.slice(4)
@@ -27,17 +31,17 @@ export default function HomeScreen() {
             <SunIcon size={14} color="var(--primary)" strokeWidth={2} />
             Mirëmëngjes
           </p>
-          <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>Emanuela</h2>
+          <h2 style={{ fontSize: 20, fontWeight: 800, color: 'var(--text-primary)' }}>{displayName}</h2>
         </div>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-          <button onClick={() => navigate('/courses')} style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
+          <button onClick={() => navigate('/search')} style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
             <SearchIcon size={18} />
           </button>
-          <button style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', position: 'relative' }}>
+          <button onClick={() => navigate('/notifications')} style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', position: 'relative' }}>
             <BellIcon size={18} />
             <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--danger)', border: '1.5px solid white' }} />
           </button>
-          <div className="avatar avatar-sm" style={{ cursor: 'pointer', background: 'var(--gradient-primary)' }} onClick={() => navigate('/profile')}>E</div>
+          <div className="avatar avatar-sm" style={{ cursor: 'pointer', background: 'var(--gradient-primary)' }} onClick={() => navigate('/profile')}>{avatarLetter}</div>
         </div>
       </div>
 
@@ -65,12 +69,12 @@ export default function HomeScreen() {
       </div>
 
       {/* Kategoritë */}
-      <div className="section" style={{ marginTop: 24 }}>
-        <div className="section-header">
+      <div style={{ marginTop: 24, marginBottom: 28 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', marginBottom: 16 }}>
           <span className="section-title">Kategoritë</span>
           <button className="section-link" onClick={() => navigate('/categories')}>Shiko të gjitha</button>
         </div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8, paddingLeft: 20, paddingRight: 20, marginLeft: -20, marginRight: -20, scrollbarWidth: 'none' }}>
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingLeft: 20, paddingRight: 20, paddingBottom: 8 }}>
           {categories.map(cat => <CategoryCard key={cat.id} {...cat} />)}
         </div>
       </div>

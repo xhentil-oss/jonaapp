@@ -13,7 +13,7 @@ export const courses = [
     instructor: 'Fatjona Cici',
     category: 'Motivim',
     duration: '6h 30m',
-    lessons: 48,
+    lessons: 54,
     level: 'Të gjitha nivelet',
     price: '€499',
     isFree: false, isPremium: true,
@@ -81,7 +81,7 @@ Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrug�
     modules: [
       { id: 1, title: 'Seanca 1 — Fillimi i Rrugëtimit', lessons: [
         { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: true },
-        { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: true },
+        { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: false },
         { id: 3,  title: 'Përtej Limiteve — Detyra 1', duration: '10:00', isFree: false },
         { id: 4,  title: 'Përtej Limiteve — Detyra 2', duration: '10:00', isFree: false },
         { id: 5,  title: 'Përtej Limiteve — Detyra 3', duration: '10:00', isFree: false },
@@ -99,49 +99,55 @@ Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrug�
         { id: 13, title: 'Përtej Limiteve — Detyra 7', duration: '10:00', isFree: false },
         { id: 14, title: 'Përtej Limiteve — Detyra 8', duration: '10:00', isFree: false },
         { id: 15, title: 'Përtej Limiteve — Detyra 9', duration: '10:00', isFree: false },
+        { id: 16, title: 'Përtej Limiteve — Detyra 10', duration: '10:00', isFree: false },
       ]},
-      { id: 4, title: 'Seanca 4 — Programimi i Ri', lessons: [
-        { id: 16, title: 'Përtej Limiteve — Seanca 4', duration: '52:00', isFree: false },
-        { id: 17, title: "Hipnoza 'Programimi i ri mendor'", duration: '24:00', isFree: false },
-        { id: 18, title: 'Përtej Limiteve — Detyra 10', duration: '10:00', isFree: false },
+      { id: 4, title: "Seanca 4 — Libraria e Vetëbesimit", lessons: [
+        { id: 17, title: 'Përtej Limiteve — Seanca 4', duration: '52:00', isFree: false },
+        { id: 18, title: "Hipnoze 'Libraria e Vetebesimit'", duration: '24:00', isFree: false },
         { id: 19, title: 'Përtej Limiteve — Detyra 11', duration: '10:00', isFree: false },
         { id: 20, title: 'Përtej Limiteve — Detyra 12', duration: '10:00', isFree: false },
+        { id: 21, title: 'Përtej Limiteve — Detyra 13', duration: '10:00', isFree: false },
+        { id: 22, title: 'Përtej Limiteve — Detyra 14', duration: '10:00', isFree: false },
+        { id: 23, title: 'Përtej Limiteve — Detyra 15', duration: '10:00', isFree: false },
+        { id: 24, title: 'Përtej Limiteve — Detyra 16', duration: '10:00', isFree: false },
+        { id: 25, title: 'Përtej Limiteve — Detyra 17', duration: '10:00', isFree: false },
       ]},
-      { id: 5, title: 'Seanca 5 — Liria Emocionale', lessons: [
-        { id: 21, title: 'Përtej Limiteve — Seanca 5', duration: '55:00', isFree: false },
-        { id: 22, title: "Vizualizim 'Jeta e ëndrrave'", duration: '22:00', isFree: false },
-        { id: 23, title: 'Përtej Limiteve — Detyra 13', duration: '10:00', isFree: false },
-        { id: 24, title: 'Përtej Limiteve — Detyra 14', duration: '10:00', isFree: false },
-        { id: 25, title: 'Përtej Limiteve — Detyra 15', duration: '10:00', isFree: false },
+      { id: 5, title: "Seanca 5 — Udhëtimi Drejt Shpirtit", lessons: [
+        { id: 26, title: 'Përtej Limiteve — Seanca 5', duration: '55:00', isFree: false },
+        { id: 27, title: "Meditim 'Udhëtimi drejt shpirtit'", duration: '22:00', isFree: false },
+        { id: 28, title: 'Përtej Limiteve — Detyra 18', duration: '10:00', isFree: false },
+        { id: 29, title: 'Përtej Limiteve — Detyra 19', duration: '10:00', isFree: false },
+        { id: 30, title: 'Përtej Limiteve — Detyra 20', duration: '10:00', isFree: false },
+        { id: 31, title: 'Përtej Limiteve — Detyra 21', duration: '10:00', isFree: false },
       ]},
-      { id: 6, title: 'Seanca 6 — Ndërtimi i Identitetit', lessons: [
-        { id: 26, title: 'Përtej Limiteve — Seanca 6', duration: '50:00', isFree: false },
-        { id: 27, title: "Hipnoza 'Identiteti i ri'", duration: '26:00', isFree: false },
-        { id: 28, title: 'Përtej Limiteve — Detyra 16', duration: '10:00', isFree: false },
-        { id: 29, title: 'Përtej Limiteve — Detyra 17', duration: '10:00', isFree: false },
-        { id: 30, title: 'Përtej Limiteve — Detyra 18', duration: '10:00', isFree: false },
+      { id: 6, title: "Seanca 6 — Kanalizimi i Energjisë", lessons: [
+        { id: 32, title: 'Përtej Limiteve — Seanca 6', duration: '50:00', isFree: false },
+        { id: 33, title: "Vizualizim 'Kanalizim energjie'", duration: '20:00', isFree: false },
+        { id: 34, title: 'Përtej Limiteve — Detyra 22', duration: '10:00', isFree: false },
+        { id: 35, title: 'Përtej Limiteve — Detyra 23', duration: '10:00', isFree: false },
+        { id: 36, title: 'Përtej Limiteve — Detyra 24', duration: '10:00', isFree: false },
       ]},
-      { id: 7, title: 'Seanca 7 — Suksesi dhe Bollëku', lessons: [
-        { id: 31, title: 'Përtej Limiteve — Seanca 7', duration: '48:00', isFree: false },
-        { id: 32, title: "Vizualizim 'Suksesi i plotë'", duration: '20:00', isFree: false },
-        { id: 33, title: 'Përtej Limiteve — Detyra 19', duration: '10:00', isFree: false },
-        { id: 34, title: 'Përtej Limiteve — Detyra 20', duration: '10:00', isFree: false },
-        { id: 35, title: 'Përtej Limiteve — Detyra 21', duration: '10:00', isFree: false },
+      { id: 7, title: 'Seanca 7 — Liria Emocionale', lessons: [
+        { id: 37, title: 'Përtej Limiteve — Seanca 7', duration: '48:00', isFree: false },
+        { id: 38, title: "Vizualizim për 'Liri emocionale'", duration: '20:00', isFree: false },
+        { id: 39, title: 'Përtej Limiteve — Detyra 25', duration: '10:00', isFree: false },
+        { id: 40, title: 'Përtej Limiteve — Detyra 26', duration: '10:00', isFree: false },
+        { id: 41, title: 'Përtej Limiteve — Detyra 27', duration: '10:00', isFree: false },
       ]},
       { id: 8, title: 'Seanca 8 — Transformimi Final', lessons: [
-        { id: 36, title: 'Përtej Limiteve — Seanca 8', duration: '60:00', isFree: false },
-        { id: 37, title: "Hipnoza 'Transformimi i plotë'", duration: '28:00', isFree: false },
-        { id: 38, title: 'Përtej Limiteve — Detyra 22', duration: '10:00', isFree: false },
-        { id: 39, title: 'Përtej Limiteve — Detyra 23', duration: '10:00', isFree: false },
-        { id: 40, title: 'Përtej Limiteve — Detyra 24', duration: '10:00', isFree: false },
-        { id: 41, title: 'Përtej Limiteve — Detyra 25', duration: '10:00', isFree: false },
-        { id: 42, title: 'Materialet Shtesë — Pjesa 1', duration: '15:00', isFree: false },
-        { id: 43, title: 'Materialet Shtesë — Pjesa 2', duration: '15:00', isFree: false },
-        { id: 44, title: 'Materialet Shtesë — Pjesa 3', duration: '15:00', isFree: false },
-        { id: 45, title: 'Materialet Shtesë — Pjesa 4', duration: '15:00', isFree: false },
-        { id: 46, title: 'Materialet Shtesë — Pjesa 5', duration: '15:00', isFree: false },
-        { id: 47, title: 'Materialet Shtesë — Pjesa 6', duration: '15:00', isFree: false },
-        { id: 48, title: 'Përmbyllja dhe Hapat e Ardhshëm', duration: '20:00', isFree: false },
+        { id: 42, title: 'Përtej Limiteve — Seanca 8', duration: '60:00', isFree: false },
+        { id: 43, title: 'Përtej Limiteve — Detyra 28', duration: '10:00', isFree: false },
+        { id: 44, title: "Vizualizimi 'Lidhja me engjëjt'", duration: '25:00', isFree: false },
+        { id: 45, title: 'Materialet Shtesë — Pjesa 1', duration: '15:00', isFree: false },
+        { id: 46, title: 'Materialet Shtesë — Pjesa 2', duration: '15:00', isFree: false },
+        { id: 47, title: 'Materialet Shtesë — Pjesa 3', duration: '15:00', isFree: false },
+        { id: 48, title: 'Materialet Shtesë — Pjesa 4', duration: '15:00', isFree: false },
+        { id: 49, title: 'Materialet Shtesë — Pjesa 5', duration: '15:00', isFree: false },
+        { id: 50, title: 'Materialet Shtesë — Pjesa 6', duration: '15:00', isFree: false },
+        { id: 51, title: 'Materialet Shtesë — Pjesa 7', duration: '15:00', isFree: false },
+        { id: 52, title: 'Materialet Shtesë — Pjesa 8', duration: '15:00', isFree: false },
+        { id: 53, title: 'Materialet Shtesë — Pjesa 9', duration: '15:00', isFree: false },
+        { id: 54, title: 'Përmbyllja dhe Hapat e Ardhshëm', duration: '20:00', isFree: false },
       ]},
     ],
   },
@@ -542,6 +548,18 @@ export const myCourses = [
   { ...courses[2], progress: 100, lastLesson: 'Llojet e frikës' },
   { ...courses[6], progress: 30, lastLesson: 'Vetënjohja dhe vlerat' },
 ]
+
+export function findLesson(lessonId: number) {
+  for (const course of courses) {
+    if (!course.modules) continue
+    for (const mod of course.modules) {
+      for (const lesson of mod.lessons) {
+        if (lesson.id === lessonId) return { lesson, course, module: mod }
+      }
+    }
+  }
+  return null
+}
 
 export const certificates = [
   {

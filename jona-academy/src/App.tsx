@@ -15,6 +15,11 @@ import CertificatesScreen from './pages/CertificatesScreen'
 import ProfileScreen from './pages/ProfileScreen'
 import SettingsScreen from './pages/SettingsScreen'
 import CheckoutScreen from './pages/CheckoutScreen'
+import EditProfileScreen from './pages/EditProfileScreen'
+import EditPasswordScreen from './pages/EditPasswordScreen'
+import EditEmailScreen from './pages/EditEmailScreen'
+import SearchScreen from './pages/SearchScreen'
+import NotificationsScreen from './pages/NotificationsScreen'
 
 export default function App() {
   return (
@@ -37,6 +42,11 @@ export default function App() {
           <Route path="/profile" element={<ProfileScreen />} />
           <Route path="/settings" element={<SettingsScreen />} />
           <Route path="/checkout/:id" element={<CheckoutScreen />} />
+          <Route path="/edit-profile" element={<EditProfileScreen />} />
+          <Route path="/edit-password" element={<EditPasswordScreen />} />
+          <Route path="/edit-email" element={<EditEmailScreen />} />
+          <Route path="/search" element={<SearchScreen />} />
+          <Route path="/notifications" element={<NotificationsScreen />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

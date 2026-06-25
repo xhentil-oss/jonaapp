@@ -38,10 +38,20 @@ function PayPalLogo({ size = 80 }: { size?: number }) {
   )
 }
 
+const subPlans: Record<string, { emri: string; cmimi: string; periudha: string; desc: string; emoji: string }> = {
+  'sub-mujor': { emri: 'Abonim Mujor', cmimi: '€9.99', periudha: '/muaj', desc: 'Akses i plotë në të gjitha kurset premium', emoji: '📅' },
+  'sub-vjetor': { emri: 'Abonim Vjetor', cmimi: '€59.99', periudha: '/vit', desc: 'Akses i plotë — kursej 50% krahasuar me mujor', emoji: '⭐' },
+}
+
 export default function CheckoutScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const course = courses.find(c => c.id === Number(id)) || courses[0]
+
+  const isSub = id?.startsWith('sub-') ?? false
+  const subPlan = isSub ? subPlans[id!] ?? subPlans['sub-vjetor'] : null
+  const course = !isSub ? (courses.find(c => c.id === Number(id)) || courses[0]) : null
+  const price = isSub ? subPlan!.cmimi : (course?.price ?? '€0')
+  const itemTitle = isSub ? subPlan!.emri : (course?.title ?? '')
 
   const [method, setMethod] = useState<Method>('card')
   const [cardNumber, setCardNumber] = useState('')
@@ -72,10 +82,12 @@ export default function CheckoutScreen() {
         <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'linear-gradient(135deg, #4A9B6F, #3a8a5f)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px', boxShadow: '0 8px 24px rgba(74,155,111,0.3)' }}>
           <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>Pagesa u krye!</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8, lineHeight: 1.6 }}>Faleminderit! Keni blerë me sukses kursin:</p>
-        <p style={{ color: 'var(--primary)', fontSize: 15, fontWeight: 700, marginBottom: 32, lineHeight: 1.4 }}>{course.title}</p>
-        <button className="btn btn-primary btn-full" style={{ padding: '16px' }} onClick={() => navigate(`/course/${course.id}`)}>Shko te Kursi</button>
+        <h1 style={{ fontSize: 24, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>{isSub ? 'Abonimi u aktivizua!' : 'Pagesa u krye!'}</h1>
+        <p style={{ color: 'var(--text-secondary)', fontSize: 15, marginBottom: 8, lineHeight: 1.6 }}>{isSub ? 'Mirë se erdhe! Ke akses të plotë në të gjitha kurset premium.' : 'Faleminderit! Keni blerë me sukses kursin:'}</p>
+        <p style={{ color: 'var(--primary)', fontSize: 15, fontWeight: 700, marginBottom: 32, lineHeight: 1.4 }}>{itemTitle}</p>
+        <button className="btn btn-primary btn-full" style={{ padding: '16px' }} onClick={() => isSub ? navigate('/courses') : navigate(`/course/${course!.id}`)}>
+          {isSub ? 'Shfleto Kurset' : 'Shko te Kursi'}
+        </button>
         <button onClick={() => navigate('/home')} style={{ marginTop: 14, background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 14, cursor: 'pointer' }}>Kthehu në Kryefaqe</button>
       </div>
     )
@@ -99,14 +111,31 @@ export default function CheckoutScreen() {
 
         {/* Order summary */}
         <div style={{ background: 'var(--bg-primary)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border)', padding: '14px', marginBottom: 20, boxShadow: 'var(--shadow-card)', display: 'flex', gap: 12, alignItems: 'center' }}>
-          <div style={{ width: 56, height: 56, borderRadius: 10, overflow: 'hidden', flexShrink: 0 }}>
-            <img src={course.image} alt={course.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
-          </div>
+          {isSub ? (
+            <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(145deg, #5C3317 0%, #7A4F2D 50%, #A0673A 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, boxShadow: '0 4px 14px rgba(122,79,45,0.4)', position: 'relative', overflow: 'hidden' }}>
+              <div style={{ position: 'absolute', top: -8, right: -8, width: 32, height: 32, borderRadius: '50%', background: 'rgba(255,255,255,0.07)' }} />
+              <svg width="26" height="22" viewBox="0 0 26 22" fill="none">
+                <path d="M2 17.5L5 6L9.5 12L13 2L16.5 12L21 6L24 17.5H2Z" fill="white" fillOpacity="0.95"/>
+                <rect x="2" y="19" width="22" height="2.5" rx="1.25" fill="rgba(255,255,255,0.6)"/>
+                <circle cx="2.5" cy="5.5" r="1.5" fill="rgba(255,220,100,0.9)"/>
+                <circle cx="13" cy="2" r="1.5" fill="rgba(255,220,100,0.9)"/>
+                <circle cx="23.5" cy="5.5" r="1.5" fill="rgba(255,220,100,0.9)"/>
+              </svg>
+            </div>
+          ) : (
+            <div style={{ width: 56, height: 56, borderRadius: 10, overflow: 'hidden', flexShrink: 0 }}>
+              <img src={course!.image} alt={course!.title} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+            </div>
+          )}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, marginBottom: 2, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{course.title}</p>
-            <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>{course.instructor}</p>
+            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, marginBottom: 2, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{itemTitle}</p>
+            <p style={{ fontSize: 11, color: 'var(--text-muted)' }}>{isSub ? subPlan!.desc : course!.instructor}</p>
+            {isSub && <p style={{ fontSize: 10, color: '#4A9B6F', fontWeight: 600, marginTop: 2 }}>Ripërtërihet automatikisht {subPlan!.periudha}</p>}
           </div>
-          <p style={{ fontSize: 20, fontWeight: 800, color: 'var(--primary)', flexShrink: 0 }}>{course.price}</p>
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            <p style={{ fontSize: 20, fontWeight: 800, color: 'var(--primary)' }}>{price}</p>
+            {isSub && <p style={{ fontSize: 10, color: 'var(--text-muted)' }}>{subPlan!.periudha}</p>}
+          </div>
         </div>
 
         {/* Payment method tabs */}
@@ -220,7 +249,7 @@ export default function CheckoutScreen() {
         {/* Total */}
         <div style={{ background: 'rgba(122,79,45,0.06)', border: '1px solid rgba(122,79,45,0.15)', borderRadius: 'var(--radius-md)', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 18 }}>
           <span style={{ fontSize: 15, color: 'var(--text-secondary)' }}>Total</span>
-          <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--primary)' }}>{course.price}</span>
+          <span style={{ fontSize: 22, fontWeight: 800, color: 'var(--primary)' }}>{price}</span>
         </div>
 
         <button
@@ -237,7 +266,7 @@ export default function CheckoutScreen() {
           ) : (
             <>
               <LockIcon size={15} color="white" strokeWidth={2.2} />
-              {method === 'paypal' ? `Vazhdo me PayPal · ${course.price}` : `Paguaj ${course.price}`}
+              {method === 'paypal' ? `Vazhdo me PayPal · ${price}` : `Paguaj ${price}`}
             </>
           )}
         </button>

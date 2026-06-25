@@ -6,6 +6,7 @@ import {
   StarIcon, LogOutIcon, ChevronRightIcon,
 } from '../components/Icons'
 import { myCourses, certificates } from '../data/mockData'
+import { useAuth } from '../context/AuthContext'
 
 const menuItems = [
   { Icon: BookOpenIcon,   label: 'Kurset e Mia',         path: '/my-courses', countKey: 'courses'      },
@@ -19,6 +20,11 @@ const menuItems = [
 
 export default function ProfileScreen() {
   const navigate = useNavigate()
+  const { user, profile, logout } = useAuth()
+
+  const displayName = profile?.emri || user?.displayName || 'Përdorues'
+  const displayEmail = user?.email || ''
+  const avatarLetter = displayName.charAt(0).toUpperCase()
 
   const counts: Record<string, number> = {
     courses: myCourses.length,
@@ -31,9 +37,9 @@ export default function ProfileScreen() {
       {/* Header */}
       <div style={{ background: 'var(--gradient-primary)', padding: '48px 24px 32px' }}>
         <div style={{ textAlign: 'center' }}>
-          <div className="avatar avatar-xl" style={{ margin: '0 auto 12px', border: '3px solid rgba(255,255,255,0.3)' }}>E</div>
-          <h2 style={{ color: 'white', fontSize: 20, fontWeight: 800, marginBottom: 4 }}>Emanuela</h2>
-          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 16 }}>sm@teenchallengealbania.org</p>
+          <div className="avatar avatar-xl" style={{ margin: '0 auto 12px', border: '3px solid rgba(255,255,255,0.3)' }}>{avatarLetter}</div>
+          <h2 style={{ color: 'white', fontSize: 20, fontWeight: 800, marginBottom: 4 }}>{displayName}</h2>
+          <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 16 }}>{displayEmail}</p>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.2)', borderRadius: 20, padding: '5px 14px', fontSize: 12, color: 'white', fontWeight: 600 }}>
             <StarIcon size={13} color="white" strokeWidth={2.2} />
             Anëtar Premium
@@ -94,7 +100,7 @@ export default function ProfileScreen() {
       {/* Logout */}
       <div style={{ padding: '16px 20px' }}>
         <button
-          onClick={() => navigate('/login')}
+          onClick={async () => { await logout(); navigate('/login') }}
           style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '14px', background: 'rgba(217,79,79,0.06)', color: 'var(--danger)', border: '1px solid rgba(217,79,79,0.2)', borderRadius: 'var(--radius-full)', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}
         >
           <LogOutIcon size={16} color="var(--danger)" strokeWidth={2} />

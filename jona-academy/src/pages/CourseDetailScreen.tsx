@@ -9,7 +9,7 @@ export default function CourseDetailScreen() {
   const navigate = useNavigate()
   const { hasCourseAccess, hasLessonAccess, hasSubscription } = useAuth()
   const [expandedModule, setExpandedModule] = useState<number | null>(0)
-  const [showFullDesc, setShowFullDesc] = useState(false)
+  const [showFullDesc, setShowFullDesc] = useState(true)
   const course = courses.find(c => c.id === Number(id)) || courses[0]
   const hasAccess = hasCourseAccess(course.id)
   const isSubscriber = hasSubscription()

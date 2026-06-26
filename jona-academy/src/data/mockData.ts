@@ -84,7 +84,7 @@ Ky trajnim është i përshtatshëm:
 Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrugën e shpirtit drejt bollëkut, suksesit dhe lumturisë në trajnimin transformues "PËRTEJ LIMITEVE NJERËZOR".`,
     modules: [
       { id: 1, title: 'Seanca 1 — Fillimi i Rrugëtimit', lessons: [
-        { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: false },
+        { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: true, videoUrl: '1UK1uft7JX2jbc1qhcpgytM4NT27ht_Ku' },
         { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: false },
         { id: 3,  title: 'Përtej Limiteve — Detyra 1', duration: '10:00', isFree: false },
         { id: 4,  title: 'Përtej Limiteve — Detyra 2', duration: '10:00', isFree: false },
@@ -353,7 +353,7 @@ Arritjet nga personat që kanë qenë pjesë e trajnimeve:
 ■ Qetësi shpirtërore dhe shërim total.`,
     modules: [
       { id: 1, title: 'Seanca 1 (74 min)', lessons: [
-        { id: 101, title: 'Ankthi — Seanca 1', duration: '74:00', isFree: false },
+        { id: 101, title: 'Ankthi — Seanca 1', duration: '74:00', isFree: false, videoUrl: '1UK1uft7JX2jbc1qhcpgytM4NT27ht_Ku' },
         { id: 102, title: 'Ankthi — Detyra 1', duration: '1:00', isFree: false },
         { id: 103, title: 'Ankthi — Detyra 2', duration: '2:00', isFree: false },
         { id: 104, title: 'Ankthi — Detyra 3', duration: '1:00', isFree: false },
@@ -839,7 +839,7 @@ Arritjet në përfundim të trajnimit:
     title: 'Menaxho ankthin, frikën dhe mendimet negative — VIP',
     instructor: 'Fatjona Cici',
     category: 'Psikologji',
-    duration: '0h 00m',
+    duration: '5h 41m',
     lessons: 40,
     level: 'Të gjitha nivelet',
     price: '€999',

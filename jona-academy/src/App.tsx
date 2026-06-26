@@ -20,6 +20,8 @@ import EditPasswordScreen from './pages/EditPasswordScreen'
 import EditEmailScreen from './pages/EditEmailScreen'
 import SearchScreen from './pages/SearchScreen'
 import NotificationsScreen from './pages/NotificationsScreen'
+import VideoQualityScreen from './pages/VideoQualityScreen'
+import DownloadsScreen from './pages/DownloadsScreen'
 
 export default function App() {
   return (
@@ -47,6 +49,8 @@ export default function App() {
           <Route path="/edit-email" element={<EditEmailScreen />} />
           <Route path="/search" element={<SearchScreen />} />
           <Route path="/notifications" element={<NotificationsScreen />} />
+          <Route path="/video-quality" element={<VideoQualityScreen />} />
+          <Route path="/downloads" element={<DownloadsScreen />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>

@@ -91,8 +91,8 @@ export default function SettingsScreen() {
 
         <Seksioni titulli="Luajtja">
           <Rreshti Icon={SettingsIcon} label="Luaj Automatikisht Mësimet" isToggle toggleValue={autoplay} onToggle={() => setAutoplay(n => !n)} />
-          <Rreshti Icon={SettingsIcon} label="Cilësia e Videos"  value="Auto" />
-          <Rreshti Icon={SettingsIcon} label="Shkarkimet"        value="Vetëm Wi-Fi" last />
+          <Rreshti Icon={SettingsIcon} label="Cilësia e Videos"  value="Auto"        onPress={() => navigate('/video-quality')} />
+          <Rreshti Icon={SettingsIcon} label="Shkarkimet"        value="Vetëm Wi-Fi" onPress={() => navigate('/downloads')} last />
         </Seksioni>
 
         <Seksioni titulli="Abonimi">

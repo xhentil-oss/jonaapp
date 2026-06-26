@@ -10,10 +10,12 @@ export default function LessonPlayerScreen() {
   const [duke_luajtur, setDukeLuajtur] = useState(false)
   const [tabAktiv, setTabAktiv] = useState<'permbledhje' | 'shenime'>('permbledhje')
   const [progresi, setProgresi] = useState(0)
+  const [showFullDesc, setShowFullDesc] = useState(false)
 
   const found = findLesson(Number(id))
 
   useEffect(() => {
+    window.scrollTo(0, 0)
     if (!found) { navigate('/home'); return }
     if (!hasLessonAccess(found.lesson, found.course.id)) {
       navigate(`/paywall?courseId=${found.course.id}`)
@@ -33,25 +35,35 @@ export default function LessonPlayerScreen() {
     <div style={{ minHeight: '100vh', background: '#1C1714', display: 'flex', flexDirection: 'column' }}>
 
       {/* Video zone */}
-      <div style={{ background: '#1C1714', aspectRatio: '16/9', maxHeight: 240, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+      <div style={{ background: '#1C1714', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
         <button
           onClick={() => navigate(-1)}
-          style={{ position: 'absolute', top: 12, left: 12, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}
+          style={{ position: 'absolute', top: 12, left: 12, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', zIndex: 2 }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
 
-        <button
-          onClick={() => setDukeLuajtur(p => !p)}
-          style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--primary)', border: '2px solid rgba(255,255,255,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: 'white' }}
-        >
-          {duke_luajtur ? '⏸' : '▶'}
-        </button>
-
-        <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.7)', borderRadius: 6, padding: '4px 8px', fontSize: 12, color: 'white' }}>{lesson.duration}</div>
+        {(lesson as any).videoUrl ? (
+          <iframe
+            src={`https://drive.google.com/file/d/${(lesson as any).videoUrl}/preview`}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
+            allow="autoplay"
+            allowFullScreen
+          />
+        ) : (
+          <>
+            <button
+              onClick={() => setDukeLuajtur(p => !p)}
+              style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--primary)', border: '2px solid rgba(255,255,255,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: 'white' }}
+            >
+              {duke_luajtur ? '⏸' : '▶'}
+            </button>
+            <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.7)', borderRadius: 6, padding: '4px 8px', fontSize: 12, color: 'white' }}>{lesson.duration}</div>
+          </>
+        )}
 
         {lesson.isFree && (
-          <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(74,155,111,0.9)', borderRadius: 12, padding: '4px 10px', fontSize: 11, color: 'white', fontWeight: 600 }}>Falas</div>
+          <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(74,155,111,0.9)', borderRadius: 12, padding: '4px 10px', fontSize: 11, color: 'white', fontWeight: 600, zIndex: 2 }}>Falas</div>
         )}
       </div>
 
@@ -86,9 +98,23 @@ export default function LessonPlayerScreen() {
         <div style={{ padding: '20px' }}>
           {tabAktiv === 'permbledhje' ? (
             <div>
-              <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.8, marginBottom: 16 }}>
-                {course.shortDesc}
-              </p>
+              <div style={{ position: 'relative', marginBottom: 4 }}>
+                <div style={{ overflow: 'hidden', maxHeight: showFullDesc ? 'none' : 100 }}>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.8, whiteSpace: 'pre-line' }}>
+                    {course.description || course.shortDesc}
+                  </p>
+                </div>
+                {!showFullDesc && (
+                  <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 50, background: 'linear-gradient(to bottom, transparent, var(--bg-primary))' }} />
+                )}
+              </div>
+              <button
+                onClick={() => setShowFullDesc(v => !v)}
+                style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: 13, fontWeight: 700, cursor: 'pointer', padding: '4px 0 14px', display: 'flex', alignItems: 'center', gap: 4 }}
+              >
+                {showFullDesc ? 'Lexo më pak' : 'Lexo më shumë'}
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showFullDesc ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
               <div style={{ background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: '12px 14px', border: '1px solid var(--border)' }}>
                 <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Instruktore</p>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

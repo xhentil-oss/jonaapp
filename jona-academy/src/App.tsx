@@ -20,6 +20,9 @@ import EditPasswordScreen from './pages/EditPasswordScreen'
 import EditEmailScreen from './pages/EditEmailScreen'
 import SearchScreen from './pages/SearchScreen'
 import NotificationsScreen from './pages/NotificationsScreen'
+import NotificationSettingsScreen from './pages/NotificationSettingsScreen'
+import HelpScreen from './pages/HelpScreen'
+import TermsScreen from './pages/TermsScreen'
 import VideoQualityScreen from './pages/VideoQualityScreen'
 import DownloadsScreen from './pages/DownloadsScreen'
 
@@ -49,6 +52,9 @@ export default function App() {
           <Route path="/edit-email" element={<EditEmailScreen />} />
           <Route path="/search" element={<SearchScreen />} />
           <Route path="/notifications" element={<NotificationsScreen />} />
+          <Route path="/notification-settings" element={<NotificationSettingsScreen />} />
+          <Route path="/help" element={<HelpScreen />} />
+          <Route path="/terms" element={<TermsScreen />} />
           <Route path="/video-quality" element={<VideoQualityScreen />} />
           <Route path="/downloads" element={<DownloadsScreen />} />
           <Route path="*" element={<Navigate to="/" />} />

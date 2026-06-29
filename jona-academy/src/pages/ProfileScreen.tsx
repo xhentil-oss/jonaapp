@@ -12,10 +12,10 @@ const menuItems = [
   { Icon: BookOpenIcon,   label: 'Kurset e Mia',         path: '/my-courses', countKey: 'courses'      },
   { Icon: AwardIcon,      label: 'Certifikatat',          path: '/certificates', countKey: 'certs'      },
   { Icon: CreditCardIcon, label: 'Abonimi',               path: '/paywall'                              },
-  { Icon: BellIcon,       label: 'Njoftimet',             path: '/settings'                             },
+  { Icon: BellIcon,       label: 'Njoftimet',             path: '/notification-settings'                },
   { Icon: SettingsIcon,   label: 'Cilësimet',             path: '/settings'                             },
-  { Icon: HelpCircleIcon, label: 'Ndihma & Mbështetja',   path: '/settings'                             },
-  { Icon: FileTextIcon,   label: 'Kushtet & Privatësia',  path: '/settings'                             },
+  { Icon: HelpCircleIcon, label: 'Ndihma & Mbështetja',   path: '/help'                                 },
+  { Icon: FileTextIcon,   label: 'Kushtet & Privatësia',  path: '/terms'                                },
 ]
 
 export default function ProfileScreen() {

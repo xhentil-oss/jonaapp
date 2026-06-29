@@ -85,7 +85,7 @@ Pastro bllokimet e brendshme, zbulo talentet e tua, zgjo ëndrrat dhe ndiq rrug�
     modules: [
       { id: 1, title: 'Seanca 1 — Fillimi i Rrugëtimit', lessons: [
         { id: 1,  title: 'Përtej Limiteve — Seanca 1', duration: '45:00', isFree: true, videoUrl: '1UK1uft7JX2jbc1qhcpgytM4NT27ht_Ku' },
-        { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: false },
+        { id: 2,  title: "Hipnoza për 'Mendimet negative, bindjet e vjetra dhe pengesat e brendshme'", duration: '22:00', isFree: false, videoUrl: '1osKk4awhW9iNYxlLqoj_WintsweHyoIS' },
         { id: 3,  title: 'Përtej Limiteve — Detyra 1', duration: '10:00', isFree: false },
         { id: 4,  title: 'Përtej Limiteve — Detyra 2', duration: '10:00', isFree: false },
         { id: 5,  title: 'Përtej Limiteve — Detyra 3', duration: '10:00', isFree: false },

@@ -28,7 +28,7 @@ export default function CourseDetailScreen() {
         }
         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 60%)' }} />
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/home')}
           style={{
             position: 'absolute', top: 16, left: 16,
             width: 38, height: 38, borderRadius: '50%',

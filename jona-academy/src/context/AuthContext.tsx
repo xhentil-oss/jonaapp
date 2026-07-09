@@ -1,43 +1,19 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from 'react'
 import {
-  User,
-  onAuthStateChanged,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signOut,
-  updateProfile,
-  sendPasswordResetEmail,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth'
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
-import { auth, db } from '../firebase'
-
-interface Subscription {
-  tipi: 'monthly' | 'yearly'
-  skadanNe: any
-}
-
-interface UserProfile {
-  uid: string
-  emri: string
-  email: string
-  fotoja?: string
-  krijuarNe: any
-  kursetBlerë: number[]
-  abonimi?: Subscription | null
-  adminAccess?: number[]
-}
+  getToken, setToken, loginUser, registerUser, fetchMe, fetchEnrollments, fetchSubscription,
+  type ApiUser, type ApiEnrollment, type ApiSubscription,
+} from '../services/api'
 
 interface AuthContextType {
-  user: User | null
-  profile: UserProfile | null
+  user: ApiUser | null
+  enrollments: ApiEnrollment[]
+  subscription: ApiSubscription | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
-  loginWithGoogle: () => Promise<void>
-  register: (emri: string, email: string, password: string) => Promise<void>
-  logout: () => Promise<void>
-  resetPassword: (email: string) => Promise<void>
+  register: (fullName: string, email: string, password: string) => Promise<void>
+  logout: () => void
+  refreshUser: () => Promise<void>
+  refreshEnrollments: () => Promise<void>
   hasSubscription: () => boolean
   hasCourseAccess: (courseId: number) => boolean
   hasLessonAccess: (lesson: { isFree: boolean }, courseId: number) => boolean
@@ -46,38 +22,68 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [user, setUser] = useState<ApiUser | null>(null)
+  const [enrollments, setEnrollments] = useState<ApiEnrollment[]>([])
+  const [subscription, setSubscription] = useState<ApiSubscription | null>(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
-      setUser(firebaseUser)
-      if (firebaseUser) {
-        const snap = await getDoc(doc(db, 'users', firebaseUser.uid))
-        if (snap.exists()) {
-          setProfile(snap.data() as UserProfile)
-        }
-      } else {
-        setProfile(null)
-      }
-      setLoading(false)
-    })
-    return unsub
+  // Enrollments/subscription are secondary data — a failure there (e.g. an
+  // endpoint not deployed yet) must never break login/session restore.
+  const refreshEnrollments = useCallback(async () => {
+    const [enr, sub] = await Promise.all([
+      fetchEnrollments().catch(() => []),
+      fetchSubscription().catch(() => null),
+    ])
+    setEnrollments(enr)
+    setSubscription(sub)
   }, [])
 
+  const refreshUser = useCallback(async () => {
+    const me = await fetchMe()
+    setUser(me)
+  }, [])
+
+  useEffect(() => {
+    const token = getToken()
+    if (!token) { setLoading(false); return }
+    fetchMe()
+      .then(async me => { setUser(me); await refreshEnrollments() })
+      .catch(() => { setToken(null); setUser(null) })
+      .finally(() => setLoading(false))
+  }, [refreshEnrollments])
+
+  const login = async (email: string, password: string) => {
+    const { token, user: loggedInUser } = await loginUser(email, password)
+    setToken(token)
+    setUser(loggedInUser)
+    await refreshEnrollments()
+  }
+
+  const register = async (fullName: string, email: string, password: string) => {
+    const { token, user: newUser } = await registerUser(fullName, email, password)
+    setToken(token)
+    setUser(newUser)
+    setEnrollments([])
+    setSubscription(null)
+  }
+
+  const logout = () => {
+    setToken(null)
+    setUser(null)
+    setEnrollments([])
+    setSubscription(null)
+  }
+
   const hasSubscription = (): boolean => {
-    if (!profile?.abonimi) return false
-    const skadan = profile.abonimi.skadanNe?.toDate?.() ?? new Date(profile.abonimi.skadanNe)
-    return skadan > new Date()
+    if (!subscription) return false
+    if (!subscription.renews_at) return true
+    return new Date(subscription.renews_at) > new Date()
   }
 
   const hasCourseAccess = (courseId: number): boolean => {
     if (!user) return false
     if (hasSubscription()) return true
-    if (profile?.kursetBlerë?.includes(courseId)) return true
-    if (profile?.adminAccess?.includes(courseId)) return true
-    return false
+    return enrollments.some(e => e.id === courseId)
   }
 
   const hasLessonAccess = (lesson: { isFree: boolean }, courseId: number): boolean => {
@@ -85,53 +91,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return hasCourseAccess(courseId)
   }
 
-  const login = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password)
-  }
-
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider()
-    const { user: gUser } = await signInWithPopup(auth, provider)
-    const snap = await getDoc(doc(db, 'users', gUser.uid))
-    if (!snap.exists()) {
-      await setDoc(doc(db, 'users', gUser.uid), {
-        uid: gUser.uid,
-        emri: gUser.displayName || '',
-        email: gUser.email || '',
-        fotoja: gUser.photoURL || '',
-        krijuarNe: serverTimestamp(),
-        kursetBlerë: [],
-        abonimi: null,
-        adminAccess: [],
-      })
-    }
-  }
-
-  const register = async (emri: string, email: string, password: string) => {
-    const { user: newUser } = await createUserWithEmailAndPassword(auth, email, password)
-    await updateProfile(newUser, { displayName: emri })
-    await setDoc(doc(db, 'users', newUser.uid), {
-      uid: newUser.uid,
-      emri,
-      email,
-      krijuarNe: serverTimestamp(),
-      kursetBlerë: [],
-      abonimi: null,
-      adminAccess: [],
-    })
-  }
-
-  const logout = async () => {
-    await signOut(auth)
-    setProfile(null)
-  }
-
-  const resetPassword = async (email: string) => {
-    await sendPasswordResetEmail(auth, email)
-  }
-
   return (
-    <AuthContext.Provider value={{ user, profile, loading, login, loginWithGoogle, register, logout, resetPassword, hasSubscription, hasCourseAccess, hasLessonAccess }}>
+    <AuthContext.Provider value={{
+      user, enrollments, subscription, loading,
+      login, register, logout, refreshUser, refreshEnrollments,
+      hasSubscription, hasCourseAccess, hasLessonAccess,
+    }}>
       {!loading && children}
     </AuthContext.Provider>
   )

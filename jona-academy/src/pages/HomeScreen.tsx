@@ -5,7 +5,7 @@ import CourseCard from '../components/CourseCard'
 import CategoryCard from '../components/CategoryCard'
 import { SearchIcon, BellIcon, SparkleIcon, SunIcon } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
-import { fetchCourses, fetchCategories, ApiCourse, ApiCategory } from '../services/api'
+import { fetchCourses, fetchCategories, type ApiCourse, type ApiCategory } from '../services/api'
 
 const citateMotivuese = [
   { citate: 'Sekreti i fillimit është të fillosh.', autor: 'Mark Twain' },
@@ -15,8 +15,8 @@ const citateMotivuese = [
 
 export default function HomeScreen() {
   const navigate = useNavigate()
-  const { profile, user } = useAuth()
-  const displayName = profile?.emri || user?.displayName || 'Mirë se vini'
+  const { user } = useAuth()
+  const displayName = user?.full_name || 'Mirë se vini'
   const avatarLetter = displayName.charAt(0).toUpperCase()
   const citate = citateMotivuese[0]
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
 import { SearchIcon, CategoryIcon } from '../components/Icons'
-import { fetchCourses, fetchCategories, ApiCourse, ApiCategory } from '../services/api'
+import { fetchCourses, fetchCategories, type ApiCourse, type ApiCategory } from '../services/api'
 
 export default function CategoriesScreen() {
   const navigate = useNavigate()

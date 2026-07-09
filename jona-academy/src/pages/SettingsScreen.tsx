@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import {
@@ -7,36 +7,17 @@ import {
   SettingsIcon, LogOutIcon, ChevronRightIcon,
 } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
-import { doc, updateDoc } from 'firebase/firestore'
-import { db } from '../firebase'
 
 export default function SettingsScreen() {
   const navigate = useNavigate()
-  const { user, profile, logout } = useAuth()
+  const { logout } = useAuth()
 
-  const p = profile as any
   const [njoftime, setNjoftime] = useState<boolean>(true)
   const [emailUpdates, setEmailUpdates] = useState<boolean>(false)
   const [autoplay, setAutoplay] = useState(true)
 
-  useEffect(() => {
-    if (p) {
-      if (typeof p.njoftimet === 'boolean') setNjoftime(p.njoftimet)
-      if (typeof p.emailUpdates === 'boolean') setEmailUpdates(p.emailUpdates)
-    }
-  }, [profile])
-
-  const toggleNjoftime = async () => {
-    const val = !njoftime
-    setNjoftime(val)
-    if (user) await updateDoc(doc(db, 'users', user.uid), { njoftimet: val })
-  }
-
-  const toggleEmailUpdates = async () => {
-    const val = !emailUpdates
-    setEmailUpdates(val)
-    if (user) await updateDoc(doc(db, 'users', user.uid), { emailUpdates: val })
-  }
+  const toggleNjoftime = () => setNjoftime(v => !v)
+  const toggleEmailUpdates = () => setEmailUpdates(v => !v)
 
   const Toggle = ({ value, onChange }: { value: boolean; onChange: () => void }) => (
     <button onClick={onChange} style={{ width: 46, height: 26, borderRadius: 13, background: value ? 'var(--primary)' : 'var(--border)', border: 'none', cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>

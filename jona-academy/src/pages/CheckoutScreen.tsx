@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { ChevronLeftIcon, LockIcon, CreditCardIcon, MailIcon } from '../components/Icons'
-import { fetchCourse, ApiCourse } from '../services/api'
+import { fetchCourse, purchaseCourse, purchaseSubscription, type ApiCourse } from '../services/api'
+import { useAuth } from '../context/AuthContext'
+
+const subPlanIds: Record<string, number> = { 'sub-mujor': 1, 'sub-vjetor': 2 }
 
 function formatCardNumber(val: string) {
   return val.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim()
@@ -46,6 +49,7 @@ const subPlans: Record<string, { emri: string; cmimi: string; periudha: string; 
 export default function CheckoutScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { refreshEnrollments } = useAuth()
 
   const isSub = id?.startsWith('sub-') ?? false
   const subPlan = isSub ? subPlans[id!] ?? subPlans['sub-vjetor'] : null
@@ -77,11 +81,29 @@ export default function CheckoutScreen() {
 
   const isValid = method === 'card' ? isValidCard : method === 'paypal' ? isValidPaypal : isValidVisa
 
-  const handlePay = () => {
+  const handlePay = async () => {
     if (!isValid) return
     setLoading(true)
-    setTimeout(() => { setLoading(false); setSuccess(true) }, 2000)
+    try {
+      if (isSub) {
+        await purchaseSubscription(subPlanIds[id!] ?? 2)
+      } else if (course) {
+        await purchaseCourse(course.id)
+      }
+      await refreshEnrollments()
+      setSuccess(true)
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setLoading(false)
+    }
   }
+
+  if (!isSub && !course) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-primary)' }}>
+      <p style={{ color: 'var(--text-muted)' }}>Duke ngarkuar...</p>
+    </div>
+  )
 
   if (success) {
     return (

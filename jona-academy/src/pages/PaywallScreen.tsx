@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { StarIcon } from '../components/Icons'
-import { fetchCourse, ApiCourse } from '../services/api'
+import { fetchCourse, type ApiCourse } from '../services/api'
 
 const planet = [
   {

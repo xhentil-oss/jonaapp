@@ -1,4 +1,134 @@
 const API_BASE = 'https://app.jonacademy.com'
+const TOKEN_KEY = 'jona_token'
+
+export function getToken(): string | null {
+  return localStorage.getItem(TOKEN_KEY)
+}
+
+export function setToken(token: string | null) {
+  if (token) localStorage.setItem(TOKEN_KEY, token)
+  else localStorage.removeItem(TOKEN_KEY)
+}
+
+async function authedFetch(path: string, options: RequestInit = {}) {
+  const token = getToken()
+  const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {}),
+    },
+  })
+  const data = await res.json().catch(() => ({}))
+  if (!res.ok) throw new Error(data.error || 'Ndodhi një gabim')
+  return data
+}
+
+export interface ApiUser {
+  id: number
+  full_name: string
+  email: string
+  membership_type?: string
+  avatar_url?: string
+  created_at?: string
+}
+
+export async function registerUser(full_name: string, email: string, password: string): Promise<{ token: string; user: ApiUser }> {
+  return authedFetch('/api/auth/register', { method: 'POST', body: JSON.stringify({ full_name, email, password }) })
+}
+
+export async function loginUser(email: string, password: string): Promise<{ token: string; user: ApiUser }> {
+  return authedFetch('/api/auth/login', { method: 'POST', body: JSON.stringify({ email, password }) })
+}
+
+export async function fetchMe(): Promise<ApiUser> {
+  return authedFetch('/api/user/me')
+}
+
+export async function updateProfileName(full_name: string): Promise<void> {
+  await authedFetch('/api/user/profile', { method: 'PATCH', body: JSON.stringify({ full_name }) })
+}
+
+export async function updateEmail(email: string, password: string): Promise<void> {
+  await authedFetch('/api/user/email', { method: 'PATCH', body: JSON.stringify({ email, password }) })
+}
+
+export async function updatePassword(current_password: string, new_password: string): Promise<void> {
+  await authedFetch('/api/user/password', { method: 'PATCH', body: JSON.stringify({ current_password, new_password }) })
+}
+
+export interface ApiEnrollment extends ApiCourse {
+  enrollmentId: number
+  progress: number
+  status: 'aktiv' | 'perfunduar'
+  enrolledAt: string
+}
+
+export async function fetchEnrollments(): Promise<ApiEnrollment[]> {
+  const rows = await authedFetch('/api/user/enrollments')
+  return rows.map((r: any) => ({
+    ...mapCourse(r),
+    enrollmentId: r.enrollment_id,
+    progress: Math.round(parseFloat(r.progress_percent) || 0),
+    status: r.enrollment_status,
+    enrolledAt: r.enrolled_at,
+  }))
+}
+
+export interface ApiCertificate {
+  id: number
+  course_id: number
+  course_title: string
+  certificate_code: string
+  issued_at: string
+}
+
+export async function fetchCertificates(): Promise<ApiCertificate[]> {
+  return authedFetch('/api/user/certificates')
+}
+
+export interface ApiSubscription {
+  id: number
+  plan_id: number
+  plan_name: string
+  status: string
+  renews_at: string
+}
+
+export async function fetchSubscription(): Promise<ApiSubscription | null> {
+  return authedFetch('/api/user/subscription')
+}
+
+export async function purchaseCourse(courseId: number): Promise<void> {
+  await authedFetch('/api/user/enrollments', { method: 'POST', body: JSON.stringify({ course_id: courseId }) })
+}
+
+export async function purchaseSubscription(planId: number): Promise<void> {
+  await authedFetch('/api/user/subscriptions', { method: 'POST', body: JSON.stringify({ plan_id: planId }) })
+}
+
+export interface ApiLessonDetail {
+  id: number
+  course_id: number
+  section_id: number
+  title: string
+  video_url: string | null
+  duration_seconds: number
+  is_free: boolean
+  order_index: number
+  course_title: string
+  section_title: string
+  siblings: { id: number; title: string; is_free: boolean; order_index: number; section_id: number }[]
+}
+
+export async function fetchLesson(id: number): Promise<ApiLessonDetail> {
+  return authedFetch(`/api/lessons/${id}`)
+}
+
+export async function postLessonProgress(id: number, watched_seconds: number, is_completed: boolean, enrollment_id?: number): Promise<void> {
+  await authedFetch(`/api/lessons/${id}/progress`, { method: 'POST', body: JSON.stringify({ watched_seconds, is_completed, enrollment_id }) })
+}
 
 const CATEGORY_COLORS: Record<string, string> = {
   'Motivim': '#7A4F2D',
@@ -72,7 +202,7 @@ export interface ApiCategory {
   color: string
 }
 
-function mapCourse(c: any): ApiCourse {
+export function mapCourse(c: any): ApiCourse {
   return {
     id: c.id,
     title: c.title,

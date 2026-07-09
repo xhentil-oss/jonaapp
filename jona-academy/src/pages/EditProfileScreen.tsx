@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { updateProfile } from 'firebase/auth'
-import { doc, updateDoc } from 'firebase/firestore'
-import { auth, db } from '../firebase'
+import { updateProfileName } from '../services/api'
 import { UserIcon, ChevronLeftIcon } from '../components/Icons'
 
 export default function EditProfileScreen() {
   const navigate = useNavigate()
-  const { user, profile } = useAuth()
+  const { user, refreshUser } = useAuth()
 
-  const [emri, setEmri] = useState(profile?.emri || user?.displayName || '')
+  const [emri, setEmri] = useState(user?.full_name || '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState(false)
@@ -20,14 +18,12 @@ export default function EditProfileScreen() {
     setLoading(true)
     setError('')
     try {
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, { displayName: emri.trim() })
-        await updateDoc(doc(db, 'users', auth.currentUser.uid), { emri: emri.trim() })
-      }
+      await updateProfileName(emri.trim())
+      await refreshUser()
       setSuccess(true)
       setTimeout(() => navigate(-1), 1200)
-    } catch {
-      setError('Ndodhi një gabim. Provo sërish.')
+    } catch (e: any) {
+      setError(e?.message || 'Ndodhi një gabim. Provo sërish.')
     } finally {
       setLoading(false)
     }

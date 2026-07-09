@@ -1,13 +1,10 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
-import { reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth'
-import { auth } from '../firebase'
+import { updatePassword as updatePasswordApi } from '../services/api'
 import { LockIcon, ChevronLeftIcon, EyeIcon, EyeOffIcon } from '../components/Icons'
 
 export default function EditPasswordScreen() {
   const navigate = useNavigate()
-  const { user } = useAuth()
 
   const [fjalekalimAktual, setFjalekalimAktual] = useState('')
   const [fjalekalimRi, setFjalekalimRi] = useState('')
@@ -25,20 +22,11 @@ export default function EditPasswordScreen() {
     setLoading(true)
     setError('')
     try {
-      const credential = EmailAuthProvider.credential(user!.email!, fjalekalimAktual)
-      await reauthenticateWithCredential(auth.currentUser!, credential)
-      await updatePassword(auth.currentUser!, fjalekalimRi)
+      await updatePasswordApi(fjalekalimAktual, fjalekalimRi)
       setSuccess(true)
       setTimeout(() => navigate(-1), 1200)
     } catch (e: any) {
-      const code = e?.code || ''
-      if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
-        setError('Fjalëkalimi aktual është i gabuar.')
-      } else if (code === 'auth/too-many-requests') {
-        setError('Shumë tentativa. Provo pas disa minutash.')
-      } else {
-        setError('Ndodhi një gabim. Provo sërish.')
-      }
+      setError(e?.message || 'Ndodhi një gabim. Provo sërish.')
     } finally {
       setLoading(false)
     }

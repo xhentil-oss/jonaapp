@@ -4,13 +4,14 @@ import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
 import CourseCard from '../components/CourseCard'
 import { BookOpenIcon, AwardIcon, TrendingUpIcon } from '../components/Icons'
-import { myCourses } from '../data/mockData'
+import { useAuth } from '../context/AuthContext'
 
 export default function MyCoursesScreen() {
   const navigate = useNavigate()
+  const { enrollments } = useAuth()
   const [tab, setTab] = useState<'te-gjitha' | 'aktive' | 'perfunduara'>('te-gjitha')
 
-  const filtered = myCourses.filter(c => {
+  const filtered = enrollments.filter(c => {
     if (tab === 'aktive') return c.progress > 0 && c.progress < 100
     if (tab === 'perfunduara') return c.progress === 100
     return true
@@ -28,9 +29,9 @@ export default function MyCoursesScreen() {
 
       <div style={{ display: 'flex', gap: 12, padding: '16px 20px' }}>
         {[
-          { label: 'Regjistruar', value: myCourses.length, Icon: BookOpenIcon, color: '#7A4F2D' },
-          { label: 'Përfunduar', value: myCourses.filter(c => c.progress === 100).length, Icon: AwardIcon, color: '#4A9B6F' },
-          { label: 'Në progres', value: myCourses.filter(c => c.progress > 0 && c.progress < 100).length, Icon: TrendingUpIcon, color: '#6366F1' },
+          { label: 'Regjistruar', value: enrollments.length, Icon: BookOpenIcon, color: '#7A4F2D' },
+          { label: 'Përfunduar', value: enrollments.filter(c => c.progress === 100).length, Icon: AwardIcon, color: '#4A9B6F' },
+          { label: 'Në progres', value: enrollments.filter(c => c.progress > 0 && c.progress < 100).length, Icon: TrendingUpIcon, color: '#6366F1' },
         ].map(s => (
           <div key={s.label} style={{ flex: 1, background: 'var(--bg-primary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', padding: '12px 8px', textAlign: 'center', boxShadow: 'var(--shadow-card)' }}>
             <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 6 }}>

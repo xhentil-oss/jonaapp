@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { LockIcon, LayersIcon, ClockIcon, TrendingUpIcon, ChevronLeftIcon } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
-import { fetchCourse, ApiCourse } from '../services/api'
+import { fetchCourse, type ApiCourse } from '../services/api'
 
 function fmtSeconds(s: number): string {
   const m = Math.round(s / 60)

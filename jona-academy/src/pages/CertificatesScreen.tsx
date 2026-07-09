@@ -1,16 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
-import { certificates } from '../data/mockData'
 import { useAuth } from '../context/AuthContext'
+import { fetchCertificates, type ApiCertificate } from '../services/api'
 
-function shpërnda(cert: { code: string; courseTitle: string }) {
-  const teksti = `Kam përfunduar me sukses kursin "${cert.courseTitle}" në Jona Academy! 🎓 ID: ${cert.code}`
-  if (navigator.share) {
-    navigator.share({ title: 'Certifikatë Jona Academy', text: teksti })
-  } else {
-    navigator.clipboard?.writeText(teksti)
-  }
+function fmtData(iso: string): string {
+  return new Date(iso).toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
 function shkarkoPDF(emri: string, cert: { code: string; courseTitle: string; completedAt: string }) {
@@ -97,12 +92,17 @@ function shkarkoPDF(emri: string, cert: { code: string; courseTitle: string; com
 }
 
 export default function CertificatesScreen() {
-  const { profile, user } = useAuth()
-  const emri = profile?.emri || user?.displayName || 'Përdorues'
+  const { user } = useAuth()
+  const emri = user?.full_name || 'Përdorues'
   const [kopjuar, setKopjuar] = useState<number | null>(null)
+  const [certificates, setCertificates] = useState<ApiCertificate[]>([])
 
-  const handleShpërnda = (cert: typeof certificates[0]) => {
-    const teksti = `Kam përfunduar me sukses kursin "${cert.courseTitle}" në Jona Academy! 🎓 ID: ${cert.code}`
+  useEffect(() => {
+    fetchCertificates().then(setCertificates).catch(console.error)
+  }, [])
+
+  const handleShpërnda = (cert: ApiCertificate) => {
+    const teksti = `Kam përfunduar me sukses kursin "${cert.course_title}" në Jona Academy! 🎓 ID: ${cert.certificate_code}`
     if (navigator.share) {
       navigator.share({ title: 'Certifikatë Jona Academy', text: teksti })
     } else {
@@ -174,7 +174,7 @@ export default function CertificatesScreen() {
 
                     {/* Course title */}
                     <div style={{ background: 'rgba(196,149,106,0.08)', border: '1px solid rgba(196,149,106,0.2)', borderRadius: 6, padding: '8px 14px', margin: '0 10px 12px' }}>
-                      <p style={{ fontSize: 13, color: '#8B4513', fontWeight: 700, margin: 0, lineHeight: 1.4, fontFamily: 'Georgia, serif' }}>"{cert.courseTitle}"</p>
+                      <p style={{ fontSize: 13, color: '#8B4513', fontWeight: 700, margin: 0, lineHeight: 1.4, fontFamily: 'Georgia, serif' }}>"{cert.course_title}"</p>
                     </div>
 
                     {/* Signature row */}
@@ -182,7 +182,7 @@ export default function CertificatesScreen() {
                       <div style={{ textAlign: 'center' }}>
                         <div style={{ width: 60, borderBottom: '1px solid #C4956A', margin: '0 auto 3px' }} />
                         <p style={{ fontSize: 9, color: '#AAA', margin: '0 0 1px', letterSpacing: 0.5, textTransform: 'uppercase' }}>Data</p>
-                        <p style={{ fontSize: 10, color: '#666', margin: 0 }}>{cert.completedAt}</p>
+                        <p style={{ fontSize: 10, color: '#666', margin: 0 }}>{fmtData(cert.issued_at)}</p>
                       </div>
                       <div style={{ textAlign: 'center' }}>
                         <p style={{ fontSize: 16, color: '#C4956A', fontFamily: 'Georgia, serif', margin: '0 0 1px', fontStyle: 'italic' }}>Jona</p>
@@ -193,7 +193,7 @@ export default function CertificatesScreen() {
                       <div style={{ textAlign: 'center' }}>
                         <div style={{ width: 60, borderBottom: '1px solid #C4956A', margin: '0 auto 3px' }} />
                         <p style={{ fontSize: 9, color: '#AAA', margin: '0 0 1px', letterSpacing: 0.5, textTransform: 'uppercase' }}>ID</p>
-                        <p style={{ fontSize: 10, color: '#666', margin: 0, fontFamily: 'monospace' }}>{cert.code}</p>
+                        <p style={{ fontSize: 10, color: '#666', margin: 0, fontFamily: 'monospace' }}>{cert.certificate_code}</p>
                       </div>
                     </div>
                   </div>
@@ -203,7 +203,7 @@ export default function CertificatesScreen() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                     <div>
                       <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>ID e Certifikatës</p>
-                      <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'monospace' }}>{cert.code}</p>
+                      <p style={{ fontSize: 12, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'monospace' }}>{cert.certificate_code}</p>
                     </div>
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   </div>
@@ -229,7 +229,7 @@ export default function CertificatesScreen() {
                     <button
                       className="btn btn-primary btn-sm"
                       style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}
-                      onClick={() => shkarkoPDF(emri, cert)}
+                      onClick={() => shkarkoPDF(emri, { code: cert.certificate_code, courseTitle: cert.course_title, completedAt: fmtData(cert.issued_at) })}
                     >
                       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                       Shkarko PDF

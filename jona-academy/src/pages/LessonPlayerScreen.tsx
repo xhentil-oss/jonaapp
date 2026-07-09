@@ -1,35 +1,56 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { findLesson } from '../data/mockData'
 import { useAuth } from '../context/AuthContext'
+import { fetchLesson, fetchCourse, postLessonProgress, type ApiLessonDetail, type ApiCourse } from '../services/api'
+
+function fmtSeconds(s: number): string {
+  const m = Math.floor(s / 60)
+  const rem = s % 60
+  return `${m}:${String(rem).padStart(2, '0')}`
+}
 
 export default function LessonPlayerScreen() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { hasLessonAccess } = useAuth()
-  const [duke_luajtur, setDukeLuajtur] = useState(false)
+  const { hasLessonAccess, enrollments } = useAuth()
   const [tabAktiv, setTabAktiv] = useState<'permbledhje' | 'shenime'>('permbledhje')
-  const [progresi, setProgresi] = useState(0)
   const [showFullDesc, setShowFullDesc] = useState(false)
-
-  const found = findLesson(Number(id))
+  const [lesson, setLesson] = useState<ApiLessonDetail | null>(null)
+  const [course, setCourse] = useState<ApiCourse | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (!id) return
     window.scrollTo(0, 0)
-    if (!found) { navigate('/home'); return }
-    if (!hasLessonAccess(found.lesson, found.course.id)) {
-      navigate(`/paywall?courseId=${found.course.id}`)
-    }
+    setLoading(true)
+    fetchLesson(Number(id))
+      .then(async l => {
+        setLesson(l)
+        const c = await fetchCourse(l.course_id).catch(() => null)
+        setCourse(c)
+        if (!hasLessonAccess({ isFree: l.is_free }, l.course_id)) {
+          navigate(`/paywall?courseId=${l.course_id}`)
+        }
+      })
+      .catch(() => navigate('/home'))
+      .finally(() => setLoading(false))
   }, [id])
 
-  if (!found) return null
+  if (loading || !lesson) return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#1C1714' }}>
+      <p style={{ color: 'rgba(255,255,255,0.6)' }}>Duke ngarkuar...</p>
+    </div>
+  )
 
-  const { lesson, course, module: mod } = found
+  const currentIndex = lesson.siblings.findIndex(l => l.id === lesson.id)
+  const nextLesson = lesson.siblings[currentIndex + 1] ?? null
+  const prevLesson = lesson.siblings[currentIndex - 1] ?? null
+  const enrollment = enrollments.find(e => e.id === lesson.course_id)
 
-  const allLessons = course.modules.flatMap(m => m.lessons)
-  const currentIndex = allLessons.findIndex(l => l.id === lesson.id)
-  const nextLesson = allLessons[currentIndex + 1] ?? null
-  const prevLesson = allLessons[currentIndex - 1] ?? null
+  const markCompleted = () => {
+    if (!enrollment) return
+    postLessonProgress(lesson.id, lesson.duration_seconds, true, enrollment.enrollmentId).catch(console.error)
+  }
 
   return (
     <div style={{ minHeight: '100vh', background: '#1C1714', display: 'flex', flexDirection: 'column' }}>
@@ -37,32 +58,24 @@ export default function LessonPlayerScreen() {
       {/* Video zone */}
       <div style={{ background: '#1C1714', height: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
         <button
-          onClick={() => navigate(`/course/${found?.course.id}`)}
+          onClick={() => navigate(`/course/${lesson.course_id}`)}
           style={{ position: 'absolute', top: 12, left: 12, width: 36, height: 36, borderRadius: '50%', background: 'rgba(0,0,0,0.6)', border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', zIndex: 2 }}
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
 
-        {(lesson as any).videoUrl ? (
+        {lesson.video_url ? (
           <iframe
-            src={`https://drive.google.com/file/d/${(lesson as any).videoUrl}/preview`}
+            src={`https://drive.google.com/file/d/${lesson.video_url}/preview`}
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 'none' }}
             allow="autoplay"
             allowFullScreen
           />
         ) : (
-          <>
-            <button
-              onClick={() => setDukeLuajtur(p => !p)}
-              style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--primary)', border: '2px solid rgba(255,255,255,0.3)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, color: 'white' }}
-            >
-              {duke_luajtur ? '⏸' : '▶'}
-            </button>
-            <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.7)', borderRadius: 6, padding: '4px 8px', fontSize: 12, color: 'white' }}>{lesson.duration}</div>
-          </>
+          <div style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.7)', borderRadius: 6, padding: '4px 8px', fontSize: 12, color: 'white' }}>{fmtSeconds(lesson.duration_seconds)}</div>
         )}
 
-        {lesson.isFree && (
+        {lesson.is_free && (
           <div style={{ position: 'absolute', top: 12, right: 12, background: 'rgba(74,155,111,0.9)', borderRadius: 12, padding: '4px 10px', fontSize: 11, color: 'white', fontWeight: 600, zIndex: 2 }}>Falas</div>
         )}
       </div>
@@ -70,16 +83,8 @@ export default function LessonPlayerScreen() {
       {/* Content */}
       <div style={{ flex: 1, background: 'var(--bg-primary)', borderTopLeftRadius: 20, borderTopRightRadius: 20, marginTop: -8 }}>
 
-        <div style={{ padding: '16px 20px 0' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Progresi i mësimit</p>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>{progresi}%</p>
-          </div>
-          <div className="progress-bar"><div className="progress-fill" style={{ width: `${progresi}%` }} /></div>
-        </div>
-
         <div style={{ padding: '14px 20px 0' }}>
-          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>{course.title} · {mod.title}</p>
+          <p style={{ fontSize: 11, color: 'var(--text-muted)', marginBottom: 2 }}>{lesson.course_title} · {lesson.section_title}</p>
           <h2 style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.3 }}>{lesson.title}</h2>
         </div>
 
@@ -101,7 +106,7 @@ export default function LessonPlayerScreen() {
               <div style={{ position: 'relative', marginBottom: 4 }}>
                 <div style={{ overflow: 'hidden', maxHeight: showFullDesc ? 'none' : 100 }}>
                   <p style={{ color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.8, whiteSpace: 'pre-line' }}>
-                    {course.description || course.shortDesc}
+                    {course?.description || course?.shortDesc || ''}
                   </p>
                 </div>
                 {!showFullDesc && (
@@ -115,13 +120,15 @@ export default function LessonPlayerScreen() {
                 {showFullDesc ? 'Lexo më pak' : 'Lexo më shumë'}
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: showFullDesc ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}><polyline points="6 9 12 15 18 9"/></svg>
               </button>
-              <div style={{ background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: '12px 14px', border: '1px solid var(--border)' }}>
-                <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Instruktore</p>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div className="avatar avatar-sm">{course.instructor[0]}</div>
-                  <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{course.instructor}</p>
+              {course && (
+                <div style={{ background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', padding: '12px 14px', border: '1px solid var(--border)' }}>
+                  <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 4 }}>Instruktore</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div className="avatar avatar-sm">{course.instructor[0]}</div>
+                    <p style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{course.instructor}</p>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -140,17 +147,17 @@ export default function LessonPlayerScreen() {
             disabled={!prevLesson}
             onClick={() => prevLesson && navigate(`/lesson/${prevLesson.id}`)}
           >
-            ← Mësimine parë
+            ← Mësimi i parë
           </button>
           <button
             className="btn btn-primary"
             style={{ flex: 1 }}
             onClick={() => {
-              setProgresi(100)
+              markCompleted()
               if (nextLesson) {
                 navigate(`/lesson/${nextLesson.id}`)
               } else {
-                navigate(`/course/${course.id}`)
+                navigate(`/course/${lesson.course_id}`)
               }
             }}
           >

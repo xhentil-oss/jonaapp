@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { SearchIcon, ChevronLeftIcon } from '../components/Icons'
 import CourseCard from '../components/CourseCard'
-import { fetchCourses, ApiCourse } from '../services/api'
+import { fetchCourses, type ApiCourse } from '../services/api'
 
 export default function SearchScreen() {
   const navigate = useNavigate()

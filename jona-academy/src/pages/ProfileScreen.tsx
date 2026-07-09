@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import {
   BookOpenIcon, AwardIcon, CreditCardIcon, BellIcon,
   SettingsIcon, HelpCircleIcon, FileTextIcon,
   StarIcon, LogOutIcon, ChevronRightIcon,
 } from '../components/Icons'
-import { myCourses, certificates } from '../data/mockData'
 import { useAuth } from '../context/AuthContext'
+import { fetchCertificates, type ApiCertificate } from '../services/api'
 
 const menuItems = [
   { Icon: BookOpenIcon,   label: 'Kurset e Mia',         path: '/my-courses', countKey: 'courses'      },
@@ -20,14 +21,19 @@ const menuItems = [
 
 export default function ProfileScreen() {
   const navigate = useNavigate()
-  const { user, profile, logout } = useAuth()
+  const { user, enrollments, subscription, logout } = useAuth()
+  const [certificates, setCertificates] = useState<ApiCertificate[]>([])
 
-  const displayName = profile?.emri || user?.displayName || 'Përdorues'
+  useEffect(() => {
+    fetchCertificates().then(setCertificates).catch(console.error)
+  }, [])
+
+  const displayName = user?.full_name || 'Përdorues'
   const displayEmail = user?.email || ''
   const avatarLetter = displayName.charAt(0).toUpperCase()
 
   const counts: Record<string, number> = {
-    courses: myCourses.length,
+    courses: enrollments.length,
     certs: certificates.length,
   }
 
@@ -42,7 +48,7 @@ export default function ProfileScreen() {
           <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 13, marginBottom: 16 }}>{displayEmail}</p>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.2)', borderRadius: 20, padding: '5px 14px', fontSize: 12, color: 'white', fontWeight: 600 }}>
             <StarIcon size={13} color="white" strokeWidth={2.2} />
-            Anëtar Premium
+            {subscription ? `Anëtar ${subscription.plan_name}` : 'Anëtar Falas'}
           </span>
         </div>
       </div>
@@ -50,8 +56,8 @@ export default function ProfileScreen() {
       {/* Stats */}
       <div style={{ display: 'flex', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border)' }}>
         {[
-          { label: 'Kurse',       value: myCourses.length },
-          { label: 'Përfunduar',  value: myCourses.filter(c => c.progress === 100).length },
+          { label: 'Kurse',       value: enrollments.length },
+          { label: 'Përfunduar',  value: enrollments.filter(c => c.progress === 100).length },
           { label: 'Certifikata', value: certificates.length },
         ].map((s, i) => (
           <div key={s.label} style={{ flex: 1, padding: '16px 8px', textAlign: 'center', borderRight: i < 2 ? '1px solid var(--border)' : 'none' }}>
@@ -65,10 +71,12 @@ export default function ProfileScreen() {
       <div style={{ padding: '16px 20px' }}>
         <div style={{ background: 'rgba(122,79,45,0.07)', border: '1px solid rgba(122,79,45,0.2)', borderRadius: 'var(--radius-lg)', padding: '14px 16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 2 }}>Plani Vjetor</p>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Ripërtërihet 24 Qershor 2027</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 2 }}>{subscription ? subscription.plan_name : 'Pa Abonim'}</p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+              {subscription ? `Ripërtërihet ${new Date(subscription.renews_at).toLocaleDateString('sq-AL', { day: 'numeric', month: 'long', year: 'numeric' })}` : 'Abonohu për akses të plotë'}
+            </p>
           </div>
-          <button className="btn btn-primary btn-sm" onClick={() => navigate('/paywall')}>Menaxho</button>
+          <button className="btn btn-primary btn-sm" onClick={() => navigate('/paywall')}>{subscription ? 'Menaxho' : 'Abonohu'}</button>
         </div>
       </div>
 

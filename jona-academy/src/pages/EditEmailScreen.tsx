@@ -1,14 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { reauthenticateWithCredential, EmailAuthProvider, updateEmail } from 'firebase/auth'
-import { doc, updateDoc } from 'firebase/firestore'
-import { auth, db } from '../firebase'
+import { updateEmail as updateEmailApi } from '../services/api'
 import { MailIcon, LockIcon, ChevronLeftIcon, EyeIcon, EyeOffIcon } from '../components/Icons'
 
 export default function EditEmailScreen() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { user, refreshUser } = useAuth()
 
   const [emailRi, setEmailRi] = useState('')
   const [fjalekalim, setFjalekalim] = useState('')
@@ -24,23 +22,12 @@ export default function EditEmailScreen() {
     setLoading(true)
     setError('')
     try {
-      const credential = EmailAuthProvider.credential(user!.email!, fjalekalim)
-      await reauthenticateWithCredential(auth.currentUser!, credential)
-      await updateEmail(auth.currentUser!, emailRi.trim())
-      await updateDoc(doc(db, 'users', auth.currentUser!.uid), { email: emailRi.trim() })
+      await updateEmailApi(emailRi.trim(), fjalekalim)
+      await refreshUser()
       setSuccess(true)
       setTimeout(() => navigate(-1), 1200)
     } catch (e: any) {
-      const code = e?.code || ''
-      if (code === 'auth/wrong-password' || code === 'auth/invalid-credential') {
-        setError('Fjalëkalimi është i gabuar.')
-      } else if (code === 'auth/email-already-in-use') {
-        setError('Ky email është tashmë në përdorim.')
-      } else if (code === 'auth/too-many-requests') {
-        setError('Shumë tentativa. Provo pas disa minutash.')
-      } else {
-        setError('Ndodhi një gabim. Provo sërish.')
-      }
+      setError(e?.message || 'Ndodhi një gabim. Provo sërish.')
     } finally {
       setLoading(false)
     }

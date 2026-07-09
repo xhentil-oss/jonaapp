@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
 import CourseCard from '../components/CourseCard'
-import { fetchCourses, fetchCategories, ApiCourse, ApiCategory } from '../services/api'
+import { fetchCourses, fetchCategories, type ApiCourse, type ApiCategory } from '../services/api'
 
 export default function CourseListScreen() {
   const [searchParams] = useSearchParams()
@@ -18,9 +18,6 @@ export default function CourseListScreen() {
   }, [])
 
   const categoryIdParam = searchParams.get('category')
-  const initialCategory = categoryIdParam
-    ? (categories.find(c => c.id === Number(categoryIdParam))?.name ?? 'Të gjitha')
-    : 'Të gjitha'
   const [filtriAktiv, setFiltriAktiv] = useState('Të gjitha')
 
   useEffect(() => {

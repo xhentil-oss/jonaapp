@@ -49,6 +49,7 @@ CREATE TABLE users (
   password_hash   TEXT                            NOT NULL,
   avatar_url      TEXT,
   membership_type ENUM('free','premium')          NOT NULL DEFAULT 'free',
+  role            ENUM('student','admin')         NOT NULL DEFAULT 'student',
   created_at      DATETIME                        NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at      DATETIME                        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (id),

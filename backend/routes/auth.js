@@ -23,12 +23,12 @@ router.post('/register', async (req, res) => {
     );
 
     const token = jwt.sign(
-      { id: result.insertId, email, full_name },
+      { id: result.insertId, email, full_name, role: 'student' },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    res.status(201).json({ token, user: { id: result.insertId, full_name, email } });
+    res.status(201).json({ token, user: { id: result.insertId, full_name, email, role: 'student' } });
   } catch (err) {
     res.status(500).json({ error: 'Gabim serveri' });
   }
@@ -51,12 +51,12 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Email ose password gabim' });
 
     const token = jwt.sign(
-      { id: user.id, email: user.email, full_name: user.full_name },
+      { id: user.id, email: user.email, full_name: user.full_name, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '30d' }
     );
 
-    res.json({ token, user: { id: user.id, full_name: user.full_name, email: user.email, membership_type: user.membership_type } });
+    res.json({ token, user: { id: user.id, full_name: user.full_name, email: user.email, membership_type: user.membership_type, role: user.role } });
   } catch (err) {
     res.status(500).json({ error: 'Gabim serveri' });
   }

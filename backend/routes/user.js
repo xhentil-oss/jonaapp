@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/me', auth, async (req, res) => {
   try {
     const [[user]] = await db.query(
-      'SELECT id, full_name, email, avatar_url, membership_type, created_at FROM users WHERE id = ?',
+      'SELECT id, full_name, email, avatar_url, membership_type, role, created_at FROM users WHERE id = ?',
       [req.user.id]
     );
     res.json(user);

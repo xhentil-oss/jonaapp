@@ -57,7 +57,7 @@ VALUES
 
 (3,  'RESTART 2026',
      'Rifillo vitin me qëllim, energji dhe plan konkret.',
-     5, 1, 'fillestare', 180, 149.00, 'premium', '/jona-3.webp', 1, 1, 0, 24),
+     5, 1, 'fillestare', 180, 149.00, 'premium', '/jona-3.jpeg', 1, 1, 0, 24),
 
 (4,  'Komunikimi Efektiv',
      'Mëso të komunikosh me besim dhe të ndërtosh marrëdhënie të shëndetshme.',
@@ -65,7 +65,7 @@ VALUES
 
 (5,  'Menaxhimi i Stresit',
      'Teknika praktike për të reduktuar stresin dhe ankthit të përditshëm.',
-     3, 1, 'fillestare', 150, 129.00, 'premium', '/jona-5.webp', 0, 0, 0, 18),
+     3, 1, 'fillestare', 150, 129.00, 'premium', '/jona-9.webp', 0, 0, 0, 18),
 
 (6,  'Zhvillim Personal – Niveli Fillestar',
      'Bazat e zhvillimit personal: vetënjohja, zakonet dhe mindset-i i suksesit.',
@@ -89,23 +89,23 @@ VALUES
 
 (11, 'Marrëdhëniet dhe Familja',
      'Ndërtoni lidhje të shëndetshme familjare dhe romantike.',
-     7, 1, 'te_gjitha_nivelet', 180, 129.00, 'premium', '/jona-11.webp', 0, 0, 0, 20),
+     7, 1, 'te_gjitha_nivelet', 180, 129.00, 'premium', '/jona-7.webp', 0, 0, 0, 20),
 
 (12, 'Biznes dhe Sipërmarrje',
      'Nga idea tek biznesi: mentaliteti i sipërmarrësit dhe lidershipi.',
-     6, 1, 'mesatar', 240, 199.00, 'premium', '/jona-12.webp', 0, 0, 0, 28),
+     6, 1, 'mesatar', 240, 199.00, 'premium', '/jona-8.webp', 0, 0, 0, 28),
 
 (13, 'Krijimtaria dhe Vetëshprehja',
      'Zbuloni potencialin krijues dhe ndërtoni identitetin tuaj.',
-     8, 1, 'fillestare', 150, 99.00, 'premium', '/jona-13.webp', 0, 0, 0, 16),
+     8, 1, 'fillestare', 150, 99.00, 'premium', '/jona-10.webp', 0, 0, 0, 16),
 
 (14, 'Menaxho Ankthin dhe Frikën',
      'Teknika të provuara për të kapërcyer frikën dhe bllokimet mendore.',
-     9, 1, 'fillestare', 180, 129.00, 'premium', '/jona-14.webp', 0, 1, 0, 18),
+     9, 1, 'fillestare', 180, 129.00, 'premium', '/jona-6.webp', 0, 1, 0, 18),
 
 (15, 'Jona VIP Club',
      'Aksesi ekskluziv VIP: sesione live mujore dhe materialet premium.',
-     1, 1, 'te_gjitha_nivelet', 0, 1499.00, 'vip', '/jona-15.webp', 1, 1, 0, 0);
+     1, 1, 'te_gjitha_nivelet', 0, 1499.00, 'vip', '/jona-2.webp', 1, 1, 0, 0);
 
 -- =============================================================================
 -- SEKSIONET — Kursi 1: "PËRTEJ LIMITEVE NJERËZOR"

@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { courses } from '../data/mockData'
 import { ChevronLeftIcon, LockIcon, CreditCardIcon, MailIcon } from '../components/Icons'
+import { fetchCourse, ApiCourse } from '../services/api'
 
 function formatCardNumber(val: string) {
   return val.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim()
@@ -49,7 +49,14 @@ export default function CheckoutScreen() {
 
   const isSub = id?.startsWith('sub-') ?? false
   const subPlan = isSub ? subPlans[id!] ?? subPlans['sub-vjetor'] : null
-  const course = !isSub ? (courses.find(c => c.id === Number(id)) || courses[0]) : null
+  const [course, setCourse] = useState<ApiCourse | null>(null)
+
+  useEffect(() => {
+    if (!isSub && id) {
+      fetchCourse(Number(id)).then(setCourse).catch(console.error)
+    }
+  }, [id, isSub])
+
   const price = isSub ? subPlan!.cmimi : (course?.price ?? '€0')
   const itemTitle = isSub ? subPlan!.emri : (course?.title ?? '')
 

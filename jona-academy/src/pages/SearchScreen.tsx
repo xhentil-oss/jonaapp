@@ -1,16 +1,18 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { courses } from '../data/mockData'
 import { SearchIcon, ChevronLeftIcon } from '../components/Icons'
 import CourseCard from '../components/CourseCard'
+import { fetchCourses, ApiCourse } from '../services/api'
 
 export default function SearchScreen() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
+  const [courses, setCourses] = useState<ApiCourse[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     inputRef.current?.focus()
+    fetchCourses().then(setCourses).catch(console.error)
   }, [])
 
   const q = query.trim().toLowerCase()

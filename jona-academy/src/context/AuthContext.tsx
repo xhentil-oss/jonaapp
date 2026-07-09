@@ -12,7 +12,6 @@ import {
 } from 'firebase/auth'
 import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore'
 import { auth, db } from '../firebase'
-import { courses } from '../data/mockData'
 
 interface Subscription {
   tipi: 'monthly' | 'yearly'
@@ -74,8 +73,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const hasCourseAccess = (courseId: number): boolean => {
-    const course = courses.find(c => c.id === courseId)
-    if (course?.isFree) return true
     if (!user) return false
     if (hasSubscription()) return true
     if (profile?.kursetBlerë?.includes(courseId)) return true

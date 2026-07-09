@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import CourseCard from '../components/CourseCard'
 import CategoryCard from '../components/CategoryCard'
 import { SearchIcon, BellIcon, SparkleIcon, SunIcon } from '../components/Icons'
-import { courses, categories, myCourses } from '../data/mockData'
 import { useAuth } from '../context/AuthContext'
+import { fetchCourses, fetchCategories, ApiCourse, ApiCategory } from '../services/api'
 
 const citateMotivuese = [
   { citate: 'Sekreti i fillimit është të fillosh.', autor: 'Mark Twain' },
@@ -18,8 +19,19 @@ export default function HomeScreen() {
   const displayName = profile?.emri || user?.displayName || 'Mirë se vini'
   const avatarLetter = displayName.charAt(0).toUpperCase()
   const citate = citateMotivuese[0]
-  const kursetEZgjedhura = courses.slice(0, 4)
-  const kursetEReja = courses.slice(4)
+
+  const [courses, setCourses] = useState<ApiCourse[]>([])
+  const [categories, setCategories] = useState<ApiCategory[]>([])
+
+  useEffect(() => {
+    fetchCourses().then(data => {
+      setCourses(data)
+      fetchCategories(data).then(setCategories)
+    }).catch(console.error)
+  }, [])
+
+  const kursetEZgjedhura = courses.filter(c => c.isPremium).slice(0, 4)
+  const kursetEReja = courses.slice(4, 10)
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-secondary)', paddingBottom: 'var(--nav-height)' }}>
@@ -45,25 +57,16 @@ export default function HomeScreen() {
         </div>
       </div>
 
-      {/* Hero Banner — vazhdo mësimin */}
+      {/* Hero Banner */}
       <div style={{ padding: '16px 20px 0' }}>
         <div style={{ borderRadius: 'var(--radius-xl)', overflow: 'hidden', position: 'relative', minHeight: 200, boxShadow: '0 6px 28px rgba(28,23,20,0.18)' }}>
           <img src="/jona-brown-1.png" alt="Jona Academy" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(28,23,20,0.82) 0%, rgba(28,23,20,0.35) 100%)' }} />
           <div style={{ position: 'relative', padding: '24px 20px' }}>
-            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginBottom: 6, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5 }}>Vazhdo Mësimin</p>
-            <h3 style={{ color: 'white', fontSize: 17, marginBottom: 6, fontWeight: 800, lineHeight: 1.3 }}>{myCourses[0].title}</h3>
-            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, marginBottom: 16 }}>Tjetër: {myCourses[0].lastLesson}</p>
-            <div style={{ marginBottom: 16 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>{myCourses[0].progress}% përfunduar</span>
-                <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.75)' }}>{myCourses[0].lessons} mësime</span>
-              </div>
-              <div style={{ height: 5, background: 'rgba(255,255,255,0.2)', borderRadius: 10 }}>
-                <div style={{ height: '100%', width: `${myCourses[0].progress}%`, background: 'white', borderRadius: 10 }} />
-              </div>
-            </div>
-            <button className="btn" onClick={() => navigate(`/course/${myCourses[0].id}`)} style={{ background: 'white', color: 'var(--primary)', fontWeight: 700, fontSize: 14, padding: '10px 20px', borderRadius: 'var(--radius-full)' }}>▶ Vazhdo</button>
+            <p style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)', marginBottom: 6, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1.5 }}>Jona Academy</p>
+            <h3 style={{ color: 'white', fontSize: 17, marginBottom: 6, fontWeight: 800, lineHeight: 1.3 }}>Transformo jetën tënde</h3>
+            <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 12, marginBottom: 16 }}>{courses.length} kurse të disponueshme</p>
+            <button className="btn" onClick={() => navigate('/courses')} style={{ background: 'white', color: 'var(--primary)', fontWeight: 700, fontSize: 14, padding: '10px 20px', borderRadius: 'var(--radius-full)' }}>Shiko Kurset</button>
           </div>
         </div>
       </div>

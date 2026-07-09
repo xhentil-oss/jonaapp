@@ -1,7 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { StarIcon } from '../components/Icons'
-import { courses } from '../data/mockData'
+import { fetchCourse, ApiCourse } from '../services/api'
 
 const planet = [
   {
@@ -27,8 +27,12 @@ export default function PaywallScreen() {
   const navigate = useNavigate()
   const location = useLocation()
   const courseId = new URLSearchParams(location.search).get('courseId')
-  const course = courseId ? courses.find(c => c.id === Number(courseId)) : null
+  const [course, setCourse] = useState<ApiCourse | null>(null)
   const [zgjedhur, setZgjedhur] = useState<'mujor' | 'vjetor' | 'njëherë'>('vjetor')
+
+  useEffect(() => {
+    if (courseId) fetchCourse(Number(courseId)).then(setCourse).catch(console.error)
+  }, [courseId])
 
   const handleCTA = () => {
     if (zgjedhur === 'njëherë') {

@@ -1,11 +1,21 @@
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import Header from '../components/Header'
 import { SearchIcon, CategoryIcon } from '../components/Icons'
-import { categories, courses } from '../data/mockData'
+import { fetchCourses, fetchCategories, ApiCourse, ApiCategory } from '../services/api'
 
 export default function CategoriesScreen() {
   const navigate = useNavigate()
+  const [courses, setCourses] = useState<ApiCourse[]>([])
+  const [categories, setCategories] = useState<ApiCategory[]>([])
+
+  useEffect(() => {
+    fetchCourses().then(data => {
+      setCourses(data)
+      fetchCategories(data).then(setCategories)
+    }).catch(console.error)
+  }, [])
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-secondary)', paddingBottom: 'var(--nav-height)' }}>

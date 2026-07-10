@@ -384,6 +384,36 @@ BEGIN
   END IF;
 END //
 
+-- [T2b] E njëjta llogaritje, por për herën e parë që mësimi shënohet (INSERT, jo UPDATE)
+CREATE TRIGGER trg_lesson_progress_insert
+AFTER INSERT ON lesson_progress
+FOR EACH ROW
+BEGIN
+  DECLARE v_total    INT;
+  DECLARE v_done     INT;
+  DECLARE v_progress DECIMAL(5,2);
+
+  SELECT c.lessons_count INTO v_total
+    FROM enrollments e
+    JOIN courses c ON c.id = e.course_id
+   WHERE e.id = NEW.enrollment_id;
+
+  IF v_total IS NOT NULL AND v_total > 0 THEN
+    SELECT COUNT(*) INTO v_done
+      FROM lesson_progress
+     WHERE enrollment_id = NEW.enrollment_id
+       AND is_completed = 1;
+
+    SET v_progress = ROUND((v_done / v_total) * 100, 2);
+
+    UPDATE enrollments
+       SET progress_percent = v_progress,
+           status           = CASE WHEN v_progress >= 100 THEN 'perfunduar' ELSE 'aktiv' END,
+           completed_at     = CASE WHEN v_progress >= 100 THEN NOW() ELSE NULL END
+     WHERE id = NEW.enrollment_id;
+  END IF;
+END //
+
 -- [T3] Lësh certifikatë automatikisht kur enrollment kalon 'perfunduar'
 CREATE TRIGGER trg_auto_issue_certificate
 AFTER UPDATE ON enrollments

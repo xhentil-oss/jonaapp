@@ -1,44 +1,51 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChevronLeftIcon } from '../components/Icons'
+import { fetchNotificationSettings, updateNotificationSettings, type NotificationSettings } from '../services/api'
 
 const kategorite = [
   {
-    id: 'kurse',
+    id: 'new_courses' as const,
     titulli: 'Kurse të Reja',
     pershkrimi: 'Njoftim kur shtohen kurse të reja',
   },
   {
-    id: 'kujtues',
+    id: 'lesson_reminders' as const,
     titulli: 'Kujtues Mësimi',
     pershkrimi: 'Të kujtojmë të vazhdosh mësimet',
   },
   {
-    id: 'oferta',
+    id: 'offers_promotions' as const,
     titulli: 'Oferta & Promocione',
     pershkrimi: 'Zbritje dhe oferta të veçanta',
   },
   {
-    id: 'certifikata',
+    id: 'certificates' as const,
     titulli: 'Certifikata',
     pershkrimi: 'Kur certifikata jote është gati',
   },
   {
-    id: 'mesazhe',
+    id: 'messages' as const,
     titulli: 'Mesazhe',
     pershkrimi: 'Mesazhe nga instruktorët',
   },
 ]
 
-function Toggle({ aktiv, onChange }: { aktiv: boolean; onChange: () => void }) {
+const defaultSettings: NotificationSettings = {
+  new_courses: 1, lesson_reminders: 1, offers_promotions: 0, certificates: 1, messages: 1,
+}
+
+function Toggle({ aktiv, onChange, disabled }: { aktiv: boolean; onChange: () => void; disabled?: boolean }) {
   return (
     <button
       onClick={onChange}
+      disabled={disabled}
       style={{
         width: 48, height: 28, borderRadius: 14,
         background: aktiv ? 'var(--primary)' : 'var(--border)',
-        border: 'none', cursor: 'pointer', position: 'relative',
+        border: 'none', cursor: disabled ? 'default' : 'pointer', position: 'relative',
         transition: 'background 0.2s', flexShrink: 0,
+        opacity: disabled ? 0.6 : 1,
       }}
     >
       <span style={{
@@ -55,27 +62,30 @@ function Toggle({ aktiv, onChange }: { aktiv: boolean; onChange: () => void }) {
 
 export default function NotificationSettingsScreen() {
   const navigate = useNavigate()
-  const [gjithçka, setGjithçka] = useState(true)
-  const [aktive, setAktive] = useState<Record<string, boolean>>({
-    kurse: true,
-    kujtues: true,
-    oferta: false,
-    certifikata: true,
-    mesazhe: true,
-  })
+  const [aktive, setAktive] = useState<NotificationSettings>(defaultSettings)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetchNotificationSettings().then(setAktive).catch(e => setError(e.message)).finally(() => setLoading(false))
+  }, [])
+
+  const gjithçka = kategorite.every(k => aktive[k.id])
+
+  const ruaj = (te_reja: NotificationSettings) => {
+    setAktive(te_reja)
+    updateNotificationSettings(te_reja).catch(e => setError(e.message))
+  }
 
   const ndryshoGjithçka = () => {
     const vlera = !gjithçka
-    setGjithçka(vlera)
-    const te_gjitha: Record<string, boolean> = {}
-    kategorite.forEach(k => { te_gjitha[k.id] = vlera })
-    setAktive(te_gjitha)
+    const te_reja = { ...aktive }
+    kategorite.forEach(k => { te_reja[k.id] = vlera ? 1 : 0 })
+    ruaj(te_reja)
   }
 
-  const ndrysho = (id: string) => {
-    const te_reja = { ...aktive, [id]: !aktive[id] }
-    setAktive(te_reja)
-    setGjithçka(Object.values(te_reja).every(Boolean))
+  const ndrysho = (id: keyof NotificationSettings) => {
+    ruaj({ ...aktive, [id]: aktive[id] ? 0 : 1 })
   }
 
   return (
@@ -103,6 +113,12 @@ export default function NotificationSettingsScreen() {
 
       <div style={{ flex: 1, padding: '20px' }}>
 
+        {error && (
+          <div style={{ background: 'rgba(220,38,38,0.08)', border: '1px solid rgba(220,38,38,0.2)', borderRadius: 8, padding: '10px 14px', marginBottom: 16 }}>
+            <p style={{ fontSize: 13, color: '#DC2626', margin: 0 }}>{error}</p>
+          </div>
+        )}
+
         {/* Toggle i përgjithshëm */}
         <div style={{
           background: 'var(--bg-primary)', borderRadius: 'var(--radius-lg)',
@@ -118,7 +134,7 @@ export default function NotificationSettingsScreen() {
               Hap ose mbyll të gjitha
             </p>
           </div>
-          <Toggle aktiv={gjithçka} onChange={ndryshoGjithçka} />
+          <Toggle aktiv={gjithçka} onChange={ndryshoGjithçka} disabled={loading} />
         </div>
 
         <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 8px 4px' }}>
@@ -147,7 +163,7 @@ export default function NotificationSettingsScreen() {
                   {k.pershkrimi}
                 </p>
               </div>
-              <Toggle aktiv={aktive[k.id]} onChange={() => ndrysho(k.id)} />
+              <Toggle aktiv={!!aktive[k.id]} onChange={() => ndrysho(k.id)} disabled={loading} />
             </div>
           ))}
         </div>

@@ -174,4 +174,37 @@ router.post('/subscriptions', auth, async (req, res) => {
   }
 });
 
+// GET /api/user/notification-settings
+router.get('/notification-settings', auth, async (req, res) => {
+  try {
+    const [[settings]] = await db.query(
+      'SELECT new_courses, lesson_reminders, offers_promotions, certificates, messages FROM notification_settings WHERE user_id = ?',
+      [req.user.id]
+    );
+    res.json(settings || { new_courses: 1, lesson_reminders: 1, offers_promotions: 0, certificates: 1, messages: 1 });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// PATCH /api/user/notification-settings
+router.patch('/notification-settings', auth, async (req, res) => {
+  const { new_courses, lesson_reminders, offers_promotions, certificates, messages } = req.body;
+  try {
+    await db.query(`
+      INSERT INTO notification_settings (user_id, new_courses, lesson_reminders, offers_promotions, certificates, messages)
+      VALUES (?, ?, ?, ?, ?, ?)
+      ON DUPLICATE KEY UPDATE
+        new_courses = VALUES(new_courses),
+        lesson_reminders = VALUES(lesson_reminders),
+        offers_promotions = VALUES(offers_promotions),
+        certificates = VALUES(certificates),
+        messages = VALUES(messages)
+    `, [req.user.id, new_courses ? 1 : 0, lesson_reminders ? 1 : 0, offers_promotions ? 1 : 0, certificates ? 1 : 0, messages ? 1 : 0]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
 module.exports = router;

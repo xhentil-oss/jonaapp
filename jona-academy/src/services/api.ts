@@ -130,6 +130,22 @@ export async function postLessonProgress(id: number, watched_seconds: number, is
   await authedFetch(`/api/lessons/${id}/progress`, { method: 'POST', body: JSON.stringify({ watched_seconds, is_completed, enrollment_id }) })
 }
 
+export interface NotificationSettings {
+  new_courses: number
+  lesson_reminders: number
+  offers_promotions: number
+  certificates: number
+  messages: number
+}
+
+export async function fetchNotificationSettings(): Promise<NotificationSettings> {
+  return authedFetch('/api/user/notification-settings')
+}
+
+export async function updateNotificationSettings(settings: NotificationSettings): Promise<void> {
+  await authedFetch('/api/user/notification-settings', { method: 'PATCH', body: JSON.stringify(settings) })
+}
+
 const CATEGORY_COLORS: Record<string, string> = {
   'Motivim': '#7A4F2D',
   'Shëndet': '#4A9B6F',

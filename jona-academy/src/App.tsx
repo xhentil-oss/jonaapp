@@ -4,6 +4,7 @@ import OnboardingScreen from './pages/OnboardingScreen'
 import LoginScreen from './pages/LoginScreen'
 import RegisterScreen from './pages/RegisterScreen'
 import ForgotPasswordScreen from './pages/ForgotPasswordScreen'
+import ResetPasswordScreen from './pages/ResetPasswordScreen'
 import HomeScreen from './pages/HomeScreen'
 import CategoriesScreen from './pages/CategoriesScreen'
 import CourseListScreen from './pages/CourseListScreen'
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/login" element={<LoginScreen />} />
           <Route path="/register" element={<RegisterScreen />} />
           <Route path="/forgot-password" element={<ForgotPasswordScreen />} />
+          <Route path="/reset-password" element={<ResetPasswordScreen />} />
           <Route path="/home" element={<HomeScreen />} />
           <Route path="/categories" element={<CategoriesScreen />} />
           <Route path="/courses" element={<CourseListScreen />} />

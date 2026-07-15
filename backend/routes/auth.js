@@ -1,7 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const db = require('../config/db');
+const { sendPasswordResetEmail } = require('../utils/mailer');
 
 const router = express.Router();
 
@@ -57,6 +59,61 @@ router.post('/login', async (req, res) => {
     );
 
     res.json({ token, user: { id: user.id, full_name: user.full_name, email: user.email, membership_type: user.membership_type, role: user.role } });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// POST /api/auth/forgot-password
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+  if (!email) return res.status(400).json({ error: 'Email është i detyrueshëm' });
+
+  const genericResponse = { message: 'Nëse ky email ekziston, të kemi dërguar udhëzimet për rivendosjen e fjalëkalimit.' };
+
+  try {
+    const [[user]] = await db.query('SELECT id, full_name, email FROM users WHERE email = ?', [email]);
+    if (!user) return res.json(genericResponse); // don't reveal whether the email exists
+
+    const rawToken = crypto.randomBytes(32).toString('hex');
+    const tokenHash = crypto.createHash('sha256').update(rawToken).digest('hex');
+    const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    await db.query(
+      'UPDATE users SET reset_token_hash = ?, reset_token_expires = ? WHERE id = ?',
+      [tokenHash, expires, user.id]
+    );
+
+    const resetUrl = `${process.env.FRONTEND_URL}/reset-password?token=${rawToken}`;
+    await sendPasswordResetEmail(user.email, user.full_name, resetUrl);
+
+    res.json(genericResponse);
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// POST /api/auth/reset-password
+router.post('/reset-password', async (req, res) => {
+  const { token, new_password } = req.body;
+  if (!token || !new_password) return res.status(400).json({ error: 'Token dhe fjalëkalimi i ri janë të detyrueshëm' });
+  if (new_password.length < 6) return res.status(400).json({ error: 'Fjalëkalimi duhet të ketë të paktën 6 karaktere' });
+
+  try {
+    const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+    const [[user]] = await db.query(
+      'SELECT id FROM users WHERE reset_token_hash = ? AND reset_token_expires > NOW()',
+      [tokenHash]
+    );
+    if (!user) return res.status(400).json({ error: 'Linku është i pavlefshëm ose ka skaduar. Kërko një link të ri.' });
+
+    const hash = await bcrypt.hash(new_password, 12);
+    await db.query(
+      'UPDATE users SET password_hash = ?, reset_token_hash = NULL, reset_token_expires = NULL WHERE id = ?',
+      [hash, user.id]
+    );
+
+    res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: 'Gabim serveri' });
   }

@@ -46,6 +46,14 @@ export async function fetchMe(): Promise<ApiUser> {
   return authedFetch('/api/user/me')
 }
 
+export async function requestPasswordReset(email: string): Promise<void> {
+  await authedFetch('/api/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) })
+}
+
+export async function resetPassword(token: string, new_password: string): Promise<void> {
+  await authedFetch('/api/auth/reset-password', { method: 'POST', body: JSON.stringify({ token, new_password }) })
+}
+
 export async function updateProfileName(full_name: string): Promise<void> {
   await authedFetch('/api/user/profile', { method: 'PATCH', body: JSON.stringify({ full_name }) })
 }

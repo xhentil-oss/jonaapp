@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { MailIcon, ChevronLeftIcon } from '../components/Icons'
+import { requestPasswordReset } from '../services/api'
 
 export default function ForgotPasswordScreen() {
   const navigate = useNavigate()
@@ -21,8 +22,8 @@ export default function ForgotPasswordScreen() {
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
           </div>
         </div>
-        <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 10, color: 'var(--text-primary)' }}>Kërkesa u dërgua</h2>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: 8, lineHeight: 1.65, fontSize: 14 }}>Ekipi i mbështetjes do t'ju kontaktojë në adresën:</p>
+        <h2 style={{ fontSize: 22, fontWeight: 800, marginBottom: 10, color: 'var(--text-primary)' }}>Kontrollo email-in tënd</h2>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: 8, lineHeight: 1.65, fontSize: 14 }}>Nëse ky email ekziston, dërguam një link për rivendosjen e fjalëkalimit në:</p>
         <p style={{ color: 'var(--primary)', fontWeight: 700, fontSize: 14, marginBottom: 32 }}>{email}</p>
         <button className="btn btn-primary btn-full" onClick={() => navigate('/login')} style={{ padding: '16px' }}>Kthehu te Hyrja</button>
         <button onClick={() => setDerguar(false)} style={{ background: 'none', border: 'none', color: 'var(--text-muted)', fontSize: 13, cursor: 'pointer', marginTop: 14 }}>Kthehu prapa</button>
@@ -42,7 +43,7 @@ export default function ForgotPasswordScreen() {
           <MailIcon size={28} color="var(--primary)" strokeWidth={1.4} />
         </div>
         <h1 style={{ fontSize: 24, marginBottom: 8, color: 'var(--text-primary)' }}>Harrove Fjalëkalimin?</h1>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: 32, lineHeight: 1.6, fontSize: 14 }}>Rivendosja automatike nuk është ende e disponueshme. Shkruaj email-in tënd dhe ekipi i mbështetjes do të të ndihmojë.</p>
+        <p style={{ color: 'var(--text-secondary)', marginBottom: 32, lineHeight: 1.6, fontSize: 14 }}>Shkruaj email-in tënd dhe do të dërgojmë një link për të rivendosur fjalëkalimin.</p>
         <div className="input-group" style={{ marginBottom: 28 }}>
           <label className="input-label">Adresa Email</label>
           <div className="input-wrapper has-icon">
@@ -61,10 +62,17 @@ export default function ForgotPasswordScreen() {
           className="btn btn-primary btn-full"
           style={{ padding: '16px', opacity: email.includes('@') && !loading ? 1 : 0.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
           disabled={!email.includes('@') || loading}
-          onClick={() => {
+          onClick={async () => {
             setLoading(true)
             setError('')
-            setTimeout(() => { setLoading(false); setDerguar(true) }, 500)
+            try {
+              await requestPasswordReset(email)
+              setDerguar(true)
+            } catch (e) {
+              setError(e instanceof Error ? e.message : 'Ndodhi një gabim. Provo sërish.')
+            } finally {
+              setLoading(false)
+            }
           }}
         >
           {loading ? (

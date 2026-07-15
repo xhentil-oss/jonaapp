@@ -47,6 +47,8 @@ CREATE TABLE users (
   full_name       VARCHAR(255)                    NOT NULL,
   email           VARCHAR(255)                    NOT NULL,
   password_hash   TEXT                            NOT NULL,
+  reset_token_hash    VARCHAR(255),
+  reset_token_expires DATETIME,
   avatar_url      TEXT,
   membership_type ENUM('free','premium')          NOT NULL DEFAULT 'free',
   role            ENUM('student','admin')         NOT NULL DEFAULT 'student',

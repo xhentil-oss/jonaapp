@@ -154,6 +154,31 @@ export async function updateNotificationSettings(settings: NotificationSettings)
   await authedFetch('/api/user/notification-settings', { method: 'PATCH', body: JSON.stringify(settings) })
 }
 
+export interface ApiNotification {
+  id: number
+  type: 'kurs' | 'certifikatë'
+  titulli: string
+  mesazhi: string
+  lexuar: number
+  created_at: string
+}
+
+export async function fetchNotifications(): Promise<ApiNotification[]> {
+  return authedFetch('/api/user/notifications')
+}
+
+export async function markNotificationRead(id: number): Promise<void> {
+  await authedFetch(`/api/user/notifications/${id}/read`, { method: 'PATCH' })
+}
+
+export async function markAllNotificationsRead(): Promise<void> {
+  await authedFetch('/api/user/notifications/read-all', { method: 'PATCH' })
+}
+
+export async function deleteNotification(id: number): Promise<void> {
+  await authedFetch(`/api/user/notifications/${id}`, { method: 'DELETE' })
+}
+
 const CATEGORY_COLORS: Record<string, string> = {
   'Motivim': '#7A4F2D',
   'Shëndet': '#4A9B6F',

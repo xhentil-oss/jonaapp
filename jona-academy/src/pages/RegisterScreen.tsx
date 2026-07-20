@@ -22,7 +22,7 @@ export default function RegisterScreen() {
     setError('')
     try {
       await register(emri, email, password)
-      navigate('/home')
+      navigate('/login')
     } catch (e: any) {
       setError(e?.message || 'Ndodhi një gabim. Provo sërish.')
     } finally {

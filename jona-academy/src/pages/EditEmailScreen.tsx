@@ -71,6 +71,8 @@ export default function EditEmailScreen() {
                 value={emailRi}
                 onChange={e => { setEmailRi(e.target.value); setError('') }}
                 autoFocus
+                autoComplete="off"
+                name="new-email-field"
               />
             </div>
           </div>

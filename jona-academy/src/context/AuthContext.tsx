@@ -60,11 +60,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   const register = async (fullName: string, email: string, password: string) => {
-    const { token, user: newUser } = await registerUser(fullName, email, password)
-    setToken(token)
-    setUser(newUser)
-    setEnrollments([])
-    setSubscription(null)
+    await registerUser(fullName, email, password)
   }
 
   const logout = () => {

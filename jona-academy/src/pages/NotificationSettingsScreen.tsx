@@ -10,24 +10,9 @@ const kategorite = [
     pershkrimi: 'Njoftim kur shtohen kurse të reja',
   },
   {
-    id: 'lesson_reminders' as const,
-    titulli: 'Kujtues Mësimi',
-    pershkrimi: 'Të kujtojmë të vazhdosh mësimet',
-  },
-  {
-    id: 'offers_promotions' as const,
-    titulli: 'Oferta & Promocione',
-    pershkrimi: 'Zbritje dhe oferta të veçanta',
-  },
-  {
     id: 'certificates' as const,
     titulli: 'Certifikata',
     pershkrimi: 'Kur certifikata jote është gati',
-  },
-  {
-    id: 'messages' as const,
-    titulli: 'Mesazhe',
-    pershkrimi: 'Mesazhe nga instruktorët',
   },
 ]
 
@@ -70,18 +55,9 @@ export default function NotificationSettingsScreen() {
     fetchNotificationSettings().then(setAktive).catch(e => setError(e.message)).finally(() => setLoading(false))
   }, [])
 
-  const gjithçka = kategorite.every(k => aktive[k.id])
-
   const ruaj = (te_reja: NotificationSettings) => {
     setAktive(te_reja)
     updateNotificationSettings(te_reja).catch(e => setError(e.message))
-  }
-
-  const ndryshoGjithçka = () => {
-    const vlera = !gjithçka
-    const te_reja = { ...aktive }
-    kategorite.forEach(k => { te_reja[k.id] = vlera ? 1 : 0 })
-    ruaj(te_reja)
   }
 
   const ndrysho = (id: keyof NotificationSettings) => {
@@ -118,24 +94,6 @@ export default function NotificationSettingsScreen() {
             <p style={{ fontSize: 13, color: '#DC2626', margin: 0 }}>{error}</p>
           </div>
         )}
-
-        {/* Toggle i përgjithshëm */}
-        <div style={{
-          background: 'var(--bg-primary)', borderRadius: 'var(--radius-lg)',
-          border: '1px solid var(--border)', padding: '16px 18px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: 8,
-        }}>
-          <div>
-            <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', margin: '0 0 2px' }}>
-              Të gjitha njoftimet
-            </p>
-            <p style={{ fontSize: 13, color: 'var(--text-muted)', margin: 0 }}>
-              Hap ose mbyll të gjitha
-            </p>
-          </div>
-          <Toggle aktiv={gjithçka} onChange={ndryshoGjithçka} disabled={loading} />
-        </div>
 
         <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: '14px 0 8px 4px' }}>
           LLOJET E NJOFTIMEVE

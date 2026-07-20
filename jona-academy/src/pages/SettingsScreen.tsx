@@ -1,23 +1,15 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import {
-  UserIcon, LockIcon, BellIcon, BookOpenIcon, MailIcon,
-  CreditCardIcon, HelpCircleIcon, FileTextIcon,
-  SettingsIcon, LogOutIcon, ChevronRightIcon,
+  UserIcon, LockIcon, MailIcon,
+  CreditCardIcon,
+  LogOutIcon, ChevronRightIcon,
 } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
 
 export default function SettingsScreen() {
   const navigate = useNavigate()
   const { logout } = useAuth()
-
-  const [njoftime, setNjoftime] = useState<boolean>(true)
-  const [emailUpdates, setEmailUpdates] = useState<boolean>(false)
-  const [autoplay, setAutoplay] = useState(true)
-
-  const toggleNjoftime = () => setNjoftime(v => !v)
-  const toggleEmailUpdates = () => setEmailUpdates(v => !v)
 
   const Toggle = ({ value, onChange }: { value: boolean; onChange: () => void }) => (
     <button onClick={onChange} style={{ width: 46, height: 26, borderRadius: 13, background: value ? 'var(--primary)' : 'var(--border)', border: 'none', cursor: 'pointer', position: 'relative', transition: 'background 0.2s', flexShrink: 0 }}>
@@ -65,31 +57,8 @@ export default function SettingsScreen() {
           <Rreshti Icon={MailIcon} label="Ndrysho Email-in" onPress={() => navigate('/edit-email')} accent last />
         </Seksioni>
 
-        <Seksioni titulli="Njoftimet">
-          <Rreshti Icon={BellIcon}     label="Njoftime Push"      isToggle toggleValue={njoftime}     onToggle={toggleNjoftime} />
-          <Rreshti Icon={BookOpenIcon} label="Azhurnime me Email" isToggle toggleValue={emailUpdates} onToggle={toggleEmailUpdates} last />
-        </Seksioni>
-
-        <Seksioni titulli="Luajtja">
-          <Rreshti Icon={SettingsIcon} label="Luaj Automatikisht Mësimet" isToggle toggleValue={autoplay} onToggle={() => setAutoplay(n => !n)} />
-          <Rreshti Icon={SettingsIcon} label="Cilësia e Videos"  value="Auto"        onPress={() => navigate('/video-quality')} />
-          <Rreshti Icon={SettingsIcon} label="Shkarkimet"        value="Vetëm Wi-Fi" onPress={() => navigate('/downloads')} last />
-        </Seksioni>
-
         <Seksioni titulli="Abonimi">
-          <Rreshti Icon={CreditCardIcon} label="Menaxho Abonimin" onPress={() => navigate('/paywall')} />
-          <Rreshti Icon={CreditCardIcon} label="Rikthe Blerjet"   onPress={() => {}} last />
-        </Seksioni>
-
-        <Seksioni titulli="Mbështetja">
-          <Rreshti Icon={HelpCircleIcon} label="Qendra e Ndihmës"      onPress={() => {}} />
-          <Rreshti Icon={HelpCircleIcon} label="Kontakto Mbështetjen"  onPress={() => {}} />
-          <Rreshti Icon={SettingsIcon}   label="Vlerëso Aplikacionin"  onPress={() => {}} last />
-        </Seksioni>
-
-        <Seksioni titulli="Ligjore">
-          <Rreshti Icon={FileTextIcon} label="Kushtet e Shërbimit"    onPress={() => {}} />
-          <Rreshti Icon={FileTextIcon} label="Politika e Privatësisë" onPress={() => {}} last />
+          <Rreshti Icon={CreditCardIcon} label="Menaxho Abonimin" onPress={() => navigate('/paywall')} last />
         </Seksioni>
 
         <div style={{ padding: '0 20px' }}>

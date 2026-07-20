@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import BottomNav from '../components/BottomNav'
 import CourseCard from '../components/CourseCard'
 import CategoryCard from '../components/CategoryCard'
-import { SearchIcon, BellIcon, SparkleIcon, SunIcon } from '../components/Icons'
+import { SearchIcon, SparkleIcon, SunIcon } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
 import { fetchCourses, fetchCategories, type ApiCourse, type ApiCategory } from '../services/api'
 
@@ -48,10 +48,6 @@ export default function HomeScreen() {
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           <button onClick={() => navigate('/search')} style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)' }}>
             <SearchIcon size={18} />
-          </button>
-          <button onClick={() => navigate('/notifications')} style={{ width: 38, height: 38, borderRadius: '50%', background: 'var(--bg-secondary)', border: '1px solid var(--border)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', position: 'relative' }}>
-            <BellIcon size={18} />
-            <span style={{ position: 'absolute', top: 7, right: 7, width: 7, height: 7, borderRadius: '50%', background: 'var(--danger)', border: '1.5px solid white' }} />
           </button>
           <div className="avatar avatar-sm" style={{ cursor: 'pointer', background: 'var(--gradient-primary)' }} onClick={() => navigate('/profile')}>{avatarLetter}</div>
         </div>

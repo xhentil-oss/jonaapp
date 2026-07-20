@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router-dom'
-import { ChevronLeftIcon, BellIcon } from './Icons'
+import { ChevronLeftIcon } from './Icons'
 
 interface HeaderProps {
   title?: string
   showBack?: boolean
-  showNotification?: boolean
   transparent?: boolean
   rightElement?: React.ReactNode
 }
 
-export default function Header({ title, showBack = false, showNotification = false, transparent = false, rightElement }: HeaderProps) {
+export default function Header({ title, showBack = false, transparent = false, rightElement }: HeaderProps) {
   const navigate = useNavigate()
 
   return (
@@ -54,21 +53,6 @@ export default function Header({ title, showBack = false, showNotification = fal
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {rightElement}
-        {showNotification && (
-          <button style={{
-            width: 36, height: 36, borderRadius: '50%',
-            background: 'var(--bg-card)', border: '1px solid var(--border)',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'var(--text-secondary)', position: 'relative',
-          }}>
-            <BellIcon size={18} />
-            <span style={{
-              position: 'absolute', top: 7, right: 7,
-              width: 7, height: 7, borderRadius: '50%',
-              background: 'var(--danger)', border: '1.5px solid var(--bg-primary)',
-            }} />
-          </button>
-        )}
       </div>
     </header>
   )

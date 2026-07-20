@@ -59,19 +59,6 @@ const kontaktet = [
     ngjyra: 'rgba(16,185,129,0.1)',
     ngjyraIkones: '#10B981',
   },
-  {
-    ikona: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 2H3v16h5l3 3 3-3h7V2z"/>
-        <line x1="9" y1="9" x2="15" y2="9"/>
-        <line x1="9" y1="13" x2="12" y2="13"/>
-      </svg>
-    ),
-    titulli: 'Chat Live',
-    vlera: 'E hënë – E premte, 9:00–17:00',
-    ngjyra: 'rgba(99,102,241,0.1)',
-    ngjyraIkones: '#6366F1',
-  },
 ]
 
 export default function HelpScreen() {

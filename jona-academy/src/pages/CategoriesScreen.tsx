@@ -19,14 +19,14 @@ export default function CategoriesScreen() {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg-secondary)', paddingBottom: 'var(--nav-height)' }}>
-      <Header title="Eksplorimi" showNotification />
+      <Header title="Eksplorimi" />
 
       <div style={{ padding: '12px 20px 20px', background: 'var(--bg-primary)', borderBottom: '1px solid var(--border)' }}>
-        <div className="input-wrapper has-icon">
+        <div className="input-wrapper has-icon" onClick={() => navigate('/search')} style={{ cursor: 'pointer' }}>
           <span className="input-icon" style={{ display: 'flex', alignItems: 'center' }}>
             <SearchIcon size={16} color="var(--text-muted)" strokeWidth={1.8} />
           </span>
-          <input className="input-field" placeholder="Kërko kurse, tema..." style={{ borderRadius: 'var(--radius-full)' }} />
+          <input className="input-field" placeholder="Kërko kurse, tema..." readOnly style={{ borderRadius: 'var(--radius-full)', cursor: 'pointer' }} />
         </div>
       </div>
 

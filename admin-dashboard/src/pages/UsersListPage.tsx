@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { fetchUsers, type AdminUserListItem } from '../services/api'
+import ConfirmModal from '../components/ConfirmModal'
+import { fetchUsers, deleteUser, type AdminUserListItem } from '../services/api'
 
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleDateString('sq-AL', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -12,12 +13,29 @@ export default function UsersListPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
+  const [userToDelete, setUserToDelete] = useState<AdminUserListItem | null>(null)
+  const [deleting, setDeleting] = useState(false)
 
   const load = () => {
     setLoading(true)
     fetchUsers(search || undefined).then(setUsers).catch(e => setError(e.message)).finally(() => setLoading(false))
   }
   useEffect(load, [])
+
+  const handleDelete = async () => {
+    if (!userToDelete) return
+    setDeleting(true)
+    setError('')
+    try {
+      await deleteUser(userToDelete.id)
+      setUsers(prev => prev.filter(x => x.id !== userToDelete.id))
+      setUserToDelete(null)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Ndodhi një gabim')
+    } finally {
+      setDeleting(false)
+    }
+  }
 
   return (
     <div>
@@ -51,8 +69,9 @@ export default function UsersListPage() {
                   <td>{u.certificates_count}</td>
                   <td>{u.has_active_subscription ? <span className="badge badge-success">Aktiv</span> : <span className="badge badge-muted">—</span>}</td>
                   <td style={{ color: 'var(--text-muted)' }}>{fmtDate(u.created_at)}</td>
-                  <td style={{ textAlign: 'right' }}>
+                  <td style={{ textAlign: 'right', display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
                     <button className="btn btn-secondary btn-sm" onClick={() => navigate(`/users/${u.id}`)}>Shiko</button>
+                    <button className="btn btn-danger btn-sm" onClick={() => setUserToDelete(u)}>Fshi</button>
                   </td>
                 </tr>
               ))}
@@ -60,6 +79,17 @@ export default function UsersListPage() {
           </table>
         )}
       </div>
+
+      <ConfirmModal
+        open={userToDelete != null}
+        title="Fshi Përdoruesin?"
+        message={userToDelete ? `Të fshihet "${userToDelete.full_name}" (${userToDelete.email})? Kjo do të fshijë edhe regjistrimet, certifikatat dhe pagesat e tij. Ky veprim nuk kthehet mbrapsht.` : ''}
+        confirmLabel="Fshi"
+        danger
+        loading={deleting}
+        onConfirm={handleDelete}
+        onCancel={() => setUserToDelete(null)}
+      />
     </div>
   )
 }

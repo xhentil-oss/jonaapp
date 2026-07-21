@@ -191,6 +191,7 @@ export interface AdminUserDetail extends AdminUserListItem {
 
 export const fetchUsers = (search?: string): Promise<AdminUserListItem[]> => get(`/api/admin/users${search ? `?search=${encodeURIComponent(search)}` : ''}`)
 export const fetchUser = (id: number): Promise<AdminUserDetail> => get(`/api/admin/users/${id}`)
+export const deleteUser = (id: number) => del(`/api/admin/users/${id}`)
 
 // ---------------- Certificates ----------------
 

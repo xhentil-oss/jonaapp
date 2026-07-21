@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const db = require('../config/db');
 const auth = require('../middleware/authMiddleware');
 const requireAdmin = require('../middleware/adminMiddleware');
+const { sendNewCourseEmail, sendCertificateReadyEmail } = require('../utils/mailer');
 
 const router = express.Router();
 
@@ -216,6 +217,21 @@ router.post('/courses', async (req, res) => {
       values
     );
     res.status(201).json({ id: result.insertId });
+
+    const [recipients] = await db.query(`
+      SELECT u.id, u.email, u.full_name FROM users u
+      LEFT JOIN notification_settings ns ON ns.user_id = u.id
+      WHERE COALESCE(ns.new_courses, 1) = 1
+    `);
+    if (recipients.length > 0) {
+      await db.query(
+        `INSERT INTO notifications (user_id, type, titulli, mesazhi) VALUES ${recipients.map(() => '(?, ?, ?, ?)').join(', ')}`,
+        recipients.flatMap(r => [r.id, 'kurs', 'Kurs i Ri i Disponueshëm', `Trajnimi "${body.title}" sapo u shtua. Shikoje tani!`])
+      );
+    }
+    for (const r of recipients) {
+      sendNewCourseEmail(r.email, r.full_name, body.title).catch(err => console.error('sendNewCourseEmail failed:', err.message));
+    }
   } catch (err) {
     res.status(500).json({ error: 'Gabim serveri', detail: err.message });
   }
@@ -380,6 +396,20 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
+router.delete('/users/:id', async (req, res) => {
+  try {
+    const [[user]] = await db.query('SELECT role FROM users WHERE id = ?', [req.params.id]);
+    if (!user) return res.status(404).json({ error: 'Përdoruesi nuk u gjet' });
+    if (user.role === 'admin') return res.status(403).json({ error: 'Nuk mund të fshihet një llogari admin' });
+
+    await db.query('DELETE FROM users WHERE id = ?', [req.params.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('delete user failed:', err);
+    res.status(500).json({ error: 'Gabim serveri', detail: err.message });
+  }
+});
+
 // ============================================================
 // CERTIFICATES
 // ============================================================
@@ -409,6 +439,22 @@ router.post('/certificates', async (req, res) => {
       [user_id, course_id, code, instructor_signature_name || 'Fatjona Cici']
     );
     res.status(201).json({ id: result.insertId, certificate_code: code });
+
+    const [[recipient]] = await db.query(`
+      SELECT u.email, u.full_name, c.title AS course_title
+      FROM users u
+      LEFT JOIN notification_settings ns ON ns.user_id = u.id
+      JOIN courses c ON c.id = ?
+      WHERE u.id = ? AND COALESCE(ns.certificates, 1) = 1
+    `, [course_id, user_id]);
+    if (recipient) {
+      await db.query(
+        'INSERT INTO notifications (user_id, type, titulli, mesazhi) VALUES (?, ?, ?, ?)',
+        [user_id, 'certifikatë', 'Certifikatë e Gatshme', `Certifikata jote për "${recipient.course_title}" është gati për shkarkim.`]
+      );
+      sendCertificateReadyEmail(recipient.email, recipient.full_name, recipient.course_title)
+        .catch(err => console.error('sendCertificateReadyEmail failed:', err.message));
+    }
   } catch (err) {
     res.status(500).json({ error: 'Gabim serveri', detail: err.message });
   }

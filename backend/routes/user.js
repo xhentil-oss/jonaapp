@@ -207,4 +207,47 @@ router.patch('/notification-settings', auth, async (req, res) => {
   }
 });
 
+// GET /api/user/notifications — njoftimet e userit
+router.get('/notifications', auth, async (req, res) => {
+  try {
+    const [rows] = await db.query(
+      'SELECT id, type, titulli, mesazhi, lexuar, created_at FROM notifications WHERE user_id = ? ORDER BY created_at DESC',
+      [req.user.id]
+    );
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// PATCH /api/user/notifications/read-all — shëno të gjitha si të lexuara
+router.patch('/notifications/read-all', auth, async (req, res) => {
+  try {
+    await db.query('UPDATE notifications SET lexuar = 1 WHERE user_id = ?', [req.user.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// PATCH /api/user/notifications/:id/read — shëno një njoftim si të lexuar
+router.patch('/notifications/:id/read', auth, async (req, res) => {
+  try {
+    await db.query('UPDATE notifications SET lexuar = 1 WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
+// DELETE /api/user/notifications/:id
+router.delete('/notifications/:id', auth, async (req, res) => {
+  try {
+    await db.query('DELETE FROM notifications WHERE id = ? AND user_id = ?', [req.params.id, req.user.id]);
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
 module.exports = router;

@@ -34,4 +34,36 @@ async function sendPasswordResetEmail(to, fullName, resetUrl) {
   });
 }
 
-module.exports = { sendPasswordResetEmail };
+async function sendNewCourseEmail(to, fullName, courseTitle) {
+  await transporter.sendMail({
+    from: `"Jona Academy" <${process.env.SMTP_USER}>`,
+    to,
+    subject: `Kurs i Ri: ${courseTitle} — Jona Academy`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #1C1714;">
+        <h2 style="color: #7A4F2D;">Kurs i Ri i Disponueshëm</h2>
+        <p>Përshëndetje ${fullName},</p>
+        <p>Sapo u shtua një kurs i ri: <strong>${courseTitle}</strong>. Hidhi një sy tani në Jona Academy!</p>
+        <p style="font-size: 13px; color: #6B5E55;">Mund t'i çaktivizosh këto njoftime te Cilësimet e llogarisë.</p>
+      </div>
+    `,
+  });
+}
+
+async function sendCertificateReadyEmail(to, fullName, courseTitle) {
+  await transporter.sendMail({
+    from: `"Jona Academy" <${process.env.SMTP_USER}>`,
+    to,
+    subject: `Certifikata jote është gati — Jona Academy`,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 480px; margin: 0 auto; color: #1C1714;">
+        <h2 style="color: #7A4F2D;">Certifikata jote është gati</h2>
+        <p>Përshëndetje ${fullName},</p>
+        <p>Urime! Certifikata jote për kursin <strong>${courseTitle}</strong> është gati për shkarkim në Jona Academy.</p>
+        <p style="font-size: 13px; color: #6B5E55;">Mund t'i çaktivizosh këto njoftime te Cilësimet e llogarisë.</p>
+      </div>
+    `,
+  });
+}
+
+module.exports = { sendPasswordResetEmail, sendNewCourseEmail, sendCertificateReadyEmail };

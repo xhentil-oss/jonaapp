@@ -2,13 +2,40 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const rateLimit = require('express-rate-limit');
 const db = require('../config/db');
 const { sendPasswordResetEmail } = require('../utils/mailer');
 
 const router = express.Router();
 
+const rateLimitMessage = { error: 'Shumë përpjekje. Provo sërish pas pak kohësh.' };
+
+const registerLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 orë
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: rateLimitMessage,
+});
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minuta
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: rateLimitMessage,
+});
+
+const forgotPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minuta
+  max: 3,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: rateLimitMessage,
+});
+
 // POST /api/auth/register
-router.post('/register', async (req, res) => {
+router.post('/register', registerLimiter, async (req, res) => {
   const { full_name, email, password } = req.body;
   if (!full_name || !email || !password)
     return res.status(400).json({ error: 'Të gjitha fushat janë të detyrueshme' });
@@ -32,12 +59,13 @@ router.post('/register', async (req, res) => {
 
     res.status(201).json({ token, user: { id: result.insertId, full_name, email, role: 'student' } });
   } catch (err) {
+    console.error('register failed:', err);
     res.status(500).json({ error: 'Gabim serveri' });
   }
 });
 
 // POST /api/auth/login
-router.post('/login', async (req, res) => {
+router.post('/login', loginLimiter, async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(400).json({ error: 'Email dhe password janë të detyrueshme' });
@@ -60,12 +88,13 @@ router.post('/login', async (req, res) => {
 
     res.json({ token, user: { id: user.id, full_name: user.full_name, email: user.email, membership_type: user.membership_type, role: user.role } });
   } catch (err) {
+    console.error('login failed:', err);
     res.status(500).json({ error: 'Gabim serveri' });
   }
 });
 
 // POST /api/auth/forgot-password
-router.post('/forgot-password', async (req, res) => {
+router.post('/forgot-password', forgotPasswordLimiter, async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ error: 'Email është i detyrueshëm' });
 
@@ -89,6 +118,7 @@ router.post('/forgot-password', async (req, res) => {
 
     res.json(genericResponse);
   } catch (err) {
+    console.error('forgot-password failed:', err);
     res.status(500).json({ error: 'Gabim serveri' });
   }
 });
@@ -115,6 +145,7 @@ router.post('/reset-password', async (req, res) => {
 
     res.json({ success: true });
   } catch (err) {
+    console.error('reset-password failed:', err);
     res.status(500).json({ error: 'Gabim serveri' });
   }
 });

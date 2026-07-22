@@ -34,24 +34,44 @@ const seksionet = [
     titulli: 'Politika e Privatësisë',
     permbajtja: [
       {
-        nentitulli: '1. Të Dhënat që Mbledhim',
-        teksti: 'Mbledhim informacione që ju jepni drejtpërdrejt, si emrin, emailin dhe informacionin e pagesës. Gjithashtu mbledhim të dhëna rreth mënyrës si përdorni platformën për të përmirësuar shërbimin tonë.',
+        nentitulli: '1. Kush Jemi',
+        teksti: 'Jona Academy është një platformë online kursesh e ofruar përmes këtij aplikacioni dhe faqes sonë të internetit. Kjo politikë shpjegon çfarë të dhënash mbledhim, pse i mbledhim, dhe çfarë të drejtash keni mbi to.',
       },
       {
-        nentitulli: '2. Si i Përdorim të Dhënat',
-        teksti: 'Të dhënat tuaja përdoren për: ofrimin e shërbimeve, personalizimin e eksperiencës, dërgimin e njoftimeve të rëndësishme, dhe përmirësimin e platformës. Nuk shesim të dhënat tuaja personale tek palë të treta.',
+        nentitulli: '2. Të Dhënat që Mbledhim',
+        teksti: 'Kur krijoni një llogari, mbledhim emrin tuaj të plotë, adresën email dhe fjalëkalimin (i ruajtur gjithmonë i enkriptuar, kurrë në tekst të thjeshtë). Kur regjistroheni në një kurs ose abonim, ruajmë të dhëna mbi kursin/planin e blerë dhe statusin e pagesës. Gjatë përdorimit të platformës, ruajmë progresin tuaj në mësime (p.sh. sa video keni parë, cilat kurse i keni përfunduar) që t\'ju ndihmojmë të vazhdoni ku e latë. Nuk mbledhim të dhëna të kartës bankare — pagesat kryhen nga procesorë të pagesave të palëve të treta që janë vetë përgjegjës për sigurinë e këtyre të dhënave.',
       },
       {
-        nentitulli: '3. Siguria e të Dhënave',
-        teksti: 'Zbatojmë masa të forta sigurie teknike dhe organizative për të mbrojtur të dhënat tuaja. Të gjitha pagesat kryhen përmes sistemeve të enkriptuara dhe të certifikuara.',
+        nentitulli: '3. Si i Përdorim të Dhënat',
+        teksti: 'Të dhënat tuaja përdoren për: krijimin dhe menaxhimin e llogarisë suaj, dhënien e aksesit te kurset që keni blerë, dërgimin e email-eve të rëndësishme (konfirmim regjistrimi, rivendosje fjalëkalimi, njoftime për kurse/certifikata të reja nëse i keni aktivizuar), dhe përmirësimin e vetë platformës. Nuk i shesim dhe nuk i japim me qira të dhënat tuaja personale palëve të treta për qëllime reklamimi.',
       },
       {
-        nentitulli: '4. Cookie-t',
-        teksti: 'Përdorim cookie për të mbajtur sesionin tuaj aktiv, për të analizuar trafikun dhe për të personalizuar eksperiencën. Mund t\'i çaktivizoni cookie-t nga cilësimet e shfletuesit, por kjo mund të ndikojë në funksionalitetin e platformës.',
+        nentitulli: '4. Me Kë i Ndajmë të Dhënat',
+        teksti: 'Për të ofruar shërbimin, disa të dhëna kalojnë përmes ofruesve teknikë që na ndihmojnë të operojmë: shërbimi i email-eve (për dërgimin e njoftimeve dhe rivendosjen e fjalëkalimit) dhe, kur aplikohet, procesori i pagesave për blerjet e kurseve/abonimeve. Videot e mësimeve mund të shërbehen përmes Google Drive; hapja e tyre i nënshtrohet edhe politikës së privatësisë së Google. Këta ofrues përpunojnë të dhënat vetëm në emrin tonë dhe sipas udhëzimeve tona, jo për qëllime të tyre.',
       },
       {
-        nentitulli: '5. Të Drejtat Tuaja',
-        teksti: 'Keni të drejtë të aksesoni, korrigjoni ose fshini të dhënat tuaja personale. Për të ushtruar këto të drejta, kontaktoni ekipin tonë në privacy@jonakademy.al.',
+        nentitulli: '5. Ruajtja e të Dhënave',
+        teksti: 'Të dhënat tuaja ruhen për sa kohë llogaria juaj është aktive. Nëse kërkoni fshirjen e llogarisë, i fshijmë të dhënat tuaja personale brenda një afati të arsyeshëm, përveç rasteve kur ligji na detyron t\'i mbajmë (p.sh. të dhëna faturimi për qëllime kontabiliteti).',
+      },
+      {
+        nentitulli: '6. Siguria e të Dhënave',
+        teksti: 'Fjalëkalimet ruhen gjithmonë të enkriptuara (hash-uara), asnjëherë në tekst të thjeshtë. Komunikimi mes aplikacionit dhe serverëve tanë kryhet përmes lidhjeve të enkriptuara (HTTPS). Aksesi te të dhënat brenda organizatës sonë kufizohet vetëm te personeli që ka nevojë të vërtetë për të.',
+      },
+      {
+        nentitulli: '7. Të Drejtat Tuaja',
+        teksti: 'Keni të drejtë të: shihni çfarë të dhënash kemi për ju, të kërkoni korrigjimin e të dhënave të pasakta, të kërkoni fshirjen e llogarisë dhe të dhënave tuaja, dhe të tërhiqni pëlqimin për marrjen e njoftimeve promocionale (nga Cilësimet e llogarisë). Për të ushtruar këto të drejta, na kontaktoni në email-in më poshtë.',
+      },
+      {
+        nentitulli: '8. Privatësia e Fëmijëve',
+        teksti: 'Platforma jonë nuk synohet për persona nën moshën 16 vjeç, dhe nuk mbledhim me dije të dhëna nga fëmijë nën këtë moshë. Nëse besoni se një fëmijë na ka dhënë të dhëna personale, na kontaktoni që t\'i fshijmë menjëherë.',
+      },
+      {
+        nentitulli: '9. Ndryshimet e Kësaj Politike',
+        teksti: 'Mund ta përditësojmë këtë politikë herë pas here për të reflektuar ndryshime në shërbimet tona ose kërkesa ligjore. Data e përditësimit të fundit shfaqet në krye të kësaj faqeje.',
+      },
+      {
+        nentitulli: '10. Na Kontaktoni',
+        teksti: 'Për çdo pyetje rreth kësaj politike ose të dhënave tuaja, na shkruani në privacy@jonacademy.com.',
       },
     ],
   },
@@ -115,7 +135,7 @@ export default function TermsScreen() {
 
         {/* Data e fundit */}
         <p style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 16 }}>
-          Përditësuar së fundmi: 1 Janar 2025
+          Përditësuar së fundmi: 22 Korrik 2026
         </p>
 
         {/* Seksionet */}
@@ -172,7 +192,7 @@ export default function TermsScreen() {
           </div>
           <div>
             <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 2px' }}>Pyetje rreth kushteve?</p>
-            <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>legal@jonakademy.al</p>
+            <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>{tabAktiv === 'privatesia' ? 'privacy@jonacademy.com' : 'legal@jonacademy.com'}</p>
           </div>
         </div>
 

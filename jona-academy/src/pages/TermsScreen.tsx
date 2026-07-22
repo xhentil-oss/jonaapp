@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { ChevronLeftIcon } from '../components/Icons'
 
 const seksionet = [
@@ -59,7 +59,9 @@ const seksionet = [
 
 export default function TermsScreen() {
   const navigate = useNavigate()
-  const [tabAktiv, setTabAktiv] = useState<'kushtet' | 'privatesia'>('kushtet')
+  const [searchParams] = useSearchParams()
+  const tabFillestar = searchParams.get('tab') === 'privatesia' ? 'privatesia' : 'kushtet'
+  const [tabAktiv, setTabAktiv] = useState<'kushtet' | 'privatesia'>(tabFillestar)
   const [hapur, setHapur] = useState<string | null>(null)
 
   const seksioni = seksionet.find(s => s.id === tabAktiv)!

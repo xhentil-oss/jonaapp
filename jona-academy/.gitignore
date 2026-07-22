@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Capacitor / Android signing — not covered by the auto-generated android/.gitignore
+android/keystore.properties
+android/**/*.keystore
+android/**/*.jks

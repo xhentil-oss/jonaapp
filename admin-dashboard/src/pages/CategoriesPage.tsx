@@ -1,8 +1,24 @@
 import { useEffect, useState } from 'react'
 import ConfirmModal from '../components/ConfirmModal'
 import { fetchCategories, createCategory, updateCategory, deleteCategory, type Category } from '../services/api'
+import {
+  BriefcaseIcon, HomeIcon, CompassIcon, PaletteIcon, LeafIcon,
+  FlameIcon, BrainIcon, HeartPulseIcon, TargetIcon, TagIcon,
+} from '../components/Icons'
 
 const emptyForm = { name: '', icon: '', color: '#7A4F2D' }
+
+const CATEGORY_ICONS: Record<string, typeof TagIcon> = {
+  'Biznes': BriefcaseIcon,
+  'Familje': HomeIcon,
+  'Jetesë': CompassIcon,
+  'Krijimtari': PaletteIcon,
+  'Mirëqenie': LeafIcon,
+  'Motivim': FlameIcon,
+  'Psikologji': BrainIcon,
+  'Shëndet': HeartPulseIcon,
+  'Zhvillim Personal': TargetIcon,
+}
 
 export default function CategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -71,9 +87,20 @@ export default function CategoriesPage() {
           <table>
             <thead><tr><th>Ikona</th><th>Emri</th><th>Ngjyra</th><th>Kurse</th><th></th></tr></thead>
             <tbody>
-              {categories.map(c => (
+              {categories.map(c => {
+                const CatIcon = CATEGORY_ICONS[c.name] || TagIcon
+                return (
                 <tr key={c.id}>
-                  <td style={{ fontSize: 18 }}>{c.icon}</td>
+                  <td>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: '50%',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      background: `${c.color || '#7A4F2D'}18`,
+                      border: `1.5px solid ${c.color || '#7A4F2D'}33`,
+                    }}>
+                      <CatIcon size={17} color={c.color || '#7A4F2D'} strokeWidth={1.8} />
+                    </div>
+                  </td>
                   <td style={{ fontWeight: 600 }}>{c.name}</td>
                   <td><span style={{ display: 'inline-block', width: 16, height: 16, borderRadius: 4, background: c.color || '#ccc', verticalAlign: 'middle' }} /></td>
                   <td>{c.courses_count}</td>
@@ -82,7 +109,8 @@ export default function CategoriesPage() {
                     <button className="btn btn-danger btn-sm" onClick={() => setToDelete(c)}>Fshi</button>
                   </td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
         )}

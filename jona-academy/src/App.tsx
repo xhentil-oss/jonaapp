@@ -19,6 +19,8 @@ import CheckoutScreen from './pages/CheckoutScreen'
 import EditProfileScreen from './pages/EditProfileScreen'
 import EditPasswordScreen from './pages/EditPasswordScreen'
 import EditEmailScreen from './pages/EditEmailScreen'
+import DeleteAccountScreen from './pages/DeleteAccountScreen'
+import AccountDeletionInfoScreen from './pages/AccountDeletionInfoScreen'
 import SearchScreen from './pages/SearchScreen'
 import NotificationsScreen from './pages/NotificationsScreen'
 import NotificationSettingsScreen from './pages/NotificationSettingsScreen'
@@ -52,6 +54,8 @@ export default function App() {
           <Route path="/edit-profile" element={<EditProfileScreen />} />
           <Route path="/edit-password" element={<EditPasswordScreen />} />
           <Route path="/edit-email" element={<EditEmailScreen />} />
+          <Route path="/delete-account" element={<DeleteAccountScreen />} />
+          <Route path="/account-deletion-info" element={<AccountDeletionInfoScreen />} />
           <Route path="/search" element={<SearchScreen />} />
           <Route path="/notifications" element={<NotificationsScreen />} />
           <Route path="/notification-settings" element={<NotificationSettingsScreen />} />

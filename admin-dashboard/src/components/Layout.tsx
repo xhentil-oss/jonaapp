@@ -1,16 +1,20 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import {
+  BarChartIcon, BookOpenIcon, TagIcon, GraduationCapIcon, UsersIcon,
+  AwardIcon, CreditCardIcon, WalletIcon, SettingsIcon,
+} from './Icons'
 
 const navItems = [
-  { to: '/', label: 'Paneli', icon: '📊', end: true },
-  { to: '/courses', label: 'Kurset', icon: '📚' },
-  { to: '/categories', label: 'Kategoritë', icon: '🏷️' },
-  { to: '/instructors', label: 'Instruktorët', icon: '🎓' },
-  { to: '/users', label: 'Përdoruesit', icon: '👥' },
-  { to: '/certificates', label: 'Certifikatat', icon: '🏆' },
-  { to: '/subscriptions', label: 'Abonimet', icon: '💳' },
-  { to: '/payments', label: 'Pagesat', icon: '💰' },
-  { to: '/settings', label: 'Cilësimet', icon: '⚙️' },
+  { to: '/', label: 'Paneli', Icon: BarChartIcon, end: true },
+  { to: '/courses', label: 'Kurset', Icon: BookOpenIcon },
+  { to: '/categories', label: 'Kategoritë', Icon: TagIcon },
+  { to: '/instructors', label: 'Instruktorët', Icon: GraduationCapIcon },
+  { to: '/users', label: 'Përdoruesit', Icon: UsersIcon },
+  { to: '/certificates', label: 'Certifikatat', Icon: AwardIcon },
+  { to: '/subscriptions', label: 'Abonimet', Icon: CreditCardIcon },
+  { to: '/payments', label: 'Pagesat', Icon: WalletIcon },
+  { to: '/settings', label: 'Cilësimet', Icon: SettingsIcon },
 ]
 
 export default function Layout() {
@@ -41,7 +45,7 @@ export default function Layout() {
                 background: isActive ? 'rgba(255,255,255,0.1)' : 'transparent',
               })}
             >
-              <span>{item.icon}</span> {item.label}
+              <item.Icon size={17} strokeWidth={1.8} /> {item.label}
             </NavLink>
           ))}
         </nav>

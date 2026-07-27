@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { fetchStats, type AdminStats } from '../services/api'
+import {
+  BookOpenIcon, TagIcon, UsersIcon, CheckCircleIcon, CreditCardIcon, WalletIcon,
+} from '../components/Icons'
 
-function StatCard({ label, value, icon }: { label: string; value: string | number; icon: string }) {
+function StatCard({ label, value, Icon }: { label: string; value: string | number; Icon: React.ComponentType<{ size?: number; color?: string; strokeWidth?: number }> }) {
   return (
     <div className="card" style={{ padding: '18px 20px', flex: 1, minWidth: 180 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-        <span style={{ fontSize: 20 }}>{icon}</span>
+        <Icon size={19} color="var(--primary)" strokeWidth={1.8} />
         <p style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>{label}</p>
       </div>
       <p style={{ fontSize: 26, fontWeight: 800 }}>{value}</p>
@@ -34,12 +37,12 @@ export default function DashboardPage() {
       <h1 style={{ fontSize: 22, marginBottom: 20 }}>Paneli</h1>
 
       <div style={{ display: 'flex', gap: 16, marginBottom: 28, flexWrap: 'wrap' }}>
-        <StatCard label="Kurse" value={stats.totalCourses} icon="📚" />
-        <StatCard label="Kategoritë" value={stats.totalCategories} icon="🏷️" />
-        <StatCard label="Studentë" value={stats.totalStudents} icon="👥" />
-        <StatCard label="Regjistrime" value={stats.totalEnrollments} icon="✅" />
-        <StatCard label="Abonime aktive" value={stats.activeSubscriptions} icon="💳" />
-        <StatCard label="Të ardhura totale" value={`€${Number(stats.totalRevenue).toFixed(2)}`} icon="💰" />
+        <StatCard label="Kurse" value={stats.totalCourses} Icon={BookOpenIcon} />
+        <StatCard label="Kategoritë" value={stats.totalCategories} Icon={TagIcon} />
+        <StatCard label="Studentë" value={stats.totalStudents} Icon={UsersIcon} />
+        <StatCard label="Regjistrime" value={stats.totalEnrollments} Icon={CheckCircleIcon} />
+        <StatCard label="Abonime aktive" value={stats.activeSubscriptions} Icon={CreditCardIcon} />
+        <StatCard label="Të ardhura totale" value={`€${Number(stats.totalRevenue).toFixed(2)}`} Icon={WalletIcon} />
       </div>
 
       <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>

@@ -525,7 +525,7 @@ const upload = multer({
 
 router.post('/upload', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'Nuk u ngarkua asnjë skedar' });
-  res.status(201).json({ url: `/uploads/${req.file.filename}` });
+  res.status(201).json({ url: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}` });
 });
 
 module.exports = router;

@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import {
   UserIcon, LockIcon, MailIcon,
   CreditCardIcon,
-  LogOutIcon, ChevronRightIcon,
+  LogOutIcon, ChevronRightIcon, TrashIcon,
 } from '../components/Icons'
 import { useAuth } from '../context/AuthContext'
 
@@ -24,19 +24,19 @@ export default function SettingsScreen() {
     </div>
   )
 
-  const Rreshti = ({ Icon, label, value, onPress, isToggle, toggleValue, onToggle, last, accent }: {
+  const Rreshti = ({ Icon, label, value, onPress, isToggle, toggleValue, onToggle, last, accent, danger }: {
     Icon: React.FC<{ size?: number; color?: string; strokeWidth?: number }>
     label: string; value?: string; onPress?: () => void
-    isToggle?: boolean; toggleValue?: boolean; onToggle?: () => void; last?: boolean; accent?: boolean
+    isToggle?: boolean; toggleValue?: boolean; onToggle?: () => void; last?: boolean; accent?: boolean; danger?: boolean
   }) => (
     <button
       onClick={isToggle ? onToggle : onPress}
       style={{ width: '100%', padding: '14px 16px', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 12, borderBottom: last ? 'none' : '1px solid var(--border)' }}
     >
       <div style={{ width: 32, height: 32, borderRadius: 9, background: 'var(--bg-secondary)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-        <Icon size={15} color="var(--text-secondary)" strokeWidth={1.8} />
+        <Icon size={15} color={danger ? 'var(--danger)' : 'var(--text-secondary)'} strokeWidth={1.8} />
       </div>
-      <span style={{ flex: 1, fontSize: 14, color: accent ? 'var(--primary)' : 'var(--text-primary)', textAlign: 'left', fontWeight: accent ? 600 : 400 }}>{label}</span>
+      <span style={{ flex: 1, fontSize: 14, color: danger ? 'var(--danger)' : accent ? 'var(--primary)' : 'var(--text-primary)', textAlign: 'left', fontWeight: accent || danger ? 600 : 400 }}>{label}</span>
       {isToggle
         ? <Toggle value={toggleValue!} onChange={onToggle!} />
         : value
@@ -59,6 +59,10 @@ export default function SettingsScreen() {
 
         <Seksioni titulli="Abonimi">
           <Rreshti Icon={CreditCardIcon} label="Menaxho Abonimin" onPress={() => navigate('/paywall')} last />
+        </Seksioni>
+
+        <Seksioni titulli="Zona e Rrezikut">
+          <Rreshti Icon={TrashIcon} label="Fshi Llogarinë" onPress={() => navigate('/delete-account')} danger last />
         </Seksioni>
 
         <div style={{ padding: '0 20px' }}>

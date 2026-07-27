@@ -18,6 +18,26 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
+// DELETE /api/user/me — useri fshin vetë llogarinë e tij (kërkon fjalëkalimin)
+router.delete('/me', auth, async (req, res) => {
+  const { password } = req.body;
+  if (!password) return res.status(400).json({ error: 'Fjalëkalimi është i detyrueshëm' });
+
+  try {
+    const [[user]] = await db.query('SELECT password_hash FROM users WHERE id = ?', [req.user.id]);
+    if (!user) return res.status(404).json({ error: 'Përdoruesi nuk u gjet' });
+
+    const match = await bcrypt.compare(password, user.password_hash);
+    if (!match) return res.status(401).json({ error: 'Fjalëkalimi është i gabuar' });
+
+    await db.query('DELETE FROM users WHERE id = ?', [req.user.id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error('delete own account failed:', err);
+    res.status(500).json({ error: 'Gabim serveri' });
+  }
+});
+
 // GET /api/user/enrollments — kurset e regjistruara
 router.get('/enrollments', auth, async (req, res) => {
   try {

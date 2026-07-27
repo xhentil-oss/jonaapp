@@ -66,6 +66,10 @@ export async function updatePassword(current_password: string, new_password: str
   await authedFetch('/api/user/password', { method: 'PATCH', body: JSON.stringify({ current_password, new_password }) })
 }
 
+export async function deleteAccount(password: string): Promise<void> {
+  await authedFetch('/api/user/me', { method: 'DELETE', body: JSON.stringify({ password }) })
+}
+
 export interface ApiEnrollment extends ApiCourse {
   enrollmentId: number
   progress: number

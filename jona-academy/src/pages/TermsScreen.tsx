@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { ChevronLeftIcon } from '../components/Icons'
+import { ChevronLeftIcon, ChevronRightIcon, TrashIcon } from '../components/Icons'
 
 const seksionet = [
   {
@@ -173,6 +173,31 @@ export default function TermsScreen() {
             </div>
           ))}
         </div>
+
+        {/* Fshirja e llogarisë */}
+        {tabAktiv === 'privatesia' && (
+          <button
+            onClick={() => navigate('/account-deletion-info')}
+            style={{
+              width: '100%', marginTop: 16, background: 'var(--bg-primary)', borderRadius: 'var(--radius-lg)',
+              border: '1px solid var(--border)', padding: '16px 18px', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
+            }}
+          >
+            <div style={{
+              width: 40, height: 40, borderRadius: 10,
+              background: 'rgba(220,38,38,0.08)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+            }}>
+              <TrashIcon size={18} color="var(--danger)" strokeWidth={1.8} />
+            </div>
+            <div style={{ flex: 1 }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-primary)', margin: '0 0 2px' }}>Kërko Fshirjen e Llogarisë dhe të Dhënave</p>
+              <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>Si të kërkosh fshirjen, brenda ose jashtë aplikacionit</p>
+            </div>
+            <ChevronRightIcon size={16} color="var(--text-muted)" strokeWidth={2} />
+          </button>
+        )}
 
         {/* Kontakt footer */}
         <div style={{

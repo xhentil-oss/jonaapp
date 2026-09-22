@@ -4,6 +4,8 @@ workflows:
     max_build_duration: 60
     instance_type: mac_mini_m2
     working_directory: jona-academy
+    integrations:
+      app_store_connect: jona_academy_asc # emri i integrimit që krijon te Codemagic → Team settings → Integrations → App Store Connect
     environment:
       groups:
         - ios_signing # shto këtu (te Codemagic → Environment variables) çelësat e signing-ut
@@ -52,5 +54,6 @@ workflows:
           success: true
           failure: true
       app_store_connect:
-        auth: integration # lidhe në Codemagic UI me llogarinë Apple Developer
+        auth: integration
+        integration: jona_academy_asc
         submit_to_testflight: true

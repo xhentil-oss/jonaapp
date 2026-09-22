@@ -27,3 +27,8 @@ dist-ssr
 android/keystore.properties
 android/**/*.keystore
 android/**/*.jks
+
+# Capacitor / iOS signing — not covered by the auto-generated ios/.gitignore
+ios/**/*.p12
+ios/**/*.mobileprovision
+ios/**/*.cer
